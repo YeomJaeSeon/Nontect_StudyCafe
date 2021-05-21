@@ -1,4 +1,4 @@
-import { AuthType, SinUpType, firebaseAuth } from './firebase';
+import { firebaseAuth } from './firebase';
 
 export default class AuthService {
   signUp(email, password) {

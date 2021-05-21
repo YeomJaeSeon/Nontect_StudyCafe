@@ -93,3 +93,7 @@ export const InputCheck = styled.input`
   margin-left: 15px;
   transform: scale(1.5);
 `;
+
+export const None = styled.input`
+  visibility: hidden;
+`;

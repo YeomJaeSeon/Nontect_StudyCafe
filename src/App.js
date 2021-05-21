@@ -6,20 +6,19 @@ import Login from './pages/login/Login';
 import Main from './pages/main/Main';
 import SignUp from './pages/signup/SignUp';
 
-function App() {
+function App({ authService }) {
   return (
     <>
-      <Header />
       <BrowserRouter>
         <Switch>
           <Route path="/" exact>
-            <Login />
+            <Login authService={authService} />
           </Route>
           <Route path="/signup" exact>
-            <SignUp />
+            <SignUp authService={authService} />
           </Route>
           <Route path="/rooms" exact>
-            <Main />
+            <Main authService={authService} />
           </Route>
           <Route path="/rooms/room/:id" exact>
             <Detail />

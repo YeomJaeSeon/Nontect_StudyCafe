@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as S from './Detail.style';
+import Header from '../../components/header/Header';
 
 const Detail = (props) => {
   const [users, setUsers] = useState([
@@ -15,24 +16,27 @@ const Detail = (props) => {
   //location.id
 
   return (
-    <S.Container>
-      <S.LeftContainer>
-        <S.UserContainer>
-          {users.map((user) => {
-            return (
-              <S.User key={user.id}>
-                <S.UserName>{user.name}</S.UserName>
-                <S.UserMonitor src="/human.jpg" alt="" />
-              </S.User>
-            );
-          })}
-        </S.UserContainer>
-        <S.ChatBox>
-          <S.ChatInput type="text" placeholder="채팅창 입력" />
-        </S.ChatBox>
-      </S.LeftContainer>
-      <S.RightContainer></S.RightContainer>
-    </S.Container>
+    <>
+      <Header />
+      <S.Container>
+        <S.LeftContainer>
+          <S.UserContainer>
+            {users.map((user) => {
+              return (
+                <S.User key={user.id}>
+                  <S.UserName>{user.name}</S.UserName>
+                  <S.UserMonitor src="/human.jpg" alt="" />
+                </S.User>
+              );
+            })}
+          </S.UserContainer>
+          <S.ChatBox>
+            <S.ChatInput type="text" placeholder="채팅창 입력" />
+          </S.ChatBox>
+        </S.LeftContainer>
+        <S.RightContainer></S.RightContainer>
+      </S.Container>
+    </>
   );
 };
 

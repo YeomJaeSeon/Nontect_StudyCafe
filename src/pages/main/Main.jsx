@@ -1,18 +1,37 @@
-import React, { useState } from 'react';
-import Room from '../../components/room/Room';
+import React, { useState, useEffect } from 'react';
 import Search from '../../components/search/Search';
 import * as S from './Main.style';
 import Rooms from '../../components/rooms/Rooms';
+import Header from '../../components/header/Header';
+import { useHistory } from 'react-router-dom';
 
-const Main = (props) => {
+const Main = ({ authService }) => {
   const [rooms, setRooms] = useState([
     { id: 1, name: '공부하러와요 ㅋㅋ', hashTag: ['건강', '자격증', 'IT'] },
     { id: 2, name: '빡센방', hashTag: ['건강', '자격증', 'IT'] },
     { id: 3, name: '소통해요 ㅎㅎ', hashTag: ['건강', '자격증', 'IT'] },
   ]);
 
+  const history = useHistory();
+
+  const logout = () => {
+    authService.logout();
+  };
+  useEffect(() => {
+    const unscribe = authService.getLoginStatus((user) => {
+      if (!user) {
+        history.push('/');
+      }
+    });
+
+    return () => {
+      unscribe();
+    };
+  }, [authService]);
+
   return (
     <>
+      <Header location="main" logout={logout} />
       <Search />
       <S.MainContainer>
         <Rooms rooms={rooms} />
