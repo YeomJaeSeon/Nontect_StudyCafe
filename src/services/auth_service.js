@@ -18,9 +18,9 @@ export default class AuthService {
   }
   // 회원 탈퇴. 유저 회원가입 정보 삭제(auth 삭제임. db삭제아님)
   delete() {
-    const deleteUser = firebaseAuth.currentUser;
-    deleteUser?.delete().catch(() => {
-      this.logout();
-    });
+    // const deleteUser = firebaseAuth.currentUser;
+    // deleteUser?.delete().catch(() => {
+    //   this.logout();
+    // });
   }
 }

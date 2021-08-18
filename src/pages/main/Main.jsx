@@ -6,11 +6,20 @@ import Header from '../../components/header/Header';
 import { useHistory } from 'react-router-dom';
 
 const Main = ({ authService }) => {
+  //test datas
   const [rooms, setRooms] = useState([
     { id: 1, name: '공부하러와요 ㅋㅋ', hashTag: ['건강', '자격증', 'IT'] },
     { id: 2, name: '빡센방', hashTag: ['건강', '자격증', 'IT'] },
     { id: 3, name: '소통해요 ㅎㅎ', hashTag: ['건강', '자격증', 'IT'] },
   ]);
+
+  // 방 생성을 위한 state
+  const [state, setState] = useState({
+    mySessionId: 'SessionA',
+    myUserName: 'OpenVidu_User_' + Math.floor(Math.random() * 100),
+    token: undefined,
+    session : undefined
+  });
 
   const history = useHistory();
 
@@ -29,6 +38,23 @@ const Main = ({ authService }) => {
     };
   }, [authService]);
 
+  const goCreate = () => {
+    history.push('/rooms/create');
+  }
+
+  // const joinSession = (event) => {
+  //   if (state.mySessionId && state.myUserName) {
+  //     this.getToken().then((token) => {
+  //         setState({
+  //             ...state,
+  //             token: token,
+  //             session: true,
+  //         });
+  //     });
+  //     event.preventDefault();
+  //   }
+  // }
+
   return (
     <>
       <Header location="main" logout={logout} />
@@ -41,7 +67,7 @@ const Main = ({ authService }) => {
         </S.ButtonBox>
       </S.MainContainer>
       <S.RoomButtonBox>
-        <S.RoomButton left>방 생성</S.RoomButton>
+        <S.RoomButton onClick={goCreate} left>방 생성</S.RoomButton>
         <S.RoomButton>방 참가</S.RoomButton>
       </S.RoomButtonBox>
     </>

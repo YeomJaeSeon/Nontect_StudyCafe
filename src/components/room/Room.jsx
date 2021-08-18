@@ -11,6 +11,7 @@ const Room = ({ id, name, hashTag }) => {
     });
   };
   console.log(hashTag);
+  
   return (
     <S.RoomContainer onClick={goToDetail}>
       <S.RoomTitleBox>{name}</S.RoomTitleBox>

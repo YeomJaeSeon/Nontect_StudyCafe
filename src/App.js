@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Header from './components/header/Header';
+import CreateRoomForm from './pages/createRoomForm/CreateRoomForm';
 import Detail from './pages/detail/Detail';
 import Login from './pages/login/Login';
 import Main from './pages/main/Main';
@@ -23,8 +24,11 @@ function App({ authService }) {
           <Route path="/rooms/room/:id" exact>
             <Detail />
           </Route>
+          <Route path="/rooms/create" exact>
+            <CreateRoomForm />
+          </Route>
         </Switch>
-      </BrowserRouter>
+    </BrowserRouter>
     </>
   );
 }
