@@ -19,10 +19,13 @@ function App({ authService, dataService }) {
             <SignUp authService={authService} dataService={dataService} />
           </Route>
           <Route path="/rooms" exact>
-            <Main authService={authService} />
+            <Main authService={authService} dataService={dataService} />
           </Route>
           <Route path="/rooms/room" exact>
-            <CreateRoomForm dataService={dataService}></CreateRoomForm>
+            <CreateRoomForm
+              authService={authService}
+              dataService={dataService}
+            ></CreateRoomForm>
           </Route>
         </Switch>
       </BrowserRouter>

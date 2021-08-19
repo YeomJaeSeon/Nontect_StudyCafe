@@ -1,29 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../../components/header/Header";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
 import OpenViduSession from "openvidu-react";
 
 const OPENVIDU_SERVER_URL = "https://ec2-3-227-185-154.compute-1.amazonaws.com";
 const OPENVIDU_SERVER_SECRET = "0000";
 
-export default function CreateRoomForm({ dataService }) {
+export default function CreateRoomForm({ authService, dataService }) {
   const [state, setState] = useState({
-    mySessionId: "SessionA",
-    myUserName: "OpenVidu_User_" + Math.floor(Math.random() * 100),
+    mySessionId: "SessionA", // 방이름
+    myUserName: "", // 유저이름(유저의 uid임) - 별명아님
     token: undefined,
     session: undefined,
   });
 
+  useEffect(() => {
+    //로그인한 유저의 uid와 방이름(mySessionId) 를 넘김
+    authService.getLoginStatus((uid) => {
+      console.log(uid);
+      setState((user) => ({
+        ...user,
+        myUserName: uid.uid,
+      }));
+    });
+  }, []);
+
+  //세션 입장 메서드
   const handlerJoinSessionEvent = () => {
     console.log("Join session");
+    dataService.userJoinRoom(state.myUserName, state.mySessionId);
+
+    dataService.getAllRooms((values) => {
+      let currentPeoplecount = Object.values(values).filter(
+        (room) => room.sessionId == state.mySessionId
+      )[0].peopleCount;
+
+      dataService.changeRoomData(state.mySessionId, currentPeoplecount + 1);
+    });
   };
 
+  //세션 나갈때
   const handlerLeaveSessionEvent = () => {
     console.log("Leave session");
     setState({
       ...state,
       session: undefined,
+    });
+    dataService.leftRoom(state.myUserName);
+
+    dataService.getAllRooms((values) => {
+      let currentPeoplecount = Object.values(values).filter(
+        (room) => room.sessionId == state.mySessionId
+      )[0].peopleCount;
+
+      if (currentPeoplecount == 1) {
+        //내가 마지막 인원이면
+        dataService.deleteRoom(state.mySessionId);
+      } else {
+        dataService.changeRoomData(state.mySessionId, currentPeoplecount - 1);
+      }
     });
   };
 
@@ -38,13 +73,6 @@ export default function CreateRoomForm({ dataService }) {
     });
   };
 
-  const handleChangeUserName = (e) => {
-    setState({
-      ...state,
-      myUserName: e.target.value,
-    });
-  };
-
   const joinSession = (event) => {
     console.log("joinSession");
     event.preventDefault();
@@ -55,10 +83,15 @@ export default function CreateRoomForm({ dataService }) {
           token: token,
           session: true,
         }));
-        //database 방 session Id 저장
-        console.log(dataService);
-        dataService.createRoom(state.mySessionId);
-        dataService.joinRoom(state.myUserName);
+        let roomIdx = 1;
+        dataService.getAllRooms((callback) => {
+          if (callback != undefined) {
+            roomIdx = Object.keys(callback).length + 1;
+          }
+        });
+
+        dataService.createRoom(state.mySessionId, roomIdx);
+        //방생성 동시에 방에 접속(세션에 접속)
       });
     }
   };
@@ -148,16 +181,6 @@ export default function CreateRoomForm({ dataService }) {
             <div id="join-dialog">
               <h1> Join a video session </h1>
               <form onSubmit={joinSession}>
-                <p>
-                  <label>Participant: </label>
-                  <input
-                    type="text"
-                    id="userName"
-                    value={state.myUserName}
-                    onChange={handleChangeUserName}
-                    required
-                  />
-                </p>
                 <p>
                   <label> Session: </label>
                   <input

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import * as S from './SignUp.style';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import * as S from "./SignUp.style";
+import { useHistory } from "react-router-dom";
 
 const EmailReg =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -13,12 +13,11 @@ const SignUp = ({ authService, dataService }) => {
   const [isPwdLengthProper, setIsPwdLengthProper] = useState(false);
   const [isRePwdLengthProper, setIsRePwdLengthProper] = useState(false);
 
-
   const [newUser, setNewUser] = useState({
-    character: '',
-    email: '',
-    pwd: '',
-    rePwd: '',
+    character: "",
+    email: "",
+    pwd: "",
+    rePwd: "",
     interestedField: {
       health: true,
       IT: false,
@@ -34,15 +33,16 @@ const SignUp = ({ authService, dataService }) => {
 
   const history = useHistory();
   const goToLogin = () => {
-    history.push('/');
+    history.push("/");
   };
 
-  const signUpHandler = () => {
+  const signUpHandler = (e) => {
+    e.preventDefault();
     if (!isAllClear()) return;
     if (isSignUping) return;
     // 회원가입중이면 아무것도안함.
     if (!isCharacterProper) {
-      alert('이미 존재하는 이름입니다.');
+      alert("이미 존재하는 이름입니다.");
       return;
     }
 
@@ -51,15 +51,16 @@ const SignUp = ({ authService, dataService }) => {
     authService
       .signUp(newUser.email, newUser.pwd)
       .then((user) => {
+        console.log("user!!!!!!!!!!!!!!!!!!!!!");
         console.log(user);
-        dataService.createUser(user.user.uid, newUser.character, newUser.email);
-        alert('회원가입 성공!');
+        alert("회원가입 성공!");
         authService.logout();
         goToLogin();
+        dataService.createUser(user.user.uid, newUser.character, newUser.email);
       })
       .catch((err) => {
-        if (err.code === 'auth/email-already-in-use') {
-          alert('이미 존재하는 이메일입니다.');
+        if (err.code === "auth/email-already-in-use") {
+          alert("이미 존재하는 이메일입니다.");
         }
       })
       .finally(() => {
@@ -72,7 +73,7 @@ const SignUp = ({ authService, dataService }) => {
     const id = e.currentTarget.id;
     const value = e.currentTarget.value;
     // 별명 2 ~ 6자리까지 && 존재하는별명있는지
-    if (id === 'character') {
+    if (id === "character") {
       if (value.length > 6) return;
       value.length >= 2
         ? existedUsers.some((characterName) => value === characterName)
@@ -80,11 +81,11 @@ const SignUp = ({ authService, dataService }) => {
           : setIsCharacterProper(true)
         : setIsCharacterProper(false);
       // email - 정규식에맞는지
-    } else if (id === 'email') {
+    } else if (id === "email") {
       value.match(EmailReg) ? setIsEmailProper(true) : setIsEmailProper(false);
     }
     // 비번 6 ~ 10 - 재비번도 동일
-    else if (id === 'pwd') {
+    else if (id === "pwd") {
       if (value.length > 10) return;
       if (value.length < 6) {
         setIsPwdLengthProper(false);
@@ -93,7 +94,7 @@ const SignUp = ({ authService, dataService }) => {
       }
       if (newUser.rePwd)
         newUser.rePwd === value ? setIsPwdProper(true) : setIsPwdProper(false);
-    } else if (id === 'rePwd') {
+    } else if (id === "rePwd") {
       if (value.length > 10) return;
       if (value.length < 6) setIsRePwdLengthProper(false);
       else setIsRePwdLengthProper(true);
@@ -141,12 +142,7 @@ const SignUp = ({ authService, dataService }) => {
         <S.SubTitle>빠르고 간단하게!</S.SubTitle>
       </S.SignUpHeader>
       <S.DivLine />
-      <S.FormContainer
-        onSubmit={(e) => {
-          signUpHandler();
-          e.preventDefault();
-        }}
-      >
+      <S.FormContainer onSubmit={signUpHandler}>
         {newUser.character.length > 0 && isCharacterProper === false && (
           <span>최소 2글자입니다.</span>
         )}
