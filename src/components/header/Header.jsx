@@ -1,9 +1,9 @@
-import React from 'react';
-import * as S from './Header.style';
+import React from "react";
+import * as S from "./Header.style";
 
 const Header = ({ location, logout }) => {
   const displayMenu = () => {
-    if (location === 'main') {
+    if (location === "main") {
       return (
         <>
           <S.InfoBtn>내 정보</S.InfoBtn>

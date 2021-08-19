@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import * as S from './Login.style';
-import { useHistory } from 'react-router-dom';
-import Header from '../../components/header/Header';
+import React, { useState, useEffect } from "react";
+import * as S from "./Login.style";
+import { useHistory } from "react-router-dom";
+import Header from "../../components/header/Header";
 
 const Login = ({ authService }) => {
   const [user, setUser] = useState({
-    id: '',
-    pwd: '',
+    id: "",
+    pwd: "",
   });
   const [isLoginState, setIsLoginState] = useState(false);
   const history = useHistory();
 
   const goToSignUp = () => {
-    history.push('/signup');
+    history.push("/signup");
   };
 
   useEffect(() => {
     const goToMain = (uid) => {
       history.push({
-        pathname: '/rooms',
+        pathname: "/rooms",
         state: { id: uid },
       });
     };
@@ -35,7 +35,7 @@ const Login = ({ authService }) => {
   const updateUserInfo = (e) => {
     const type = e.currentTarget.id;
     const value = e.currentTarget.value;
-    if (type === 'id') {
+    if (type === "id") {
       setUser((user) => ({ ...user, id: value }));
     } else {
       setUser((user) => ({ ...user, pwd: value }));
@@ -48,10 +48,10 @@ const Login = ({ authService }) => {
     authService
       .login(user.id, user.pwd)
       .then(() => {
-        alert('로그인성공');
+        alert("로그인성공");
       })
       .catch(() => {
-        alert('로그인실패 ㅠㅠ');
+        alert("로그인실패 ㅠㅠ");
       })
       .finally(() => {
         setIsLoginState(false);
@@ -65,6 +65,7 @@ const Login = ({ authService }) => {
           <S.TitleText>Nontect Study</S.TitleText>
         </S.Title>
         <S.Box>
+          <div>안녕하세요</div>
           <S.FormBox
             onSubmit={(e) => {
               e.preventDefault();

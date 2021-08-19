@@ -6,12 +6,13 @@ const EmailReg =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 // 관심분야 체크박스 0 ~ 3
-const SignUp = ({ authService }) => {
+const SignUp = ({ authService, dataService }) => {
   const [isCharacterProper, setIsCharacterProper] = useState(false);
   const [isEmailProper, setIsEmailProper] = useState(false);
   const [isPwdProper, setIsPwdProper] = useState(false);
   const [isPwdLengthProper, setIsPwdLengthProper] = useState(false);
   const [isRePwdLengthProper, setIsRePwdLengthProper] = useState(false);
+
 
   const [newUser, setNewUser] = useState({
     character: '',
@@ -50,9 +51,8 @@ const SignUp = ({ authService }) => {
     authService
       .signUp(newUser.email, newUser.pwd)
       .then((user) => {
-        // user &&
-        //   user.user &&
-        //   databaseService.createUser(user.user?.uid, newUser.character);
+        console.log(user);
+        dataService.createUser(user.user.uid, newUser.character, newUser.email);
         alert('회원가입 성공!');
         authService.logout();
         goToLogin();

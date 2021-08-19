@@ -39,21 +39,8 @@ const Main = ({ authService }) => {
   }, [authService]);
 
   const goCreate = () => {
-    history.push('/rooms/create');
+    history.push('/rooms/room');
   }
-
-  // const joinSession = (event) => {
-  //   if (state.mySessionId && state.myUserName) {
-  //     this.getToken().then((token) => {
-  //         setState({
-  //             ...state,
-  //             token: token,
-  //             session: true,
-  //         });
-  //     });
-  //     event.preventDefault();
-  //   }
-  // }
 
   return (
     <>

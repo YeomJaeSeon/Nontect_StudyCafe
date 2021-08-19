@@ -1,13 +1,13 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Header from './components/header/Header';
-import CreateRoomForm from './pages/createRoomForm/CreateRoomForm';
-import Detail from './pages/detail/Detail';
-import Login from './pages/login/Login';
-import Main from './pages/main/Main';
-import SignUp from './pages/signup/SignUp';
+import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Header from "./components/header/Header";
+import CreateRoomForm from "./pages/createRoomForm/CreateRoomForm";
+import Detail from "./pages/detail/Detail";
+import Login from "./pages/login/Login";
+import Main from "./pages/main/Main";
+import SignUp from "./pages/signup/SignUp";
 
-function App({ authService }) {
+function App({ authService, dataService }) {
   return (
     <>
       <BrowserRouter>
@@ -16,19 +16,16 @@ function App({ authService }) {
             <Login authService={authService} />
           </Route>
           <Route path="/signup" exact>
-            <SignUp authService={authService} />
+            <SignUp authService={authService} dataService={dataService} />
           </Route>
           <Route path="/rooms" exact>
             <Main authService={authService} />
           </Route>
-          <Route path="/rooms/room/:id" exact>
-            <Detail />
-          </Route>
-          <Route path="/rooms/create" exact>
-            <CreateRoomForm />
+          <Route path="/rooms/room" exact>
+            <CreateRoomForm dataService={dataService}></CreateRoomForm>
           </Route>
         </Switch>
-    </BrowserRouter>
+      </BrowserRouter>
     </>
   );
 }
