@@ -1,19 +1,15 @@
-import React, { useState } from 'react';
-import * as S from './Room.style';
-import { useHistory } from 'react-router-dom';
+import React, { useState } from "react";
+import * as S from "./Room.style";
+import OpenViduSession from "openvidu-react";
+import axios from "axios";
 
-const Room = ({ id, name, hashTag }) => {
-  const history = useHistory();
-  const goToDetail = () => {
-    history.push({
-      pathname: `rooms/room/${id}`,
-      state: { id: id },
-    });
-  };
-  console.log(hashTag);
-  
+//여기서 오픈비두 입장 작업을 해야함
+
+const Room = ({ id, name, hashTag, peopleCount }) => {
+  const enterSession = () => {};
+
   return (
-    <S.RoomContainer onClick={goToDetail}>
+    <S.RoomContainer onClick={enterSession}>
       <S.RoomTitleBox>{name}</S.RoomTitleBox>
       <S.InnerContainer>
         <S.HashTagContainer>
@@ -21,7 +17,7 @@ const Room = ({ id, name, hashTag }) => {
             return <S.HashTagContent>#{tag}</S.HashTagContent>;
           })}
         </S.HashTagContainer>
-        <div>{id}/6</div>
+        <div>{peopleCount}/6</div>
       </S.InnerContainer>
     </S.RoomContainer>
   );

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import * as style from '../../utils/css-utils';
+import styled from "styled-components";
+import * as style from "../../utils/css-utils";
 
 export const Container = styled.div`
   margin: auto;

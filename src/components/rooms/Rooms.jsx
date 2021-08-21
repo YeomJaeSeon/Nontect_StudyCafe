@@ -4,9 +4,13 @@ import Room from "../room/Room";
 import Header from "../header/Header";
 import axios from "axios";
 import OpenViduSession from "openvidu-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Rooms = ({ rooms }) => {
+  useEffect(() => {
+    console.log("Rooms useEffect");
+    console.log(rooms);
+  }, []);
   return (
     <>
       <S.RoomsContainer>
@@ -17,6 +21,7 @@ const Rooms = ({ rooms }) => {
               key={room.id}
               id={room.id}
               name={room.name}
+              peopleCount={room.peopleCount}
               hashTag={room.hashTag}
             ></Room>
           );

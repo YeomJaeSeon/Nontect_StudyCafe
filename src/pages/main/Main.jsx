@@ -9,14 +9,6 @@ const Main = ({ authService, dataService }) => {
   //test datas
   const [rooms, setRooms] = useState([]); //방들 (세션들)
 
-  // 방 생성을 위한 state
-  const [state, setState] = useState({
-    mySessionId: "SessionA",
-    myUserName: "OpenVidu_User_" + Math.floor(Math.random() * 100),
-    token: undefined,
-    session: undefined,
-  });
-
   const history = useHistory();
 
   const logout = () => {
@@ -32,11 +24,13 @@ const Main = ({ authService, dataService }) => {
             return {
               id: value.idxCount,
               name: value.sessionId,
-              peopel: value.count,
+              peopleCount: value.peopleCount,
               hashTag: [],
             };
           })
         );
+        console.log("이걸로 바뀌었어요");
+        console.log(rooms);
       }
     });
   }, []);

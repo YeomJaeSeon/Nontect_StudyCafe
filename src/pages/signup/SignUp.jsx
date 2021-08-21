@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./SignUp.style";
 import { useHistory } from "react-router-dom";
-
-const EmailReg =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import { EmailReg } from "../../config/config";
 
 // 관심분야 체크박스 0 ~ 3
 const SignUp = ({ authService, dataService }) => {
@@ -37,15 +35,26 @@ const SignUp = ({ authService, dataService }) => {
   };
 
   const signUpHandler = (e) => {
+    //먼저 이미 먼저 가입한 회원들의 이름을 가져옴
+    dataService.getAllUsers((data) => {
+      if (data !== undefined) {
+        const names = Object.values(data).map((data) => data.name);
+        console.log(names);
+        setExistedUsers(names);
+      }
+    });
+
     e.preventDefault();
-    if (!isAllClear()) return;
+    if (!isAllClear()) {
+      alert("회원가입 조건을 모두 충족시켜주세요");
+      return;
+    } // 충조하지않으면 회원가입 X
     if (isSignUping) return;
     // 회원가입중이면 아무것도안함.
     if (!isCharacterProper) {
       alert("이미 존재하는 이름입니다.");
       return;
     }
-
     setIsSignUping(true);
     // 회원가입중
     authService
@@ -56,7 +65,19 @@ const SignUp = ({ authService, dataService }) => {
         alert("회원가입 성공!");
         authService.logout();
         goToLogin();
-        dataService.createUser(user.user.uid, newUser.character, newUser.email);
+        const interesedFieldArr = Object.keys(newUser.interestedField).filter(
+          (v) => newUser.interestedField[`${v}`] === true
+        );
+
+        console.log("회원의 관심분야 배열");
+        console.log(interesedFieldArr);
+
+        dataService.createUser(
+          user.user.uid,
+          newUser.character,
+          newUser.email,
+          interesedFieldArr
+        );
       })
       .catch((err) => {
         if (err.code === "auth/email-already-in-use") {
@@ -144,7 +165,7 @@ const SignUp = ({ authService, dataService }) => {
       <S.DivLine />
       <S.FormContainer onSubmit={signUpHandler}>
         {newUser.character.length > 0 && isCharacterProper === false && (
-          <span>최소 2글자입니다.</span>
+          <span>별명이 너무 짧습니다!</span>
         )}
         <S.Input
           type="text"
@@ -163,6 +184,12 @@ const SignUp = ({ authService, dataService }) => {
           value={newUser.email}
           onChange={upDateUserInfo}
         />
+        {newUser.pwd.length > 0 && isPwdLengthProper === false && (
+          <span>비밀번호가 너무 짧습니다!</span>
+        )}
+        {newUser.pwd.length > 0 && isPwdProper === false && (
+          <span>두 비밀번호가 다릅니다!</span>
+        )}
         <S.Input
           type="password"
           placeholder="비밀번호"
@@ -170,6 +197,12 @@ const SignUp = ({ authService, dataService }) => {
           value={newUser.pwd}
           onChange={upDateUserInfo}
         />
+        {newUser.rePwd.length > 0 && isRePwdLengthProper === false && (
+          <span>비밀번호가 너무 짧습니다!</span>
+        )}
+        {newUser.pwd.length > 0 && isPwdProper === false && (
+          <span>두 비밀번호가 다릅니다!</span>
+        )}
         <S.Input
           type="password"
           placeholder="비밀번호 확인"
@@ -242,7 +275,9 @@ const SignUp = ({ authService, dataService }) => {
         </S.ListContainer>
         <S.None type="submit" />
       </S.FormContainer>
-      <S.SignUpBtn onClick={signUpHandler}>가입하기</S.SignUpBtn>
+      <S.SignUpBtn isAllClear={() => isAllClear()} onClick={signUpHandler}>
+        가입하기
+      </S.SignUpBtn>
     </S.Container>
   );
 };

@@ -6,17 +6,53 @@ import axios from "axios";
 
 export default class Database {
   //==회원가입==//
-  createUser(uid, name, email) {
-    return axios.put(
-      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
-      {
-        uid: uid,
-        name: name,
-        email: email,
-        score: 0,
-        joinRoom: 0,
-      }
-    );
+  createUser(uid, name, email, interestedField) {
+    if (interestedField.length === 1) {
+      return axios.put(
+        `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
+        {
+          uid: uid,
+          name: name,
+          email: email,
+          score: 0,
+          joinRoom: 0,
+          interestedField: {
+            interestedField1: interestedField[0],
+          },
+        }
+      );
+    } else if (interestedField.length === 2) {
+      return axios.put(
+        `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
+        {
+          uid: uid,
+          name: name,
+          email: email,
+          score: 0,
+          joinRoom: 0,
+          interestedField: {
+            interestedField1: interestedField[0],
+            interestedField2: interestedField[1],
+          },
+        }
+      );
+    } else {
+      return axios.put(
+        `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
+        {
+          uid: uid,
+          name: name,
+          email: email,
+          score: 0,
+          joinRoom: 0,
+          interestedField: {
+            interestedField1: interestedField[0],
+            interestedField2: interestedField[1],
+            interestedField3: interestedField[2],
+          },
+        }
+      );
+    }
   }
 
   //==방장이 방생성==//
