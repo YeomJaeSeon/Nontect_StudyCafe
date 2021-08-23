@@ -8,6 +8,7 @@ import {
   koreanReg,
 } from "../../config/config";
 import { useHistory, useLocation } from "react-router";
+import * as S from "./CreateRoomForm.style";
 
 export default function CreateRoomForm({ authService, dataService }) {
   const [state, setState] = useState({
@@ -16,6 +17,8 @@ export default function CreateRoomForm({ authService, dataService }) {
     token: undefined,
     session: undefined,
   });
+  const [isLoading, setIsLoading] = useState(false);
+
   const location = useLocation();
   const history = useHistory();
   useEffect(() => {
@@ -53,6 +56,7 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   //세션 나갈때
   const handlerLeaveSessionEvent = () => {
+    setIsLoading(true);
     console.log("Leave session");
     setState({
       ...state,
@@ -65,10 +69,11 @@ export default function CreateRoomForm({ authService, dataService }) {
         (room) => room.sessionId == state.mySessionId
       )[0].peopleCount;
 
-      if (currentPeoplecount == 1) {
+      if (currentPeoplecount <= 1) {
         //내가 마지막 인원이면
         dataService.deleteRoom(state.mySessionId).then(() => {
           history.push("/rooms");
+          setIsLoading(false);
         });
       } else {
         //나가는데 인원이 더남아있으면
@@ -76,6 +81,7 @@ export default function CreateRoomForm({ authService, dataService }) {
           .changeRoomData(state.mySessionId, currentPeoplecount - 1)
           .then(() => {
             history.push("/rooms");
+            setIsLoading(false);
           });
       }
     });
@@ -94,6 +100,7 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   //방 만들기(세션만들기)
   const joinSession = (event) => {
+    setIsLoading(true);
     let isAlreadyExisted = false;
     dataService.getAllRooms((values) => {
       if (values != undefined) {
@@ -131,6 +138,7 @@ export default function CreateRoomForm({ authService, dataService }) {
           }));
           //방생성 동시에 방에 접속(세션에 접속)
           dataService.createRoom(state.mySessionId);
+          setIsLoading(false);
         });
       }
     } else {
@@ -142,6 +150,7 @@ export default function CreateRoomForm({ authService, dataService }) {
           token: token,
           session: true,
         }));
+        setIsLoading(false);
       });
     }
   };
@@ -232,42 +241,50 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   return (
     <>
-      <Header />
-      {state.session === undefined ? (
-        <div>
-          <div id="join">
-            <div id="join-dialog">
-              <h1> 입장할 방을 생성해주세요 </h1>
-              <form onSubmit={joinSession}>
-                <p>
-                  <label> 방 이름: </label>
-                  <input
-                    type="text"
-                    id="sessionId"
-                    value={state.mySessionId}
-                    onChange={handleChangeSessionId}
-                    required
-                  />
-                </p>
-                <p>
-                  <input name="commit" type="submit" value="JOIN" />
-                </p>
-              </form>
-            </div>
-          </div>
-        </div>
+      {isLoading ? (
+        <S.LoadingSpinnerContainer>
+          <S.LoadingSpinner />
+        </S.LoadingSpinnerContainer>
       ) : (
         <>
-          <h1>{state.mySessionId} 방</h1>
-          <OpenViduSession
-            id="opv-session"
-            sessionName={state.mySessionId}
-            user={state.myUserName}
-            token={state.token}
-            joinSession={handlerJoinSessionEvent}
-            leaveSession={handlerLeaveSessionEvent}
-            error={handlerErrorEvent}
-          />
+          <Header />
+          {state.session === undefined ? (
+            <div>
+              <div id="join">
+                <div id="join-dialog">
+                  <h1> 입장할 방을 생성해주세요 </h1>
+                  <form onSubmit={joinSession}>
+                    <p>
+                      <label> 방 이름: </label>
+                      <input
+                        type="text"
+                        id="sessionId"
+                        value={state.mySessionId}
+                        onChange={handleChangeSessionId}
+                        required
+                      />
+                    </p>
+                    <p>
+                      <input name="commit" type="submit" value="JOIN" />
+                    </p>
+                  </form>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <>
+              <h1>{state.mySessionId} 방</h1>
+              <OpenViduSession
+                id="opv-session"
+                sessionName={state.mySessionId}
+                user={state.myUserName}
+                token={state.token}
+                joinSession={handlerJoinSessionEvent}
+                leaveSession={handlerLeaveSessionEvent}
+                error={handlerErrorEvent}
+              />
+            </>
+          )}
         </>
       )}
     </>
