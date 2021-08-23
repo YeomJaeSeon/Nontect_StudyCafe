@@ -9,6 +9,7 @@ import {
 } from "../../config/config";
 import { useHistory, useLocation } from "react-router";
 import * as S from "./CreateRoomForm.style";
+import { useBeforeunload } from "react-beforeunload";
 
 export default function CreateRoomForm({ authService, dataService }) {
   const [state, setState] = useState({
@@ -21,6 +22,12 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   const location = useLocation();
   const history = useHistory();
+
+  useBeforeunload((e) => {
+    e.preventDefault();
+    alert("나가려구?");
+  });
+
   useEffect(() => {
     if (location.state !== undefined) {
       setState((prev) => ({
@@ -130,7 +137,10 @@ export default function CreateRoomForm({ authService, dataService }) {
       console.log("방 생성 후 입장");
       if (state.mySessionId && state.myUserName) {
         getToken().then((token) => {
-          if (isAlreadyExisted) return;
+          if (isAlreadyExisted) {
+            setIsLoading(false);
+            return;
+          }
           setState((prev) => ({
             ...prev,
             token: token,
