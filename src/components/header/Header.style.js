@@ -2,12 +2,14 @@ import styled from 'styled-components';
 import * as style from '../../utils/css-utils';
 
 export const HeaderContainer = styled.header`
-  display: flex;
+margin-bottom: 0;
   position: fixed;
   top: 0;
   background-color: ${style.MainColor};
   width: 100%;
   height: 60px;
+  display: flex;
+  transition: top 0.2s ease-in-out;
 `;
 
 export const InfoBtn = styled.button`
@@ -16,7 +18,7 @@ export const InfoBtn = styled.button`
   width: 80px;
   height: 30px;
   right: 120px;
-  top: 15px;
+  top: 7px;
   background-color: ${style.BoxColor};
   border: none;
   border-radius: 5px;
@@ -26,13 +28,21 @@ export const InfoBtn = styled.button`
   }
 `;
 
+export const LogoContainer = styled.img`
+position: absolute;
+width:140px;
+height: 50px;
+left:0;
+top: 4px;
+`;
+
 export const LogoutBtn = styled.button`
   position: absolute;
   font-weight: bolder;
   width: 80px;
   height: 30px;
   right: 20px;
-  top: 15px;
+  top: 7px;
   background-color: ${style.BoxColor};
   border: none;
   border-radius: 5px;

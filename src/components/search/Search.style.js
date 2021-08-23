@@ -5,6 +5,7 @@ export const SelectorContainer = styled.div`
   margin-left: 150px;
   margin-top: 30px;
   margin-bottom: 30px;
+  
 `;
 
 export const Selector = styled.select`

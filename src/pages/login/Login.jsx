@@ -59,11 +59,12 @@ const Login = ({ authService }) => {
   };
   return (
     <>
-      <Header />
+
       <S.Container>
-        <S.Title>
-          <S.TitleText>Nontect Study</S.TitleText>
-        </S.Title>
+        <Header />
+        <S.TitleContainer>
+          <S.Title src="./main_logo.png" art="logo"></S.Title>
+        </S.TitleContainer>
         <S.Box>
           <div>안녕하세요</div>
           <S.FormBox

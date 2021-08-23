@@ -8,4 +8,5 @@ export const RoomsContainer = styled.div`
   margin: auto;
   margin-top: 20px;
   padding-top: 20px;
+  
 `;
