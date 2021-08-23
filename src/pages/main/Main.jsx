@@ -56,7 +56,7 @@ const Main = ({ authService, dataService }) => {
       <Header location="main" logout={logout} />
       <Search />
       <S.MainContainer>
-        <Rooms rooms={rooms} />
+        <Rooms dataService={dataService} rooms={rooms} />
         <S.ButtonBox>
           <S.Button>{"<"}</S.Button>
           <S.Button>{">"}</S.Button>

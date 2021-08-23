@@ -2,7 +2,7 @@
 
 - rooms
   - sessionId(방이름)
-    - idxCount(방 데이터 식별자)
+    - idxCount(방 데이터 식별자) --- 삭제함(불필요하다생각)
     - peopleCount(방에 접속한 유저수)
     - sessionId(방이름)
 

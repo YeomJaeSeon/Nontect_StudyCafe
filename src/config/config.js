@@ -3,3 +3,4 @@ export const OPENVIDU_SERVER_URL =
 export const OPENVIDU_SERVER_SECRET = "0000";
 export const EmailReg =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+export const koreanReg = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;

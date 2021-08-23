@@ -5,17 +5,28 @@ import OpenViduSession from "openvidu-react";
 import {
   OPENVIDU_SERVER_URL,
   OPENVIDU_SERVER_SECRET,
+  koreanReg,
 } from "../../config/config";
+import { useHistory, useLocation } from "react-router";
 
 export default function CreateRoomForm({ authService, dataService }) {
   const [state, setState] = useState({
-    mySessionId: "SessionA", // 방이름
+    mySessionId: "", // 방이름
     myUserName: "", // 유저이름(유저의 uid임) - 별명아님
     token: undefined,
     session: undefined,
   });
-
+  const location = useLocation();
+  const history = useHistory();
   useEffect(() => {
+    if (location.state !== undefined) {
+      setState((prev) => ({
+        ...prev,
+        mySessionId: location.state.name,
+      }));
+      joinSession(undefined);
+    }
+
     //로그인한 유저의 uid와 방이름(mySessionId) 를 넘김
     authService.getLoginStatus((uid) => {
       console.log(uid);
@@ -56,10 +67,16 @@ export default function CreateRoomForm({ authService, dataService }) {
 
       if (currentPeoplecount == 1) {
         //내가 마지막 인원이면
-        dataService.deleteRoom(state.mySessionId);
+        dataService.deleteRoom(state.mySessionId).then(() => {
+          history.push("/rooms");
+        });
       } else {
         //나가는데 인원이 더남아있으면
-        dataService.changeRoomData(state.mySessionId, currentPeoplecount - 1);
+        dataService
+          .changeRoomData(state.mySessionId, currentPeoplecount - 1)
+          .then(() => {
+            history.push("/rooms");
+          });
       }
     });
   };
@@ -83,40 +100,64 @@ export default function CreateRoomForm({ authService, dataService }) {
         const roomLength = Object.keys(values).filter(
           (room) => room == state.mySessionId
         ).length;
-        if (roomLength != 0) {
+        if (event !== undefined && roomLength != 0) {
           alert("이미 해당 방이 존재합니다");
           isAlreadyExisted = true;
         }
       }
     });
-    // if (isAlreadyExisted) return;
-    // console.log("joinSession");
-    event.preventDefault();
-    if (state.mySessionId && state.myUserName) {
+    if (event !== undefined) {
+      event.preventDefault();
+      if (state.mySessionId == "") {
+        alert("방이름을 입력해주세요!");
+        return;
+      }
+
+      if (koreanReg.test(state.mySessionId)) {
+        alert("방이름은 한글로 설정할수 없습니다.");
+        return;
+      }
+    }
+    if (event !== undefined) {
+      //방생성 후 입장
+      console.log("방 생성 후 입장");
+      if (state.mySessionId && state.myUserName) {
+        getToken().then((token) => {
+          if (isAlreadyExisted) return;
+          setState((prev) => ({
+            ...prev,
+            token: token,
+            session: true,
+          }));
+          //방생성 동시에 방에 접속(세션에 접속)
+          dataService.createRoom(state.mySessionId);
+        });
+      }
+    } else {
+      //방 목록에서 방입장
+      console.log("방 목록에서 방입장!!!!!!!!");
       getToken().then((token) => {
-        if (isAlreadyExisted) return;
         setState((prev) => ({
           ...prev,
           token: token,
           session: true,
         }));
-        let roomIdx = 1;
-        dataService.getAllRooms((callback) => {
-          if (callback != undefined) {
-            roomIdx = Object.keys(callback).length + 1;
-          }
-        });
-
-        dataService.createRoom(state.mySessionId, roomIdx);
-        //방생성 동시에 방에 접속(세션에 접속)
       });
     }
   };
 
   const getToken = () => {
-    return createSession(state.mySessionId)
-      .then((sessionId) => createToken(sessionId))
-      .catch((Err) => console.error(Err));
+    if (location.state == undefined) {
+      console.log("나는 방생성해서 들어왔어요");
+      return createSession(state.mySessionId)
+        .then((sessionId) => createToken(sessionId))
+        .catch((Err) => console.error(Err));
+    } else {
+      console.log("나는 방 목록에서 입장해서 들어왔어요");
+      return createSession(location.state.name)
+        .then((sessionId) => createToken(sessionId))
+        .catch((Err) => console.error(Err));
+    }
   };
 
   const createSession = (sessionId) => {
@@ -196,10 +237,10 @@ export default function CreateRoomForm({ authService, dataService }) {
         <div>
           <div id="join">
             <div id="join-dialog">
-              <h1> Join a video session </h1>
+              <h1> 입장할 방을 생성해주세요 </h1>
               <form onSubmit={joinSession}>
                 <p>
-                  <label> Session: </label>
+                  <label> 방 이름: </label>
                   <input
                     type="text"
                     id="sessionId"

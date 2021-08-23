@@ -56,11 +56,10 @@ export default class Database {
   }
 
   //==방장이 방생성==//
-  createRoom(sessionId, roomIdx) {
+  createRoom(sessionId) {
     return axios.put(
       `https://web-project-e37c4-default-rtdb.firebaseio.com/rooms/${sessionId}.json`,
       {
-        idxCount: roomIdx,
         sessionId: sessionId,
         peopleCount: 0, //방만 생성시 count = 0 (방의 유저 수)
       }

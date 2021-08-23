@@ -17,7 +17,9 @@
     "react-webcam": "^6.0.0",
     "styled-components": "5.2.3",
     "web-vitals": "^1.0.1",
-    "webpack": "4.41.5"
+    "webpack": "4.41.5",
+    "@tensorflow-models/face-landmarks-detection": "0.0.2",
+    "@tensorflow/tfjs": "3.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

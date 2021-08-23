@@ -6,7 +6,7 @@ import axios from "axios";
 import OpenViduSession from "openvidu-react";
 import { useState, useEffect } from "react";
 
-const Rooms = ({ rooms }) => {
+const Rooms = ({ dataService, rooms }) => {
   useEffect(() => {
     console.log("Rooms useEffect");
     console.log(rooms);
@@ -18,6 +18,7 @@ const Rooms = ({ rooms }) => {
           console.log(room);
           return (
             <Room
+              dataService={dataService}
               key={room.id}
               id={room.id}
               name={room.name}
