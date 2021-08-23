@@ -16,7 +16,11 @@ const Room = ({ id, name, hashTag, peopleCount, dataService }) => {
         //방이 존재안하면
         alert("존재하지 않는 방입니다. 새로고침해주세요");
       } else {
-        const length = callback.filter((v) => v.sessionId == name).length;
+        console.log("콜백");
+        console.log(callback);
+        const length = Object.keys(callback).filter((v) => v == name).length;
+
+        console.log("길이" + length);
         if (length == 0) alert("존재하지 않는 방입니다. 새로고침해주세요");
         else {
           history.push({
