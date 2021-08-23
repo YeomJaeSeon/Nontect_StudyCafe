@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../../components/header/Header";
 import OpenViduSession from "openvidu-react";
@@ -7,17 +7,98 @@ import {
   OPENVIDU_SERVER_SECRET,
   koreanReg,
 } from "../../config/config";
+
+import { alarm, Focus, setFocus } from "./Focus";
+import * as tf from "@tensorflow/tfjs";
+import * as facemesh from "@tensorflow-models/face-landmarks-detection";
+import { drawMesh } from "./utilities";
+import Webcam from "react-webcam";
+
 import { useHistory, useLocation } from "react-router";
 import * as S from "./CreateRoomForm.style";
 import { useBeforeunload } from "react-beforeunload";
 
 export default function CreateRoomForm({ authService, dataService }) {
+
+  const webcamRef = useRef(null);
+  const canvasRef = useRef(null);
+
+  const [totalSec, setTotalSeconds] = useState(0);
+  const [studySec, setStudySeconds] = useState(0);
+
   const [state, setState] = useState({
     mySessionId: "", // 방이름
     myUserName: "", // 유저이름(유저의 uid임) - 별명아님
     token: undefined,
     session: undefined,
   });
+
+  //  Load posenet
+  const runFacemesh = async () => {
+    const net = await facemesh.load(facemesh.SupportedPackages.mediapipeFacemesh);
+    setInterval(() => { //clearInterval -> 멈출 수 있음
+      detect(net);
+    }, 500);
+  };
+
+  const detect = async (net) => {
+    if (
+      typeof webcamRef.current !== "undefined" &&
+      webcamRef.current !== null &&
+      webcamRef.current.video.readyState === 4
+    ) {
+      // Get Video Properties
+      const video = webcamRef.current.video;
+      const videoWidth = webcamRef.current.video.videoWidth;
+      const videoHeight = webcamRef.current.video.videoHeight;
+
+      // Set video width
+      webcamRef.current.video.width = videoWidth;
+      webcamRef.current.video.height = videoHeight;
+
+      // Set canvas width
+      canvasRef.current.width = videoWidth;
+      canvasRef.current.height = videoHeight;
+
+      // Make Detections
+      // OLD MODEL
+      //       const face = await net.estimateFaces(video);
+      // NEW MODEL
+      const face = await net.estimateFaces({ input: video });
+
+      // try-catch 예외처리 - 얼굴최초인식되고 도중에 인식안될때
+      // 프로그램 비정상 종료되는 에러있었음.
+      try {
+        alarm(face[0].annotations);
+      } catch (err) {
+        console.log("얼굴 인식안됩니다.")
+        setFocus(false);
+      }
+      console.log('---------')
+
+      // Get canvas context
+      const ctx = canvasRef.current.getContext("2d");
+      requestAnimationFrame(() => { drawMesh(face, ctx) });
+    }
+  };
+  //집중시간 업데이트시 초, 분은 변화가 나타나지만 mesh는 지속적으로 렌더링 되어야 하기에
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    runFacemesh();
+
+    const totalStudytime = setInterval(() => { //총 공부시간
+      setTotalSeconds((totalSec) => totalSec + 1);
+    }, 1000);
+    const realStudytime = setInterval(() => { //총 공부시간
+      if (Focus) {
+        setStudySeconds((studySec) => studySec + 1);
+      }
+    }, 1000);
+
+  }, []); //배열 안에 minutes, seconds를 설정하여 인터벌간격(1초)마다 업데이트
+
+  //---------------------------------------------------------------
   const [isLoading, setIsLoading] = useState(false);
 
   const location = useLocation();
@@ -202,16 +283,16 @@ export default function CreateRoomForm({ authService, dataService }) {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
+              OPENVIDU_SERVER_URL
             );
             if (
               window.confirm(
                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"'
+                OPENVIDU_SERVER_URL +
+                '"\n\nClick OK to navigate and accept it. ' +
+                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                OPENVIDU_SERVER_URL +
+                '"'
               )
             ) {
               window.location.assign(
@@ -229,9 +310,9 @@ export default function CreateRoomForm({ authService, dataService }) {
       axios
         .post(
           OPENVIDU_SERVER_URL +
-            "/openvidu/api/sessions/" +
-            sessionId +
-            "/connection",
+          "/openvidu/api/sessions/" +
+          sessionId +
+          "/connection",
           data,
           {
             headers: {
@@ -251,51 +332,99 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   return (
     <>
+
       {isLoading ? (
         <S.LoadingSpinnerContainer>
           <S.LoadingSpinner />
         </S.LoadingSpinnerContainer>
       ) : (
         <>
-          <Header />
-          {state.session === undefined ? (
-            <div>
-              <div id="join">
-                <div id="join-dialog">
-                  <h1> 입장할 방을 생성해주세요 </h1>
-                  <form onSubmit={joinSession}>
-                    <p>
-                      <label> 방 이름: </label>
-                      <input
-                        type="text"
-                        id="sessionId"
-                        value={state.mySessionId}
-                        onChange={handleChangeSessionId}
-                        required
-                      />
-                    </p>
-                    <p>
-                      <input name="commit" type="submit" value="JOIN" />
-                    </p>
-                  </form>
+          <S.BackgroundContainer>
+            <Header />
+
+            <S.Container>
+              {state.session === undefined ? (
+                <div>
+                  <div>
+
+                    <h1> 입장할 방 이름을 입력해주세요 </h1>
+                    <form onSubmit={joinSession}>
+                      <p>
+                        <label> 방 이름: </label>
+                        <input
+                          type="text"
+                          id="sessionId"
+                          value={state.mySessionId}
+                          onChange={handleChangeSessionId}
+                          required
+                        />
+                      </p>
+                      <p>
+                        <input name="commit" type="submit" value="JOIN" />
+                      </p>
+                    </form>
+
+                  </div>
                 </div>
-              </div>
-            </div>
-          ) : (
-            <>
-              <h1>{state.mySessionId} 방</h1>
-              <OpenViduSession
-                id="opv-session"
-                sessionName={state.mySessionId}
-                user={state.myUserName}
-                token={state.token}
-                joinSession={handlerJoinSessionEvent}
-                leaveSession={handlerLeaveSessionEvent}
-                error={handlerErrorEvent}
-              />
-            </>
-          )}
+              ) : (
+                <>
+                  <h1>{state.mySessionId} 방</h1>
+                  <OpenViduSession
+                    id="opv-session"
+                    sessionName={state.mySessionId}
+                    user={state.myUserName}
+                    token={state.token}
+                    joinSession={handlerJoinSessionEvent}
+                    leaveSession={handlerLeaveSessionEvent}
+                    error={handlerErrorEvent}
+                  />
+
+                  <S.Facemesh>
+                    <div>
+                      <header>
+                        <Webcam
+                          ref={webcamRef}
+                          style={{
+                            position: "absolute",
+                            marginLeft: "50px",
+                            marginRight: "50px",
+                            left: 0,
+                            right: 0,
+                            textAlign: "center",
+                            zindex: 9,
+                            width: 640,
+                            height: 480,
+                          }}
+                        />
+                        <canvas
+                          ref={canvasRef}
+                          style={{
+                            position: "absolute",
+                            marginLeft: "50px",
+                            marginRight: "50px",
+                            left: 0,
+                            right: 0,
+                            textAlign: "center",
+                            zindex: 9,
+                            width: 640,
+                            height: 480,
+                          }}
+                        />
+                      </header>
+                    </div>
+                  </S.Facemesh>
+
+                  <S.FocusTimer>
+                    <div>
+                      총 공부 시간 : {Math.floor(totalSec / 60)} : {totalSec % 60},   집중 시간 : {Math.floor(studySec / 60)} : {studySec % 60}
+                    </div>
+                  </S.FocusTimer>
+                </>
+              )}
+            </S.Container>
+          </S.BackgroundContainer>
         </>
+
       )}
     </>
   );

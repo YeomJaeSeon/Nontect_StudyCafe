@@ -12,7 +12,12 @@ const Header = ({ location, logout }) => {
       );
     }
   };
-  return <S.HeaderContainer>{displayMenu()}</S.HeaderContainer>;
+  return (
+    < S.HeaderContainer >
+      {displayMenu()}
+      < S.LogoContainer src="./openvidu_logo.png" art="logo" >
+      </S.LogoContainer >
+    </S.HeaderContainer >);
 };
 
 export default Header;

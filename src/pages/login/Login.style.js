@@ -2,24 +2,37 @@ import styled from "styled-components";
 import * as style from "../../utils/css-utils";
 
 export const Container = styled.div`
-  display: flex;
+width: 100vw;
+height: 100vh;  
+
+  background-color: ${style.BackgroundColor};
 `;
 
-export const Title = styled.div`
-  flex-basis: 70%;
+export const TitleContainer = styled.div`
+display: block;
 `;
 
-export const TitleText = styled.h1`
-  margin: 50px;
-  font-size: 3.5rem;
+export const Title = styled.img`
+position: fixed;
+top: 20%;
+left: 50%;
+transform: translate(-50%,-50%);
+width: 600px;
+height: 380px;
+
 `;
 
 export const Box = styled.div`
+position: fixed;
+display: flex;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
   width: 350px;
   height: 450px;
   background-color: ${style.BoxColor};
   margin: 30px 20px;
-  display: flex;
+  
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -72,7 +85,7 @@ export const DivLine = styled.div`
   width: 70%;
   height: 2px;
   margin: 10px 0;
-  background-color: ${style.MainColor};
+  background-color: ${style.BackgroundColor};
 `;
 
 export const SignUpBtn = styled.button`

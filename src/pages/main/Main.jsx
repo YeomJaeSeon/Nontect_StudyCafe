@@ -53,21 +53,24 @@ const Main = ({ authService, dataService }) => {
 
   return (
     <>
+
       <Header location="main" logout={logout} />
-      <Search />
-      <S.MainContainer>
-        <Rooms dataService={dataService} rooms={rooms} />
-        <S.ButtonBox>
-          <S.Button>{"<"}</S.Button>
-          <S.Button>{">"}</S.Button>
-        </S.ButtonBox>
-      </S.MainContainer>
-      <S.RoomButtonBox>
-        <S.RoomButton onClick={goCreate} left>
-          방 생성
-        </S.RoomButton>
-        <S.RoomButton>방 참가</S.RoomButton>
-      </S.RoomButtonBox>
+      <S.BackgroundContainer>
+        <Search />
+        <S.MainContainer>
+          <Rooms dataService={dataService} rooms={rooms} />
+          <S.ButtonBox>
+            <S.Button>{"<"}</S.Button>
+            <S.Button>{">"}</S.Button>
+          </S.ButtonBox>
+        </S.MainContainer>
+        <S.RoomButtonBox>
+          <S.RoomButton onClick={goCreate} left>
+            방 생성
+          </S.RoomButton>
+          <S.RoomButton>방 참가</S.RoomButton>
+        </S.RoomButtonBox>
+      </S.BackgroundContainer>
     </>
   );
 };

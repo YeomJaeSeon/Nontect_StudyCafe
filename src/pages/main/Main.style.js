@@ -1,8 +1,17 @@
 import styled from 'styled-components';
 import * as style from '../../utils/css-utils';
 
+
+export const BackgroundContainer = styled.div`
+width: 100vw;
+height: 100vh;  
+
+position: fixed;
+  background-color: ${style.BackgroundColor};
+`;
+
 export const MainContainer = styled.div`
-  width: 80%;
+  width: 90%;
   height: 400px;
   background-color: ${style.BoxColor};
   margin: auto;
@@ -29,6 +38,7 @@ export const Button = styled.button`
   &:hover {
     transform: scale(1.1);
   }
+  
 `;
 
 export const RoomButtonBox = styled.div`
