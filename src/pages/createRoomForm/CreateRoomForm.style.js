@@ -5,7 +5,6 @@ import * as style from "../../utils/css-utils";
 export const BackgroundContainer = styled.div`
 width: 100vw;
 height: 100vh;  
-
 position: fixed;
   background-color: ${style.BackgroundColor};
 `;
