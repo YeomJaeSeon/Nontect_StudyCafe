@@ -9,7 +9,7 @@ margin-bottom: 0;
   width: 100%;
   height: 60px;
   display: flex;
-  transition: top 0.2s ease-in-out;
+  
 `;
 
 export const InfoBtn = styled.button`
