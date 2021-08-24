@@ -5,7 +5,7 @@ import * as style from "../../utils/css-utils";
 export const BackgroundContainer = styled.div`
 width: 100vw;
 height: 100vh;  
-position: fixed;
+
   background-color: ${style.BackgroundColor};
 `;
 
@@ -13,10 +13,7 @@ position: fixed;
 
 export const Container = styled.div`
   text-align: center;
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%,-50%);
+ 
 `;
 
 const spin = keyframes`

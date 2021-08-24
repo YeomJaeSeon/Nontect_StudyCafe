@@ -62,9 +62,9 @@ const Login = ({ authService }) => {
 
       <S.Container>
         <Header />
-        <S.TitleContainer>
-          <S.Title src="./main_logo.png" art="logo"></S.Title>
-        </S.TitleContainer>
+        <S.Background src="./main_image.png" art="main">
+
+        </S.Background>
         <S.Box>
           <div>안녕하세요</div>
           <S.FormBox

@@ -5,21 +5,21 @@ export const Container = styled.div`
 width: 100vw;
 height: 100vh;  
 
-  background-color: ${style.BackgroundColor};
+ 
+`;
+export const Background = styled.img`
+width: 100vw;
+height: 100vh;  
 `;
 
 export const TitleContainer = styled.div`
 display: block;
 `;
 
-export const Title = styled.img`
-position: fixed;
-top: 20%;
-left: 50%;
-transform: translate(-50%,-50%);
-width: 600px;
-height: 380px;
-
+export const Title = styled.div`
+background-color: ${style.BoxColor};
+font-size: 44px;
+flex-basis: 70%;
 `;
 
 export const Box = styled.div`
