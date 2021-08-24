@@ -1,7 +1,14 @@
 import React from "react";
 import * as S from "./Header.style";
+import { useHistory } from "react-router";
 
 const Header = ({ location, logout }) => {
+  const history = useHistory();
+
+  const goToHome = () => {
+    history.push("/");
+  };
+
   const displayMenu = () => {
     if (location === "main") {
       return (
@@ -13,11 +20,15 @@ const Header = ({ location, logout }) => {
     }
   };
   return (
-    < S.HeaderContainer >
+    <S.HeaderContainer>
       {displayMenu()}
-      < S.LogoContainer src="./openvidu_logo.png" art="logo" >
-      </S.LogoContainer >
-    </S.HeaderContainer >);
+      <S.LogoContainer
+        src="/openvidu_logo.png"
+        art="logo"
+        onClick={goToHome}
+      ></S.LogoContainer>
+    </S.HeaderContainer>
+  );
 };
 
 export default Header;

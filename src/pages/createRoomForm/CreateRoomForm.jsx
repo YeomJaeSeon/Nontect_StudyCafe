@@ -19,7 +19,6 @@ import * as S from "./CreateRoomForm.style";
 import { useBeforeunload } from "react-beforeunload";
 
 export default function CreateRoomForm({ authService, dataService }) {
-
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -35,8 +34,11 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   //  Load posenet
   const runFacemesh = async () => {
-    const net = await facemesh.load(facemesh.SupportedPackages.mediapipeFacemesh);
-    setInterval(() => { //clearInterval -> 멈출 수 있음
+    const net = await facemesh.load(
+      facemesh.SupportedPackages.mediapipeFacemesh
+    );
+    setInterval(() => {
+      //clearInterval -> 멈출 수 있음
       detect(net);
     }, 500);
   };
@@ -71,14 +73,16 @@ export default function CreateRoomForm({ authService, dataService }) {
       try {
         alarm(face[0].annotations);
       } catch (err) {
-        console.log("얼굴 인식안됩니다.")
+        console.log("얼굴 인식안됩니다.");
         setFocus(false);
       }
-      console.log('---------')
+      console.log("---------");
 
       // Get canvas context
       const ctx = canvasRef.current.getContext("2d");
-      requestAnimationFrame(() => { drawMesh(face, ctx) });
+      requestAnimationFrame(() => {
+        drawMesh(face, ctx);
+      });
     }
   };
   //집중시간 업데이트시 초, 분은 변화가 나타나지만 mesh는 지속적으로 렌더링 되어야 하기에
@@ -87,15 +91,16 @@ export default function CreateRoomForm({ authService, dataService }) {
   useEffect(() => {
     runFacemesh();
 
-    const totalStudytime = setInterval(() => { //총 공부시간
+    const totalStudytime = setInterval(() => {
+      //총 공부시간
       setTotalSeconds((totalSec) => totalSec + 1);
     }, 1000);
-    const realStudytime = setInterval(() => { //총 공부시간
+    const realStudytime = setInterval(() => {
+      //총 공부시간
       if (Focus) {
         setStudySeconds((studySec) => studySec + 1);
       }
     }, 1000);
-
   }, []); //배열 안에 minutes, seconds를 설정하여 인터벌간격(1초)마다 업데이트
 
   //---------------------------------------------------------------
@@ -210,6 +215,7 @@ export default function CreateRoomForm({ authService, dataService }) {
 
       if (koreanReg.test(state.mySessionId)) {
         alert("방이름은 한글로 설정할수 없습니다.");
+        setIsLoading(false);
         return;
       }
     }
@@ -283,16 +289,16 @@ export default function CreateRoomForm({ authService, dataService }) {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-              OPENVIDU_SERVER_URL
+                OPENVIDU_SERVER_URL
             );
             if (
               window.confirm(
                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                OPENVIDU_SERVER_URL +
-                '"\n\nClick OK to navigate and accept it. ' +
-                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                OPENVIDU_SERVER_URL +
-                '"'
+                  OPENVIDU_SERVER_URL +
+                  '"\n\nClick OK to navigate and accept it. ' +
+                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                  OPENVIDU_SERVER_URL +
+                  '"'
               )
             ) {
               window.location.assign(
@@ -310,9 +316,9 @@ export default function CreateRoomForm({ authService, dataService }) {
       axios
         .post(
           OPENVIDU_SERVER_URL +
-          "/openvidu/api/sessions/" +
-          sessionId +
-          "/connection",
+            "/openvidu/api/sessions/" +
+            sessionId +
+            "/connection",
           data,
           {
             headers: {
@@ -332,7 +338,6 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   return (
     <>
-
       {isLoading ? (
         <S.LoadingSpinnerContainer>
           <S.LoadingSpinner />
@@ -346,7 +351,6 @@ export default function CreateRoomForm({ authService, dataService }) {
               {state.session === undefined ? (
                 <div>
                   <div>
-
                     <h1> 입장할 방 이름을 입력해주세요 </h1>
                     <form onSubmit={joinSession}>
                       <p>
@@ -363,7 +367,6 @@ export default function CreateRoomForm({ authService, dataService }) {
                         <input name="commit" type="submit" value="JOIN" />
                       </p>
                     </form>
-
                   </div>
                 </div>
               ) : (
@@ -416,7 +419,9 @@ export default function CreateRoomForm({ authService, dataService }) {
 
                   <S.FocusTimer>
                     <div>
-                      총 공부 시간 : {Math.floor(totalSec / 60)} : {totalSec % 60},   집중 시간 : {Math.floor(studySec / 60)} : {studySec % 60}
+                      총 공부 시간 : {Math.floor(totalSec / 60)} :{" "}
+                      {totalSec % 60}, 집중 시간 : {Math.floor(studySec / 60)} :{" "}
+                      {studySec % 60}
                     </div>
                   </S.FocusTimer>
                 </>
@@ -424,7 +429,6 @@ export default function CreateRoomForm({ authService, dataService }) {
             </S.Container>
           </S.BackgroundContainer>
         </>
-
       )}
     </>
   );

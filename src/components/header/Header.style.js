@@ -1,15 +1,14 @@
-import styled from 'styled-components';
-import * as style from '../../utils/css-utils';
+import styled from "styled-components";
+import * as style from "../../utils/css-utils";
 
 export const HeaderContainer = styled.header`
-margin-bottom: 0;
+  margin-bottom: 0;
   position: fixed;
   top: 0;
   background-color: ${style.MainColor};
   width: 100%;
   height: 60px;
   display: flex;
-  
 `;
 
 export const InfoBtn = styled.button`
@@ -29,11 +28,12 @@ export const InfoBtn = styled.button`
 `;
 
 export const LogoContainer = styled.img`
-position: absolute;
-width:140px;
-height: 50px;
-left:0;
-top: 4px;
+  position: absolute;
+  width: 140px;
+  height: 50px;
+  left: 0;
+  top: 4px;
+  cursor: pointer;
 `;
 
 export const LogoutBtn = styled.button`
