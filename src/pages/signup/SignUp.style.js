@@ -2,24 +2,23 @@ import styled from "styled-components";
 import * as style from "../../utils/css-utils";
 
 export const BackgroundContainer = styled.div`
-width: 100vw;
-height: 100vh;  
-background-color: ${style.BackgroundColor};
- 
+  width: 100vw;
+  height: 100vh;
+  background-color: ${style.BackgroundColor};
 `;
 export const Background = styled.img`
-width: 100vw;
-height: 100vh;  
+  width: 100vw;
+  height: 100vh;
 `;
 
 export const Container = styled.div`
-position:fixed;
-display: flex;
+  position: fixed;
+  display: flex;
 
   margin-top: 30px;
   top: 50%;
   left: 20%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   width: 450px;
   height: 550px;
 
@@ -27,7 +26,7 @@ display: flex;
   align-items: center;
 
   background-color: ${style.BoxColor};
-  opacity:0.8; 
+  opacity: 0.8;
   border: none;
   border-radius: 5px;
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
@@ -87,6 +86,18 @@ export const SignUpBtn = styled.button`
     background-color: white;
     color: orange;
   }
+`;
+
+export const LoginBtn = styled.button`
+  margin: 5px 0;
+  padding: 8px;
+  color: ${style.TextColor};
+  background-color: transparent;
+  outline: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 300ms ease;
 `;
 
 export const InterestingTitle = styled.h3`

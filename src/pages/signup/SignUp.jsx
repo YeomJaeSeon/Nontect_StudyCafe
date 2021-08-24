@@ -157,10 +157,9 @@ const SignUp = ({ authService, dataService }) => {
   };
 
   return (
-    <S.BackgroundContainer><Header />
-      <S.Background src="./main_background.jpg" art="signup">
-
-      </S.Background>
+    <S.BackgroundContainer>
+      <Header />
+      <S.Background src="./main_background.jpg" art="signup"></S.Background>
       <S.Container>
         <S.SignUpHeader>
           <S.Title>가입하기</S.Title>
@@ -282,6 +281,7 @@ const SignUp = ({ authService, dataService }) => {
         <S.SignUpBtn isAllClear={() => isAllClear()} onClick={signUpHandler}>
           가입하기
         </S.SignUpBtn>
+        <S.LoginBtn onClick={goToLogin}>로그인하러가기</S.LoginBtn>
       </S.Container>
     </S.BackgroundContainer>
   );
