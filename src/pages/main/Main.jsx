@@ -8,6 +8,8 @@ import { useHistory } from "react-router-dom";
 const Main = ({ authService, dataService }) => {
   //test datas
   const [rooms, setRooms] = useState([]); //방들 (세션들)
+  const [startRoomNumber, setStartRoomNumber] = useState(0);
+  const [totalRoomsLength, setTotalRoomsLength] = useState(0);
 
   const history = useHistory();
 
@@ -19,21 +21,65 @@ const Main = ({ authService, dataService }) => {
     dataService.getAllRooms((values) => {
       if (values != undefined) {
         console.log(Object.values(values));
-        setRooms(
-          Object.values(values).map((value) => {
-            return {
-              id: value.idxCount,
-              name: value.sessionId,
-              peopleCount: value.peopleCount,
-              hashTag: [],
-            };
-          })
-        );
+        const result = Object.values(values).map((value) => {
+          return {
+            id: value.idxCount,
+            name: value.sessionId,
+            peopleCount: value.peopleCount,
+            hashTag: [],
+          };
+        });
+        setTotalRoomsLength(result.length);
+        if (result.length > 4) {
+          setRooms(
+            Object.values(values)
+              .map((value) => {
+                return {
+                  id: value.idxCount,
+                  name: value.sessionId,
+                  peopleCount: value.peopleCount,
+                  hashTag: [],
+                };
+              })
+              .slice(0, 4)
+          );
+        } else {
+          setRooms(
+            Object.values(values).map((value) => {
+              return {
+                id: value.idxCount,
+                name: value.sessionId,
+                peopleCount: value.peopleCount,
+                hashTag: [],
+              };
+            })
+          );
+        }
+
         console.log("이걸로 바뀌었어요");
         console.log(rooms);
       }
     });
   }, []);
+
+  useEffect(() => {
+    dataService.getAllRooms((rooms) => {
+      if (rooms != undefined) {
+        setRooms(
+          Object.values(rooms)
+            .map((value) => {
+              return {
+                id: value.idxCount,
+                name: value.sessionId,
+                peopleCount: value.peopleCount,
+                hashTag: [],
+              };
+            })
+            .slice(startRoomNumber, startRoomNumber + 4)
+        );
+      }
+    });
+  }, [startRoomNumber]);
 
   useEffect(() => {
     const unscribe = authService.getLoginStatus((user) => {
@@ -51,17 +97,33 @@ const Main = ({ authService, dataService }) => {
     history.push("/rooms/room");
   };
 
+  const showBackRooms = () => {
+    console.log("left click");
+    if (totalRoomsLength <= 4) return;
+    if (startRoomNumber !== 0) {
+      setStartRoomNumber((prev) => prev - 4);
+    }
+  };
+
+  const showFrontRooms = () => {
+    console.log("right click");
+    console.log(totalRoomsLength);
+    if (totalRoomsLength <= 4) return;
+    if (startRoomNumber + 4 < totalRoomsLength) {
+      setStartRoomNumber((prev) => prev + 4);
+    }
+  };
+
   return (
     <>
-
       <Header location="main" logout={logout} />
       <S.BackgroundContainer>
         <Search />
         <S.MainContainer>
           <Rooms dataService={dataService} rooms={rooms} />
           <S.ButtonBox>
-            <S.Button>{"<"}</S.Button>
-            <S.Button>{">"}</S.Button>
+            <S.Button onClick={showBackRooms}>{"<"}</S.Button>
+            <S.Button onClick={showFrontRooms}>{">"}</S.Button>
           </S.ButtonBox>
         </S.MainContainer>
         <S.RoomButtonBox>
