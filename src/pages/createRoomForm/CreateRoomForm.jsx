@@ -79,7 +79,9 @@ export default function CreateRoomForm({ authService, dataService }) {
       console.log("---------");
 
       // Get canvas context
-      const ctx = canvasRef.current.getContext("2d");
+      //==염재선 - 임시방편 방들어갔다 나오면 ctx가 null됨==//
+
+      const ctx = canvasRef.current && canvasRef.current.getContext("2d");
       requestAnimationFrame(() => {
         drawMesh(face, ctx);
       });
