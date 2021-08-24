@@ -113,7 +113,6 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   useBeforeunload((e) => {
     e.preventDefault();
-    alert("나가려구?");
   });
 
   useEffect(() => {
@@ -163,6 +162,9 @@ export default function CreateRoomForm({ authService, dataService }) {
       let currentPeoplecount = Object.values(values).filter(
         (room) => room.sessionId == state.mySessionId
       )[0].peopleCount;
+
+      console.log("나갈대 현재 방인원 세보자 ");
+      console.log(currentPeoplecount);
 
       if (currentPeoplecount <= 1) {
         //내가 마지막 인원이면

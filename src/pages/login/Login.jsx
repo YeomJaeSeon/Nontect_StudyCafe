@@ -59,12 +59,9 @@ const Login = ({ authService }) => {
   };
   return (
     <>
-
       <S.Container>
         <Header />
-        <S.Background src="./main_background.jpg" art="main">
-
-        </S.Background>
+        <S.Background src="./main_background.jpg" art="main"></S.Background>
         <S.Box>
           <h1>Nontect Study</h1>
           <h4>실시간 비대면 OPEN 스터디 플랫폼</h4>

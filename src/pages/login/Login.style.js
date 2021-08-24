@@ -2,36 +2,35 @@ import styled from "styled-components";
 import * as style from "../../utils/css-utils";
 
 export const Container = styled.div`
-width: 100vw;
-height: 100vh;  
- 
+  width: 100vw;
+  height: 100vh;
 `;
 export const Background = styled.img`
-width: 100vw;
-height: 100vh;  
+  width: 100vw;
+  height: 100vh;
 `;
 
 export const TitleContainer = styled.div`
-display: block;
+  display: block;
 `;
 
 export const Title = styled.div`
-background-color: ${style.BoxColor};
-font-size: 44px;
-flex-basis: 70%;
+  background-color: ${style.BoxColor};
+  font-size: 44px;
+  flex-basis: 70%;
 `;
 
 export const Box = styled.div`
-position: fixed;
-display: flex;
-top: 50%;
-left: 20%;
-transform: translate(-50%,-50%);
-width: 450px;
-height: 550px;
+  position: fixed;
+  display: flex;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  height: 550px;
   background-color: ${style.BoxColor};
   margin-top: 30px;
-  opacity:0.8; 
+  opacity: 0.8;
   flex-direction: column;
   align-items: center;
   justify-content: center;

@@ -89,15 +89,15 @@ export const SignUpBtn = styled.button`
 `;
 
 export const LoginBtn = styled.button`
-  margin: 5px 0;
-  padding: 8px;
-  color: ${style.TextColor};
-  background-color: transparent;
-  outline: none;
   border: none;
-  font-size: 18px;
+  background-color: transparent;
   cursor: pointer;
-  transition: all 300ms ease;
+  color: ${style.MainColor};
+  margin-top: 10px;
+  font-size: 15px;
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 export const InterestingTitle = styled.h3`
