@@ -41,13 +41,13 @@ export const SignUpHeader = styled.div`
 export const Title = styled.h1`
   margin: 0;
   font-size: 1.5rem;
-  color: ${style.TextColor};
+  color: ${style.BackgroundColor};
 `;
 
 export const SubTitle = styled.h3`
   margin: 0;
   font-size: 1rem;
-  color: ${style.TextColor};
+  color: ${style.BackgroundColor};
 `;
 
 export const DivLine = styled.div`
@@ -76,7 +76,7 @@ export const Input = styled.input`
 export const SignUpBtn = styled.button`
   padding: 8px;
   color: white;
-  background-color: orange;
+  background-color: ${style.ButtonColor};
   outline: none;
   border-radius: 10px;
   font-size: 18px;
@@ -84,7 +84,7 @@ export const SignUpBtn = styled.button`
   transition: all 300ms ease;
   &:hover {
     background-color: white;
-    color: orange;
+    color: ${style.ButtonColor};
   }
 `;
 

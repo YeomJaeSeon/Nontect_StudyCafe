@@ -9,6 +9,7 @@ export const HeaderContainer = styled.header`
   width: 100%;
   height: 60px;
   display: flex;
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.40);
 `;
 
 export const InfoBtn = styled.button`
@@ -17,13 +18,15 @@ export const InfoBtn = styled.button`
   width: 80px;
   height: 30px;
   right: 120px;
-  top: 7px;
+  top: 13px;
   background-color: ${style.BoxColor};
   border: none;
   border-radius: 5px;
-  cursor: pointer;
+  
   &:hover {
-    transform: scale(1.02);
+    background-color: ${style.HeaderButtonColor};
+    transform: scale(1.10);
+    color:white;
   }
 `;
 
@@ -33,7 +36,7 @@ export const LogoContainer = styled.img`
   height: 50px;
   left: 0;
   top: 4px;
-  cursor: pointer;
+
 `;
 
 export const LogoutBtn = styled.button`
@@ -42,12 +45,14 @@ export const LogoutBtn = styled.button`
   width: 80px;
   height: 30px;
   right: 20px;
-  top: 7px;
+  top: 13px;
   background-color: ${style.BoxColor};
   border: none;
   border-radius: 5px;
   cursor: pointer;
   &:hover {
-    transform: scale(1.02);
+    background-color: ${style.HeaderButtonColor};
+    transform: scale(1.10);
+    color:white;
   }
 `;

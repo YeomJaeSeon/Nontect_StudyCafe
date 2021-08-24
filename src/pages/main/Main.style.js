@@ -7,9 +7,15 @@ width: 100vw;
 height: 100vh;  
 
 position: fixed;
-  background-color: ${style.BackgroundColor};
+background-color: ${style.BackgroundColor};
 `;
-
+export const Background = styled.img`
+width: 100vw;
+height: 100vh;  
+opacity: 0.5;
+position: absolute;
+z-index:-1;
+`;
 export const MainContainer = styled.div`
   width: 90%;
   height: 400px;
@@ -36,7 +42,9 @@ export const Button = styled.button`
   cursor: pointer;
   color: ${style.MainColor};
   &:hover {
-    transform: scale(1.1);
+    background-color: ${style.HeaderButtonColor};
+    transform: scale(1.10);
+    color:white;
   }
   
 `;
@@ -55,6 +63,8 @@ export const RoomButton = styled.button`
   font-weight: bolder;
   cursor: pointer;
   &:hover {
-    transform: scale(1.02);
+    background-color: ${style.HeaderButtonColor};
+    transform: scale(1.10);
+    color:white;
   }
 `;

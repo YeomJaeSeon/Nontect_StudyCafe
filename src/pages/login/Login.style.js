@@ -89,7 +89,7 @@ export const DivLine = styled.div`
 export const SignUpBtn = styled.button`
   padding: 8px;
   color: white;
-  background-color: orange;
+  background-color: ${style.ButtonColor};
   outline: none;
   border-radius: 10px;
   font-size: 18px;
@@ -98,6 +98,6 @@ export const SignUpBtn = styled.button`
   transition: all 300ms ease;
   &:hover {
     background-color: white;
-    color: orange;
+    color: ${style.ButtonColor};
   }
 `;
