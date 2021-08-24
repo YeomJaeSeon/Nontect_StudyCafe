@@ -1,21 +1,36 @@
 import styled from "styled-components";
 import * as style from "../../utils/css-utils";
 
+export const BackgroundContainer = styled.div`
+width: 100vw;
+height: 100vh;  
+background-color: ${style.BackgroundColor};
+ 
+`;
+export const Background = styled.img`
+width: 100vw;
+height: 100vh;  
+`;
+
 export const Container = styled.div`
-  margin: auto;
+position:fixed;
+display: flex;
+
   margin-top: 30px;
+  top: 50%;
+  left: 20%;
+  transform: translate(-50%,-50%);
   width: 450px;
   height: 550px;
 
-  display: flex;
   flex-direction: column;
   align-items: center;
 
   background-color: ${style.BoxColor};
-
+  opacity:0.8; 
   border: none;
-  border-radius: 10px;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 `;
 
 export const SignUpHeader = styled.div`

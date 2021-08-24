@@ -3,9 +3,9 @@ import * as style from "../../utils/css-utils";
 
 
 export const BackgroundContainer = styled.div`
+position: fixed;
 width: 100vw;
 height: 100vh;  
-
   background-color: ${style.BackgroundColor};
 `;
 

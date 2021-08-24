@@ -4,7 +4,6 @@ import * as style from "../../utils/css-utils";
 export const Container = styled.div`
 width: 100vw;
 height: 100vh;  
-
  
 `;
 export const Background = styled.img`
@@ -26,19 +25,19 @@ export const Box = styled.div`
 position: fixed;
 display: flex;
 top: 50%;
-left: 50%;
+left: 20%;
 transform: translate(-50%,-50%);
-  width: 350px;
-  height: 450px;
+width: 450px;
+height: 550px;
   background-color: ${style.BoxColor};
-  margin: 30px 20px;
-  
+  margin-top: 30px;
+  opacity:0.8; 
   flex-direction: column;
   align-items: center;
   justify-content: center;
   border: none;
-  border-radius: 10px;
-  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 `;
 
 export const FormBox = styled.form`

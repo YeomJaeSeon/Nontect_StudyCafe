@@ -62,11 +62,12 @@ const Login = ({ authService }) => {
 
       <S.Container>
         <Header />
-        <S.Background src="./main_image.png" art="main">
+        <S.Background src="./main_background.jpg" art="main">
 
         </S.Background>
         <S.Box>
-          <div>안녕하세요</div>
+          <h1>Nontect Study</h1>
+          <h4>실시간 비대면 OPEN 스터디 플랫폼</h4>
           <S.FormBox
             onSubmit={(e) => {
               e.preventDefault();

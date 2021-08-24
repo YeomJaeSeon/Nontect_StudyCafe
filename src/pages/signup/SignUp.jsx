@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as S from "./SignUp.style";
 import { useHistory } from "react-router-dom";
 import { EmailReg } from "../../config/config";
-
+import Header from "../../components/header/Header";
 // 관심분야 체크박스 0 ~ 3
 const SignUp = ({ authService, dataService }) => {
   const [isCharacterProper, setIsCharacterProper] = useState(false);
@@ -157,128 +157,133 @@ const SignUp = ({ authService, dataService }) => {
   };
 
   return (
-    <S.Container>
-      <S.SignUpHeader>
-        <S.Title>가입하기</S.Title>
-        <S.SubTitle>빠르고 간단하게!</S.SubTitle>
-      </S.SignUpHeader>
-      <S.DivLine />
-      <S.FormContainer onSubmit={signUpHandler}>
-        {newUser.character.length > 0 && isCharacterProper === false && (
-          <span>별명이 너무 짧습니다!</span>
-        )}
-        <S.Input
-          type="text"
-          placeholder="별명"
-          id="character"
-          value={newUser.character}
-          onChange={upDateUserInfo}
-        />
-        {newUser.email.length > 0 && isEmailProper === false && (
-          <span>이메일 형식이 틀립니다</span>
-        )}
-        <S.Input
-          type="text"
-          placeholder="이메일"
-          id="email"
-          value={newUser.email}
-          onChange={upDateUserInfo}
-        />
-        {newUser.pwd.length > 0 && isPwdLengthProper === false && (
-          <span>비밀번호가 너무 짧습니다!</span>
-        )}
-        {newUser.pwd.length > 0 && isPwdProper === false && (
-          <span>두 비밀번호가 다릅니다!</span>
-        )}
-        <S.Input
-          type="password"
-          placeholder="비밀번호"
-          id="pwd"
-          value={newUser.pwd}
-          onChange={upDateUserInfo}
-        />
-        {newUser.rePwd.length > 0 && isRePwdLengthProper === false && (
-          <span>비밀번호가 너무 짧습니다!</span>
-        )}
-        {newUser.pwd.length > 0 && isPwdProper === false && (
-          <span>두 비밀번호가 다릅니다!</span>
-        )}
-        <S.Input
-          type="password"
-          placeholder="비밀번호 확인"
-          id="rePwd"
-          value={newUser.rePwd}
-          onChange={upDateUserInfo}
-        />
-        <S.InterestingTitle>관심분야(1 ~ 3개 선택)</S.InterestingTitle>
-        <S.ListContainer>
-          <S.Label>
-            건강
-            <S.InputCheck
-              type="checkbox"
-              name="health"
-              value="health"
-              onChange={updateInterestedField}
-              checked={newUser.interestedField.health}
-            />
-          </S.Label>
-          <S.Label>
-            자격증
-            <S.InputCheck
-              type="checkbox"
-              name="certification"
-              value="certification"
-              onChange={updateInterestedField}
-              checked={newUser.interestedField.certification}
-            />
-          </S.Label>
-          <S.Label>
-            IT
-            <S.InputCheck
-              type="checkbox"
-              name="IT"
-              value="IT"
-              onChange={updateInterestedField}
-              checked={newUser.interestedField.IT}
-            />
-          </S.Label>
-          <S.Label>
-            예능
-            <S.InputCheck
-              type="checkbox"
-              name="entertainment"
-              value="entertainment"
-              onChange={updateInterestedField}
-              checked={newUser.interestedField.entertainment}
-            />
-          </S.Label>
-          <S.Label>
-            종교
-            <S.InputCheck
-              type="checkbox"
-              name="religion"
-              value="religion"
-              onChange={updateInterestedField}
-              checked={newUser.interestedField.religion}
-            />
-          </S.Label>
-          <S.Label>
-            기술
-            <S.InputCheck
-              type="checkbox"
-              name="tech"
-              value="tech"
-              onChange={updateInterestedField}
-              checked={newUser.interestedField.tech}
-            />
-          </S.Label>
-        </S.ListContainer>
-        <S.None type="submit" />
-      </S.FormContainer>
-      <S.SignUpBtn isAllClear={() => isAllClear()} onClick={signUpHandler}>
-        가입하기
-      </S.SignUpBtn>
-    </S.Container>
+    <S.BackgroundContainer><Header />
+      <S.Background src="./main_background.jpg" art="signup">
+
+      </S.Background>
+      <S.Container>
+        <S.SignUpHeader>
+          <S.Title>가입하기</S.Title>
+          <S.SubTitle>빠르고 간단하게!</S.SubTitle>
+        </S.SignUpHeader>
+        <S.DivLine />
+        <S.FormContainer onSubmit={signUpHandler}>
+          {newUser.character.length > 0 && isCharacterProper === false && (
+            <span>별명이 너무 짧습니다!</span>
+          )}
+          <S.Input
+            type="text"
+            placeholder="별명"
+            id="character"
+            value={newUser.character}
+            onChange={upDateUserInfo}
+          />
+          {newUser.email.length > 0 && isEmailProper === false && (
+            <span>이메일 형식이 틀립니다</span>
+          )}
+          <S.Input
+            type="text"
+            placeholder="이메일"
+            id="email"
+            value={newUser.email}
+            onChange={upDateUserInfo}
+          />
+          {newUser.pwd.length > 0 && isPwdLengthProper === false && (
+            <span>비밀번호가 너무 짧습니다!</span>
+          )}
+          {newUser.pwd.length > 0 && isPwdProper === false && (
+            <span>두 비밀번호가 다릅니다!</span>
+          )}
+          <S.Input
+            type="password"
+            placeholder="비밀번호"
+            id="pwd"
+            value={newUser.pwd}
+            onChange={upDateUserInfo}
+          />
+          {newUser.rePwd.length > 0 && isRePwdLengthProper === false && (
+            <span>비밀번호가 너무 짧습니다!</span>
+          )}
+          {newUser.pwd.length > 0 && isPwdProper === false && (
+            <span>두 비밀번호가 다릅니다!</span>
+          )}
+          <S.Input
+            type="password"
+            placeholder="비밀번호 확인"
+            id="rePwd"
+            value={newUser.rePwd}
+            onChange={upDateUserInfo}
+          />
+          <S.InterestingTitle>관심분야(1 ~ 3개 선택)</S.InterestingTitle>
+          <S.ListContainer>
+            <S.Label>
+              건강
+              <S.InputCheck
+                type="checkbox"
+                name="health"
+                value="health"
+                onChange={updateInterestedField}
+                checked={newUser.interestedField.health}
+              />
+            </S.Label>
+            <S.Label>
+              자격증
+              <S.InputCheck
+                type="checkbox"
+                name="certification"
+                value="certification"
+                onChange={updateInterestedField}
+                checked={newUser.interestedField.certification}
+              />
+            </S.Label>
+            <S.Label>
+              IT
+              <S.InputCheck
+                type="checkbox"
+                name="IT"
+                value="IT"
+                onChange={updateInterestedField}
+                checked={newUser.interestedField.IT}
+              />
+            </S.Label>
+            <S.Label>
+              예능
+              <S.InputCheck
+                type="checkbox"
+                name="entertainment"
+                value="entertainment"
+                onChange={updateInterestedField}
+                checked={newUser.interestedField.entertainment}
+              />
+            </S.Label>
+            <S.Label>
+              종교
+              <S.InputCheck
+                type="checkbox"
+                name="religion"
+                value="religion"
+                onChange={updateInterestedField}
+                checked={newUser.interestedField.religion}
+              />
+            </S.Label>
+            <S.Label>
+              기술
+              <S.InputCheck
+                type="checkbox"
+                name="tech"
+                value="tech"
+                onChange={updateInterestedField}
+                checked={newUser.interestedField.tech}
+              />
+            </S.Label>
+          </S.ListContainer>
+          <S.None type="submit" />
+        </S.FormContainer>
+        <S.SignUpBtn isAllClear={() => isAllClear()} onClick={signUpHandler}>
+          가입하기
+        </S.SignUpBtn>
+      </S.Container>
+    </S.BackgroundContainer>
   );
 };
 
