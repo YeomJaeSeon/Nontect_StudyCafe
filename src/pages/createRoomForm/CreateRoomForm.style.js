@@ -50,3 +50,13 @@ export const FocusTimer = styled.div`
   text-align: center;
   bottom: 0;
 `;
+
+export const Label = styled.label`
+  margin: 10px 15px;
+  font-size: 20px;
+`;
+
+export const InputCheck = styled.input`
+  margin-left: 15px;
+  transform: scale(1.5);
+`;

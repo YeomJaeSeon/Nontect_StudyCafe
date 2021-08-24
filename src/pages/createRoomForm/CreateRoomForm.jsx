@@ -18,6 +18,8 @@ import { useHistory, useLocation } from "react-router";
 import * as S from "./CreateRoomForm.style";
 import { useBeforeunload } from "react-beforeunload";
 
+import { Button } from "react-bootstrap";
+
 export default function CreateRoomForm({ authService, dataService }) {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -107,6 +109,32 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   //---------------------------------------------------------------
   const [isLoading, setIsLoading] = useState(false);
+
+  const [interestedField, setInterestedField] = useState({
+    health: true,
+    IT: false,
+    certification: false,
+    entertainment: false,
+    religion: false,
+    tech: false,
+  });
+
+  //방의 해시태그
+  // 1 ~ 3 checkbox
+  const updateInterestedField = (e) => {
+    const name = e.currentTarget.name;
+    const isChecked = e.currentTarget.checked;
+
+    const checkedCount = Object.values(interestedField).filter(
+      (bool) => bool
+    ).length;
+    if (checkedCount === 1 && interestedField[name] === true) return;
+    if (checkedCount === 3 && interestedField[name] === false) return;
+    setInterestedField((prev) => ({
+      ...prev,
+      [name]: isChecked,
+    }));
+  };
 
   const location = useLocation();
   const history = useHistory();
@@ -360,10 +388,11 @@ export default function CreateRoomForm({ authService, dataService }) {
               {state.session === undefined ? (
                 <div>
                   <div>
-                    <h1> 입장할 방 이름을 입력해주세요 </h1>
+                    <h1> 방 생성 페이지 </h1>
                     <form onSubmit={joinSession}>
                       <p>
-                        <label> 방 이름: </label>
+                        <label for="sessionId">방 이름</label>
+                        <br />
                         <input
                           type="text"
                           id="sessionId"
@@ -372,9 +401,74 @@ export default function CreateRoomForm({ authService, dataService }) {
                           required
                         />
                       </p>
-                      <p>{/* 방의 해쉬태그달기(관심분야로) */}</p>
                       <p>
-                        <input name="commit" type="submit" value="JOIN" />
+                        <div>방 해시태그</div>
+                        <br />
+                        <S.Label>
+                          건강
+                          <S.InputCheck
+                            type="checkbox"
+                            name="health"
+                            value="health"
+                            onChange={updateInterestedField}
+                            checked={interestedField.health}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          자격증
+                          <S.InputCheck
+                            type="checkbox"
+                            name="certification"
+                            value="certification"
+                            onChange={updateInterestedField}
+                            checked={interestedField.certification}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          IT
+                          <S.InputCheck
+                            type="checkbox"
+                            name="IT"
+                            value="IT"
+                            onChange={updateInterestedField}
+                            checked={interestedField.IT}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          예능
+                          <S.InputCheck
+                            type="checkbox"
+                            name="entertainment"
+                            value="entertainment"
+                            onChange={updateInterestedField}
+                            checked={interestedField.entertainment}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          종교
+                          <S.InputCheck
+                            type="checkbox"
+                            name="religion"
+                            value="religion"
+                            onChange={updateInterestedField}
+                            checked={interestedField.religion}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          기술
+                          <S.InputCheck
+                            type="checkbox"
+                            name="tech"
+                            value="tech"
+                            onChange={updateInterestedField}
+                            checked={interestedField.tech}
+                          />
+                        </S.Label>
+                      </p>
+                      <p>
+                        <Button variant="secondary" name="commit" type="submit">
+                          생성
+                        </Button>
                       </p>
                     </form>
                   </div>
