@@ -177,6 +177,7 @@ export default function CreateRoomForm({ authService, dataService }) {
         dataService
           .changeRoomData(state.mySessionId, currentPeoplecount - 1)
           .then(() => {
+            console.log("ㅋㅋㅋ");
             history.push("/rooms");
             setIsLoading(false);
           });
@@ -344,9 +345,12 @@ export default function CreateRoomForm({ authService, dataService }) {
   return (
     <>
       {isLoading ? (
-        <S.LoadingSpinnerContainer>
-          <S.LoadingSpinner />
-        </S.LoadingSpinnerContainer>
+        <>
+          <Header />
+          <S.LoadingSpinnerContainer>
+            <S.LoadingSpinner />
+          </S.LoadingSpinnerContainer>
+        </>
       ) : (
         <>
           <S.BackgroundContainer>
@@ -368,6 +372,7 @@ export default function CreateRoomForm({ authService, dataService }) {
                           required
                         />
                       </p>
+                      <p>{/* 방의 해쉬태그달기(관심분야로) */}</p>
                       <p>
                         <input name="commit" type="submit" value="JOIN" />
                       </p>

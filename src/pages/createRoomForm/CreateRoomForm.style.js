@@ -1,19 +1,15 @@
 import styled, { keyframes } from "styled-components";
 import * as style from "../../utils/css-utils";
 
-
 export const BackgroundContainer = styled.div`
-position: fixed;
-width: 100vw;
-height: 100vh;  
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
   background-color: ${style.BackgroundColor};
 `;
 
-
-
 export const Container = styled.div`
   text-align: center;
- 
 `;
 
 const spin = keyframes`
@@ -29,8 +25,8 @@ export const LoadingSpinner = styled.div`
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  border: 15px solid gray;
-  border-top: 15px solid blue;
+  border: 15px solid #e0e0e0;
+  border-top: 15px solid #212121;
   animation: ${spin} 2s infinite linear;
 `;
 
@@ -43,14 +39,14 @@ export const LoadingSpinnerContainer = styled.div`
 `;
 
 export const Facemesh = styled.div`
-    visibility: hidden;
- `;
+  visibility: hidden;
+`;
 
 export const FocusTimer = styled.div`
-    marginLeft: 50px;
-    marginRight: 50px;
-    left: 0;
-    position: absolute;
-    text-align: center;
-    bottom: 0;
+  marginleft: 50px;
+  marginright: 50px;
+  left: 0;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
 `;
