@@ -31,33 +31,10 @@ const Main = ({ authService, dataService }) => {
         });
         setTotalRoomsLength(result.length);
         if (result.length > 4) {
-          setRooms(
-            Object.values(values)
-              .map((value) => {
-                return {
-                  id: value.idxCount,
-                  name: value.sessionId,
-                  peopleCount: value.peopleCount,
-                  hashTag: [],
-                };
-              })
-              .slice(0, 4)
-          );
+          setRooms(result.slice(0, 4));
         } else {
-          setRooms(
-            Object.values(values).map((value) => {
-              return {
-                id: value.idxCount,
-                name: value.sessionId,
-                peopleCount: value.peopleCount,
-                hashTag: [],
-              };
-            })
-          );
+          setRooms(result);
         }
-
-        console.log("이걸로 바뀌었어요");
-        console.log(rooms);
       }
     });
   }, []);
