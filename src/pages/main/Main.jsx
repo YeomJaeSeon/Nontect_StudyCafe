@@ -95,7 +95,7 @@ const Main = ({ authService, dataService }) => {
     <>
       <Header location="main" logout={logout} />
       <S.BackgroundContainer>
-        <S.Background src="main_background.jpg" alt="main"></S.Background>
+        <S.Background src="./main_background.jpg" alt="main"></S.Background>
         <Search />
         <S.MainContainer>
           <Rooms dataService={dataService} rooms={rooms} />

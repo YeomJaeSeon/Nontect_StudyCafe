@@ -19,12 +19,13 @@ export const InfoBtn = styled.button`
   height: 30px;
   right: 120px;
   top: 13px;
-  background-color: ${style.BoxColor};
+  background-color: ${style.HeaderButtonColor};
+  color:white;
   border: none;
   border-radius: 5px;
-  
+  transition: all 0.4s;
   &:hover {
-    background-color: ${style.HeaderButtonColor};
+    
     transform: scale(1.10);
     color:white;
   }
@@ -40,19 +41,21 @@ export const LogoContainer = styled.img`
 `;
 
 export const LogoutBtn = styled.button`
+color:white;
   position: absolute;
   font-weight: bolder;
   width: 80px;
   height: 30px;
   right: 20px;
   top: 13px;
-  background-color: ${style.BoxColor};
+  background-color: ${style.HeaderButtonColor};
   border: none;
   border-radius: 5px;
   cursor: pointer;
+  transition: all 0.4s;
   &:hover {
-    background-color: ${style.HeaderButtonColor};
+    
     transform: scale(1.10);
-    color:white;
+    
   }
 `;

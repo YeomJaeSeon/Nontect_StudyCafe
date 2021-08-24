@@ -2,14 +2,31 @@ import styled, { keyframes } from "styled-components";
 import * as style from "../../utils/css-utils";
 
 export const BackgroundContainer = styled.div`
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-  background-color: ${style.BackgroundColor};
+width: 100vw;
+height: 100vh;  
+
+position: fixed;
+background-color: ${style.BackgroundColor};
+`;
+
+export const Background = styled.img`
+width: 100vw;
+height: 100vh;  
+opacity: 0.5;
+position: absolute;
+z-index:-1;
 `;
 
 export const Container = styled.div`
   text-align: center;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+
+  width: 450px;
+  height: 550px;
+  background-color: ${style.BoxColor};
 `;
 
 const spin = keyframes`
@@ -60,3 +77,4 @@ export const InputCheck = styled.input`
   margin-left: 15px;
   transform: scale(1.5);
 `;
+

@@ -9,6 +9,8 @@ height: 100vh;
 position: fixed;
 background-color: ${style.BackgroundColor};
 `;
+
+
 export const Background = styled.img`
 width: 100vw;
 height: 100vh;  
@@ -16,12 +18,16 @@ opacity: 0.5;
 position: absolute;
 z-index:-1;
 `;
+
+
 export const MainContainer = styled.div`
   width: 90%;
-  height: 400px;
+  height: 500px;
   background-color: ${style.BoxColor};
   margin: auto;
-  border: 3px solid ${style.MainColor};
+  
+
+  border: 1px solid ${style.MainColor};
 `;
 
 export const ButtonBox = styled.div`
@@ -35,16 +41,18 @@ export const Button = styled.button`
   width: 50px;
   height: 30px;
   font-size: 40px;
+  
   font-weight: bolder;
   background-color: transparent;
   border: none;
   outline: none;
-  cursor: pointer;
+  
+  transition: all 0.4s;
   color: ${style.MainColor};
   &:hover {
-    background-color: ${style.HeaderButtonColor};
+    
     transform: scale(1.10);
-    color:white;
+    color:${style.HeaderButtonColor};
   }
   
 `;
@@ -54,17 +62,22 @@ export const RoomButtonBox = styled.div`
   margin-right: 150px;
   margin-top: 20px;
 `;
+
+
 export const RoomButton = styled.button`
   padding: 5px 30px;
   font-size: 20px;
   background-color: ${style.BoxColor};
-  border: 2px solid ${style.MainColor};
+ 
   margin-right: ${(props) => (props.left ? '15px' : null)};
   font-weight: bolder;
   cursor: pointer;
+  transition: all 0.4s;
+
   &:hover {
     background-color: ${style.HeaderButtonColor};
     transform: scale(1.10);
     color:white;
+    
   }
 `;
