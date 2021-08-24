@@ -79,7 +79,7 @@ export default function CreateRoomForm({ authService, dataService }) {
       console.log("---------");
 
       // Get canvas context
-      //==염재선 - 임시방편 방들어갔다 나오면 ctx가 null됨==//
+      //==염재선 - 임시방편 방들어갔다 나오면 canvasRef.current가 null됨==//
 
       const ctx = canvasRef.current && canvasRef.current.getContext("2d");
       requestAnimationFrame(() => {
@@ -152,7 +152,7 @@ export default function CreateRoomForm({ authService, dataService }) {
   //세션 나갈때
   const handlerLeaveSessionEvent = () => {
     setIsLoading(true);
-    console.log("Leave session");
+    console.log("Leave session!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
     setState({
       ...state,
       session: undefined,
@@ -243,6 +243,7 @@ export default function CreateRoomForm({ authService, dataService }) {
     } else {
       //방 목록에서 방입장
       console.log("방 목록에서 방입장!!!!!!!!");
+
       getToken().then((token) => {
         setState((prev) => ({
           ...prev,

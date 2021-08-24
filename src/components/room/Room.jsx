@@ -23,6 +23,10 @@ const Room = ({ id, name, hashTag, peopleCount, dataService }) => {
         console.log("길이" + length);
         if (length == 0) alert("존재하지 않는 방입니다. 새로고침해주세요");
         else {
+          if (peopleCount >= 6) {
+            alert("인원이 모두 찼습니다.");
+            return;
+          }
           history.push({
             pathname: "/rooms/room",
             state: { name: name },
