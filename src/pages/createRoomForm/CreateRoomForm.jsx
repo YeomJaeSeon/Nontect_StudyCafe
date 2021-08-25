@@ -24,8 +24,21 @@ export default function CreateRoomForm({ authService, dataService }) {
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
+  //----집중시간 나타내는 변수 ----//
   const [totalSec, setTotalSeconds] = useState(0);
   const [studySec, setStudySeconds] = useState(0);
+
+  const FocusingRate = studySec / totalSec; //집중도
+
+  const Totalminute = Math.floor(totalSec / 60);
+  const Totalsecond = totalSec % 60;
+  const Studyminute = Math.floor(studySec / 60);
+  const Studysecond = studySec % 60;
+
+  const displayFocus = () => {
+    alert("총 공부시간 : " + Totalminute + "분 " + Totalsecond + "초  \n공부 중 실제로 집중한 시간 : " + Studyminute + "분 " + Studysecond + "초");
+  };
+
 
   const [state, setState] = useState({
     mySessionId: "", // 방이름
@@ -44,6 +57,7 @@ export default function CreateRoomForm({ authService, dataService }) {
       detect(net);
     }, 500);
   };
+
 
   const detect = async (net) => {
     if (
@@ -329,16 +343,16 @@ export default function CreateRoomForm({ authService, dataService }) {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
+              OPENVIDU_SERVER_URL
             );
             if (
               window.confirm(
                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"'
+                OPENVIDU_SERVER_URL +
+                '"\n\nClick OK to navigate and accept it. ' +
+                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                OPENVIDU_SERVER_URL +
+                '"'
               )
             ) {
               window.location.assign(
@@ -350,15 +364,17 @@ export default function CreateRoomForm({ authService, dataService }) {
     });
   };
 
+
+
   const createToken = (sessionId) => {
     return new Promise((resolve, reject) => {
       var data = JSON.stringify({});
       axios
         .post(
           OPENVIDU_SERVER_URL +
-            "/openvidu/api/sessions/" +
-            sessionId +
-            "/connection",
+          "/openvidu/api/sessions/" +
+          sessionId +
+          "/connection",
           data,
           {
             headers: {
@@ -387,163 +403,157 @@ export default function CreateRoomForm({ authService, dataService }) {
         </>
       ) : (
         <>
-          <S.BackgroundContainer>
-            {state.session ? (
-              // 화상채팅중
-              <Header chatting={true} />
-            ) : (
-              // 화상채팅 안하는중
-              <Header chatting={false} />
-            )}
+          {state.session ? (
+            // 화상채팅중
+            <Header chatting={true} />
+          ) : (
+            // 화상채팅 안하는중
+            <Header chatting={false} />
+          )}
 
-            <S.Container>
-              {state.session === undefined ? (
-                <S.CreateContainer>
+
+          {state.session === undefined ? (
+            <S.BackgroundContainer>
+              <S.Background src="/main_background.jpg" alt="main"></S.Background>
+              <S.CreateContainer>
+                <div>
+                  <h1> 방 생성 페이지 </h1>
+                  <form onSubmit={joinSession}>
+                    <p>
+                      <S.NameLabel>방 이름</S.NameLabel>
+                      <S.NameInput
+                        type="text"
+                        id="sessionId"
+                        value={state.mySessionId}
+                        onChange={handleChangeSessionId}
+                        required
+                      />
+                    </p>
+                    <p>
+                      <S.NameLabel>방 해시태그</S.NameLabel>
+                      <S.RoomHashTagBox>
+                        <S.Label>
+                          건강
+                          <S.InputCheck
+                            type="checkbox"
+                            name="health"
+                            value="health"
+                            onChange={updateInterestedField}
+                            checked={interestedField.health}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          자격증
+                          <S.InputCheck
+                            type="checkbox"
+                            name="certification"
+                            value="certification"
+                            onChange={updateInterestedField}
+                            checked={interestedField.certification}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          IT
+                          <S.InputCheck
+                            type="checkbox"
+                            name="IT"
+                            value="IT"
+                            onChange={updateInterestedField}
+                            checked={interestedField.IT}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          예능
+                          <S.InputCheck
+                            type="checkbox"
+                            name="entertainment"
+                            value="entertainment"
+                            onChange={updateInterestedField}
+                            checked={interestedField.entertainment}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          종교
+                          <S.InputCheck
+                            type="checkbox"
+                            name="religion"
+                            value="religion"
+                            onChange={updateInterestedField}
+                            checked={interestedField.religion}
+                          />
+                        </S.Label>
+                        <S.Label>
+                          기술
+                          <S.InputCheck
+                            type="checkbox"
+                            name="tech"
+                            value="tech"
+                            onChange={updateInterestedField}
+                            checked={interestedField.tech}
+                          />
+                        </S.Label>
+                      </S.RoomHashTagBox>
+                    </p>
+                    <p>
+                      <S.CreateButton name="commit" type="submit">
+                        생성
+                      </S.CreateButton>
+                    </p>
+                  </form>
+                </div>
+              </S.CreateContainer>
+            </S.BackgroundContainer>
+          ) : (
+            <>
+              <S.VideoContainer>
+                <h1>{state.mySessionId} 방</h1>
+                <OpenViduSession
+                  id="opv-session"
+                  sessionName={state.mySessionId}
+                  user={state.myUserName}
+                  token={state.token}
+                  joinSession={handlerJoinSessionEvent}
+                  leaveSession={handlerLeaveSessionEvent}
+                  error={handlerErrorEvent}
+                />
+
+                <S.Facemesh>
                   <div>
-                    <h1> 방 생성 페이지 </h1>
-                    <form onSubmit={joinSession}>
-                      <p>
-                        <S.NameLabel>방 이름</S.NameLabel>
-                        <S.NameInput
-                          type="text"
-                          id="sessionId"
-                          value={state.mySessionId}
-                          onChange={handleChangeSessionId}
-                          required
-                        />
-                      </p>
-                      <p>
-                        <S.NameLabel>방 해시태그</S.NameLabel>
-                        <S.RoomHashTagBox>
-                          <S.Label>
-                            건강
-                            <S.InputCheck
-                              type="checkbox"
-                              name="health"
-                              value="health"
-                              onChange={updateInterestedField}
-                              checked={interestedField.health}
-                            />
-                          </S.Label>
-                          <S.Label>
-                            자격증
-                            <S.InputCheck
-                              type="checkbox"
-                              name="certification"
-                              value="certification"
-                              onChange={updateInterestedField}
-                              checked={interestedField.certification}
-                            />
-                          </S.Label>
-                          <S.Label>
-                            IT
-                            <S.InputCheck
-                              type="checkbox"
-                              name="IT"
-                              value="IT"
-                              onChange={updateInterestedField}
-                              checked={interestedField.IT}
-                            />
-                          </S.Label>
-                          <S.Label>
-                            예능
-                            <S.InputCheck
-                              type="checkbox"
-                              name="entertainment"
-                              value="entertainment"
-                              onChange={updateInterestedField}
-                              checked={interestedField.entertainment}
-                            />
-                          </S.Label>
-                          <S.Label>
-                            종교
-                            <S.InputCheck
-                              type="checkbox"
-                              name="religion"
-                              value="religion"
-                              onChange={updateInterestedField}
-                              checked={interestedField.religion}
-                            />
-                          </S.Label>
-                          <S.Label>
-                            기술
-                            <S.InputCheck
-                              type="checkbox"
-                              name="tech"
-                              value="tech"
-                              onChange={updateInterestedField}
-                              checked={interestedField.tech}
-                            />
-                          </S.Label>
-                        </S.RoomHashTagBox>
-                      </p>
-                      <p>
-                        <S.CreateButton name="commit" type="submit">
-                          생성
-                        </S.CreateButton>
-                      </p>
-                    </form>
+                    <header>
+                      <Webcam
+                        ref={webcamRef}
+                        style={{
+                          position: "absolute",
+
+                          zindex: 9,
+                          width: 640,
+                          height: 480,
+                        }}
+                      />
+                      <canvas
+                        ref={canvasRef}
+                        style={{
+                          position: "absolute",
+
+                          zindex: 9,
+                          width: 640,
+                          height: 480,
+                        }}
+                      />
+                    </header>
                   </div>
-                </S.CreateContainer>
-              ) : (
-                <>
-                  <h1>{state.mySessionId} 방</h1>
-                  <OpenViduSession
-                    id="opv-session"
-                    sessionName={state.mySessionId}
-                    user={state.myUserName}
-                    token={state.token}
-                    joinSession={handlerJoinSessionEvent}
-                    leaveSession={handlerLeaveSessionEvent}
-                    error={handlerErrorEvent}
-                  />
+                </S.Facemesh>
+              </S.VideoContainer>
+              <S.FocusContainer>
+                <S.Focusimg src="/focus_logo (2).png"
+                  art="focus"
+                  onClick={displayFocus} >
+                </S.Focusimg>
+              </S.FocusContainer>
+            </>
+          )}
 
-                  <S.Facemesh>
-                    <div>
-                      <header>
-                        <Webcam
-                          ref={webcamRef}
-                          style={{
-                            position: "absolute",
-                            marginLeft: "50px",
-                            marginRight: "50px",
-                            left: 0,
-                            right: 0,
-                            textAlign: "center",
-                            zindex: 9,
-                            width: 640,
-                            height: 480,
-                          }}
-                        />
-                        <canvas
-                          ref={canvasRef}
-                          style={{
-                            position: "absolute",
-                            marginLeft: "50px",
-                            marginRight: "50px",
-                            left: 0,
-                            right: 0,
-                            textAlign: "center",
-                            zindex: 9,
-                            width: 640,
-                            height: 480,
-                          }}
-                        />
-                      </header>
-                    </div>
-                  </S.Facemesh>
 
-                  <S.FocusTimer>
-                    <div>
-                      총 공부 시간 : {Math.floor(totalSec / 60)} :{" "}
-                      {totalSec % 60}, 집중 시간 : {Math.floor(studySec / 60)} :{" "}
-                      {studySec % 60}
-                    </div>
-                  </S.FocusTimer>
-                </>
-              )}
-            </S.Container>
-          </S.BackgroundContainer>
         </>
       )}
     </>

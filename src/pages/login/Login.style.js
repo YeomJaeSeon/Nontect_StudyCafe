@@ -9,7 +9,12 @@ export const Background = styled.img`
   width: 100vw;
   height: 100vh;
 `;
-
+export const logo = styled.div`
+position: fixed;
+display: flex;
+  color:black;
+  background-color:white;
+`;
 export const TitleContainer = styled.div`
   display: block;
 `;

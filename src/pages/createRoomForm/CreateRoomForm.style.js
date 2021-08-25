@@ -17,19 +17,7 @@ export const Background = styled.img`
   z-index: -1;
 `;
 
-export const Container = styled.div`
-  text-align: center;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
 
-  width: 450px;
-  height: 550px;
-  background-color: ${style.BoxColor};
-
-  margin-top: 80px;
-`;
 
 const spin = keyframes`
   0%{
@@ -60,14 +48,25 @@ export const LoadingSpinnerContainer = styled.div`
 export const Facemesh = styled.div`
   visibility: hidden;
 `;
+export const FocusContainer = styled.div`
+
+  
+`;
+export const Focusimg = styled.img`
+width:100px;
+height: 100px;
+z-index:1;position:absolute;bottom: 0;
+cursor: pointer;
+opacity: 0.3;
+`;
 
 export const FocusTimer = styled.div`
-  marginleft: 50px;
-  marginright: 50px;
-  left: 0;
-  position: absolute;
+
+  z-index:1;
   text-align: center;
+  position:absolute;
   bottom: 0;
+  background-color:${style.BoxColor};
 `;
 
 export const Label = styled.label`
@@ -83,6 +82,17 @@ export const InputCheck = styled.input`
 // 방생성 박스
 export const CreateContainer = styled.div`
   margin-top: 50px;
+  text-align: center;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+
+  width: 450px;
+  height: 550px;
+  background-color: ${style.BoxColor};
+
+  margin-top: 80px;
 `;
 
 export const NameLabel = styled.div`
@@ -118,4 +128,9 @@ export const CreateButton = styled.button`
     transform: scale(1.1);
     color: white;
   }
+`;
+
+export const VideoContainer = styled.div`
+  margin-top: 0;
+  z-index:-1;
 `;

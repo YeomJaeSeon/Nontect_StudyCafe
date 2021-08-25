@@ -86,6 +86,7 @@ const Login = ({ authService }) => {
               onChange={updateUserInfo}
             />
             <S.SubmitBtn type="submit" value="로그인" />
+
             <S.Button type="button">비밀번호 찾기</S.Button>
           </S.FormBox>
           <S.DivLine />

@@ -25,7 +25,7 @@ export const MainContainer = styled.div`
   height: 500px;
   background-color: ${style.BoxColor};
   margin: auto;
-  
+  opacity:0.6;
 
   border: 1px solid ${style.MainColor};
 `;
@@ -68,7 +68,7 @@ export const RoomButton = styled.button`
   padding: 5px 30px;
   font-size: 20px;
   background-color: ${style.BoxColor};
- 
+
   margin-right: ${(props) => (props.left ? '15px' : null)};
   font-weight: bolder;
   cursor: pointer;
@@ -78,6 +78,6 @@ export const RoomButton = styled.button`
     background-color: ${style.HeaderButtonColor};
     transform: scale(1.10);
     color:white;
-    
+
   }
 `;
