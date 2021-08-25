@@ -323,16 +323,16 @@ export default function CreateRoomForm({ authService, dataService }) {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-              OPENVIDU_SERVER_URL
+                OPENVIDU_SERVER_URL
             );
             if (
               window.confirm(
                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                OPENVIDU_SERVER_URL +
-                '"\n\nClick OK to navigate and accept it. ' +
-                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                OPENVIDU_SERVER_URL +
-                '"'
+                  OPENVIDU_SERVER_URL +
+                  '"\n\nClick OK to navigate and accept it. ' +
+                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                  OPENVIDU_SERVER_URL +
+                  '"'
               )
             ) {
               window.location.assign(
@@ -350,9 +350,9 @@ export default function CreateRoomForm({ authService, dataService }) {
       axios
         .post(
           OPENVIDU_SERVER_URL +
-          "/openvidu/api/sessions/" +
-          sessionId +
-          "/connection",
+            "/openvidu/api/sessions/" +
+            sessionId +
+            "/connection",
           data,
           {
             headers: {
@@ -383,13 +383,9 @@ export default function CreateRoomForm({ authService, dataService }) {
           </>
         ) : (
           <>
-
             <Header />
 
-
-
             {state.session === undefined ? (
-
               <S.Container>
                 <div>
                   <div>
@@ -479,7 +475,6 @@ export default function CreateRoomForm({ authService, dataService }) {
                   </div>
                 </div>
               </S.Container>
-
             ) : (
               <>
                 <h1>{state.mySessionId} 방</h1>
@@ -530,16 +525,15 @@ export default function CreateRoomForm({ authService, dataService }) {
 
                 <S.FocusTimer>
                   <div>
-                    총 공부 시간 : {Math.floor(totalSec / 60)} :{" "}
-                    {totalSec % 60}, 집중 시간 : {Math.floor(studySec / 60)} :{" "}
-                    {studySec % 60}
+                    총 공부 시간 : {Math.floor(totalSec / 60)} : {totalSec % 60}
+                    , 집중 시간 : {Math.floor(studySec / 60)} : {studySec % 60}
                   </div>
                 </S.FocusTimer>
               </>
             )}
-
           </>
-        )}</S.BackgroundContainer>
+        )}
+      </S.BackgroundContainer>
     </>
   );
 }
