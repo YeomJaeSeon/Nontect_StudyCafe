@@ -2,7 +2,7 @@ import React from "react";
 import * as S from "./Header.style";
 import { useHistory } from "react-router";
 
-const Header = ({ location, logout }) => {
+const Header = ({ location, logout, chatting }) => {
   const history = useHistory();
 
   const goToHome = () => {
@@ -20,14 +20,20 @@ const Header = ({ location, logout }) => {
     }
   };
   return (
-    <S.HeaderContainer>
-      {displayMenu()}
-      <S.LogoContainer
-        src="/openvidu_logo.png"
-        art="logo"
-        onClick={goToHome}
-      ></S.LogoContainer>
-    </S.HeaderContainer>
+    <>
+      {chatting ? (
+        <S.NonHeader></S.NonHeader>
+      ) : (
+        <S.HeaderContainer>
+          {displayMenu()}
+          <S.LogoContainer
+            src="/openvidu_logo.png"
+            art="logo"
+            onClick={goToHome}
+          ></S.LogoContainer>
+        </S.HeaderContainer>
+      )}
+    </>
   );
 };
 

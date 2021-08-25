@@ -1,6 +1,15 @@
 import styled from "styled-components";
 import * as style from "../../utils/css-utils";
 
+export const NonHeader = styled.header`
+  background-color: ${style.BackgroundColor};
+  margin-bottom: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+`;
+
 export const HeaderContainer = styled.header`
   margin-bottom: 0;
   position: fixed;
@@ -9,7 +18,7 @@ export const HeaderContainer = styled.header`
   width: 100%;
   height: 60px;
   display: flex;
-  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.40);
+  box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, 0.4);
 `;
 
 export const InfoBtn = styled.button`
@@ -20,14 +29,13 @@ export const InfoBtn = styled.button`
   right: 120px;
   top: 13px;
   background-color: ${style.HeaderButtonColor};
-  color:white;
+  color: white;
   border: none;
   border-radius: 5px;
   transition: all 0.4s;
   &:hover {
-    
-    transform: scale(1.10);
-    color:white;
+    transform: scale(1.1);
+    color: white;
   }
 `;
 
@@ -37,11 +45,10 @@ export const LogoContainer = styled.img`
   height: 50px;
   left: 0;
   top: 4px;
-
 `;
 
 export const LogoutBtn = styled.button`
-color:white;
+  color: white;
   position: absolute;
   font-weight: bolder;
   width: 80px;
@@ -54,8 +61,6 @@ color:white;
   cursor: pointer;
   transition: all 0.4s;
   &:hover {
-    
-    transform: scale(1.10);
-    
+    transform: scale(1.1);
   }
 `;

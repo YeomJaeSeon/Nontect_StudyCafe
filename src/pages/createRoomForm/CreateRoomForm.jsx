@@ -382,7 +382,13 @@ export default function CreateRoomForm({ authService, dataService }) {
       ) : (
         <>
           <S.BackgroundContainer>
-            <Header />
+            {state.session ? (
+              // 화상채팅중
+              <Header chatting={true} />
+            ) : (
+              // 화상채팅 안하는중
+              <Header chatting={false} />
+            )}
 
             <S.Container>
               {state.session === undefined ? (
