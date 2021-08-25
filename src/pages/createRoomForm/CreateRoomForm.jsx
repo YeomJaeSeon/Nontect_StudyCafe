@@ -479,7 +479,6 @@ export default function CreateRoomForm({ authService, dataService }) {
                   </div>
                 </div>
               </S.Container>
-
             ) : (
               <>
                 <h1>{state.mySessionId} 방</h1>
