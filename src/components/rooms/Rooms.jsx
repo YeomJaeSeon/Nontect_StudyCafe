@@ -14,12 +14,11 @@ const Rooms = ({ dataService, rooms }) => {
   return (
     <>
       <S.RoomsContainer>
-        {rooms.map((room) => {
-          console.log(room);
+        {rooms.map((room, idx) => {
           return (
             <Room
               dataService={dataService}
-              key={room.id}
+              key={idx}
               id={room.id}
               name={room.name}
               peopleCount={room.peopleCount}

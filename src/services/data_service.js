@@ -7,61 +7,40 @@ import axios from "axios";
 export default class Database {
   //==회원가입==//
   createUser(uid, name, email, interestedField) {
-    if (interestedField.length === 1) {
-      return axios.put(
-        `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
-        {
-          uid: uid,
-          name: name,
-          email: email,
-          score: 0,
-          joinRoom: 0,
-          interestedField: {
-            interestedField1: interestedField[0],
-          },
-        }
-      );
-    } else if (interestedField.length === 2) {
-      return axios.put(
-        `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
-        {
-          uid: uid,
-          name: name,
-          email: email,
-          score: 0,
-          joinRoom: 0,
-          interestedField: {
-            interestedField1: interestedField[0],
-            interestedField2: interestedField[1],
-          },
-        }
-      );
-    } else {
-      return axios.put(
-        `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
-        {
-          uid: uid,
-          name: name,
-          email: email,
-          score: 0,
-          joinRoom: 0,
-          interestedField: {
-            interestedField1: interestedField[0],
-            interestedField2: interestedField[1],
-            interestedField3: interestedField[2],
-          },
-        }
-      );
-    }
+    const entries = new Map();
+    interestedField.forEach((value) => {
+      entries.set(value, value);
+    });
+
+    const obj = Object.fromEntries(entries);
+
+    return axios.put(
+      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
+      {
+        uid: uid,
+        name: name,
+        email: email,
+        score: 0,
+        joinRoom: 0,
+        hashTag: obj,
+      }
+    );
   }
 
   //==방장이 방생성==//
-  createRoom(sessionId) {
+  createRoom(sessionId, interestedArr) {
+    const entries = new Map();
+    interestedArr.forEach((value) => {
+      entries.set(value, value);
+    });
+
+    const obj = Object.fromEntries(entries);
     return axios.put(
       `https://web-project-e37c4-default-rtdb.firebaseio.com/rooms/${sessionId}.json`,
       {
         sessionId: sessionId,
         peopleCount: 0, //방만 생성시 count = 0 (방의 유저 수)
+        hashTag: obj,
       }
     );
   }

@@ -13,7 +13,7 @@ const Room = ({ id, name, hashTag, peopleCount, dataService }) => {
       console.log(callback);
       console.log("이녀석 어떨까!!!!!!!!!!!!!!");
       if (callback == undefined) {
-        //방이 존재안하면
+        //방이 존재안하면x
         alert("존재하지 않는 방입니다. 새로고침해주세요");
       } else {
         console.log("콜백");
@@ -40,8 +40,8 @@ const Room = ({ id, name, hashTag, peopleCount, dataService }) => {
       <S.RoomTitleBox>{name}</S.RoomTitleBox>
       <S.InnerContainer>
         <S.HashTagContainer>
-          {hashTag.map((tag) => {
-            return <S.HashTagContent>#{tag}</S.HashTagContent>;
+          {hashTag.map((tag, idx) => {
+            return <S.HashTagContent key={idx}>#{tag} </S.HashTagContent>;
           })}
         </S.HashTagContainer>
         <S.PeopleCountContent peopleCount={peopleCount}>

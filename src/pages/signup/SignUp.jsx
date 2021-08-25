@@ -37,7 +37,7 @@ const SignUp = ({ authService, dataService }) => {
   const signUpHandler = (e) => {
     //먼저 이미 먼저 가입한 회원들의 이름을 가져옴
     dataService.getAllUsers((data) => {
-      if (data !== undefined) {
+      if (data) {
         const names = Object.values(data).map((data) => data.name);
         console.log(names);
         setExistedUsers(names);

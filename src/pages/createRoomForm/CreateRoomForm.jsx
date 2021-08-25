@@ -243,6 +243,7 @@ export default function CreateRoomForm({ authService, dataService }) {
       event.preventDefault();
       if (state.mySessionId == "") {
         alert("방이름을 입력해주세요!");
+        setIsLoading(false);
         return;
       }
 
@@ -267,7 +268,12 @@ export default function CreateRoomForm({ authService, dataService }) {
             session: true,
           }));
           //방생성 동시에 방에 접속(세션에 접속)
-          dataService.createRoom(state.mySessionId);
+          const interestArr = Object.keys(interestedField).filter(
+            (value) => interestedField[value] == true
+          );
+          console.log("방의 해쉬태그으으으으");
+          console.log(interestArr);
+          dataService.createRoom(state.mySessionId, interestArr);
           setIsLoading(false);
         });
       }

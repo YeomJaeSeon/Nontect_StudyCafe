@@ -5,6 +5,18 @@ import Rooms from "../../components/rooms/Rooms";
 import Header from "../../components/header/Header";
 import { useHistory } from "react-router-dom";
 
+//======= 해시태그 매핑할 한국어
+const hashMatch = {
+  health: "건강",
+  IT: "IT",
+  certification: "자격증",
+  entertainment: "예능",
+  religion: "종교",
+  tech: "기술",
+};
+Object.freeze(hashMatch);
+//=========
+
 const Main = ({ authService, dataService }) => {
   //test datas
   const [rooms, setRooms] = useState([]); //방들 (세션들)
@@ -20,19 +32,24 @@ const Main = ({ authService, dataService }) => {
   useEffect(() => {
     dataService.getAllRooms((values) => {
       if (values != undefined) {
-        console.log(Object.values(values));
+        console.log("values =====");
+        console.log(values);
         const result = Object.values(values).map((value) => {
           return {
-            id: value.idxCount,
             name: value.sessionId,
             peopleCount: value.peopleCount,
-            hashTag: [],
+            hashTag: Object.values(value.hashTag).map((v) => hashMatch[`${v}`]),
           };
         });
+
+        console.log("result=======");
+        console.log(result);
         setTotalRoomsLength(result.length);
         if (result.length > 4) {
+          console.log("setState");
           setRooms(result.slice(0, 4));
         } else {
+          console.log("setState");
           setRooms(result);
         }
       }
@@ -46,10 +63,11 @@ const Main = ({ authService, dataService }) => {
           Object.values(rooms)
             .map((value) => {
               return {
-                id: value.idxCount,
                 name: value.sessionId,
                 peopleCount: value.peopleCount,
-                hashTag: [],
+                hashTag: Object.values(value.hashTag).map(
+                  (v) => hashMatch[`${v}`]
+                ),
               };
             })
             .slice(startRoomNumber, startRoomNumber + 4)

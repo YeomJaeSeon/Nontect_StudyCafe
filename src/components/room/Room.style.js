@@ -43,7 +43,9 @@ export const HashTagContainer = styled.div`
   padding: 5px 10px;
 `;
 
-export const HashTagContent = styled.span``;
+export const HashTagContent = styled.span`
+  color: #757575;
+`;
 
 export const PeopleCountContent = styled.div`
   color: ${(props) =>
