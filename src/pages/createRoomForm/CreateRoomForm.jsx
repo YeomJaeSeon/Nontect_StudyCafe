@@ -417,10 +417,11 @@ export default function CreateRoomForm({ authService, dataService }) {
               <S.Background src="/main_background.jpg" alt="main"></S.Background>
               <S.CreateContainer>
                 <div>
-                  <h1> 방 생성 페이지 </h1>
+                  <h1> 스터디룸 생성 </h1>
+                  <S.DivLine />
                   <form onSubmit={joinSession}>
                     <p>
-                      <S.NameLabel>방 이름</S.NameLabel>
+                      <S.NameLabel>스터디룸 이름을 입력하세요</S.NameLabel>
                       <S.NameInput
                         type="text"
                         id="sessionId"
@@ -430,7 +431,8 @@ export default function CreateRoomForm({ authService, dataService }) {
                       />
                     </p>
                     <p>
-                      <S.NameLabel>방 해시태그</S.NameLabel>
+
+                      <S.NameLabel>스터디룸 해시태그를 선택하세요(최대 3개)</S.NameLabel>
                       <S.RoomHashTagBox>
                         <S.Label>
                           건강

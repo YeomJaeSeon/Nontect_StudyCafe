@@ -28,6 +28,8 @@ export const MainContainer = styled.div`
   opacity:0.6;
 
   border: 1px solid ${style.MainColor};
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 `;
 
 export const ButtonBox = styled.div`

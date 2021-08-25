@@ -87,23 +87,36 @@ export const CreateContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
-
+  opacity:0.6;
   width: 450px;
   height: 550px;
   background-color: ${style.BoxColor};
-
+  border-radius: 5px;
+  box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
   margin-top: 80px;
 `;
 
+export const DivLine = styled.div`
+  width: 70%;
+  height: 2px;
+  margin: auto;
+  background-color: ${style.BackgroundColor};
+`;
+
+
 export const NameLabel = styled.div`
-  font-size: 20px;
+  font-size: 15px;
   margin-bottom: 20px;
 `;
 
+
+
 export const NameInput = styled.input`
-  font-size: 20px;
+  
+font-size: 20px;
   padding: 5px;
   text-align: center;
+  margin-bottom: 60px;
 `;
 
 export const RoomHashTagBox = styled.div`
