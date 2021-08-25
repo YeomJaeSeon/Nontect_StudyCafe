@@ -392,14 +392,13 @@ export default function CreateRoomForm({ authService, dataService }) {
 
             <S.Container>
               {state.session === undefined ? (
-                <div>
+                <S.CreateContainer>
                   <div>
                     <h1> 방 생성 페이지 </h1>
                     <form onSubmit={joinSession}>
                       <p>
-                        <label for="sessionId">방 이름</label>
-                        <br />
-                        <input
+                        <S.NameLabel>방 이름</S.NameLabel>
+                        <S.NameInput
                           type="text"
                           id="sessionId"
                           value={state.mySessionId}
@@ -408,77 +407,78 @@ export default function CreateRoomForm({ authService, dataService }) {
                         />
                       </p>
                       <p>
-                        <div>방 해시태그</div>
-                        <br />
-                        <S.Label>
-                          건강
-                          <S.InputCheck
-                            type="checkbox"
-                            name="health"
-                            value="health"
-                            onChange={updateInterestedField}
-                            checked={interestedField.health}
-                          />
-                        </S.Label>
-                        <S.Label>
-                          자격증
-                          <S.InputCheck
-                            type="checkbox"
-                            name="certification"
-                            value="certification"
-                            onChange={updateInterestedField}
-                            checked={interestedField.certification}
-                          />
-                        </S.Label>
-                        <S.Label>
-                          IT
-                          <S.InputCheck
-                            type="checkbox"
-                            name="IT"
-                            value="IT"
-                            onChange={updateInterestedField}
-                            checked={interestedField.IT}
-                          />
-                        </S.Label>
-                        <S.Label>
-                          예능
-                          <S.InputCheck
-                            type="checkbox"
-                            name="entertainment"
-                            value="entertainment"
-                            onChange={updateInterestedField}
-                            checked={interestedField.entertainment}
-                          />
-                        </S.Label>
-                        <S.Label>
-                          종교
-                          <S.InputCheck
-                            type="checkbox"
-                            name="religion"
-                            value="religion"
-                            onChange={updateInterestedField}
-                            checked={interestedField.religion}
-                          />
-                        </S.Label>
-                        <S.Label>
-                          기술
-                          <S.InputCheck
-                            type="checkbox"
-                            name="tech"
-                            value="tech"
-                            onChange={updateInterestedField}
-                            checked={interestedField.tech}
-                          />
-                        </S.Label>
+                        <S.NameLabel>방 해시태그</S.NameLabel>
+                        <S.RoomHashTagBox>
+                          <S.Label>
+                            건강
+                            <S.InputCheck
+                              type="checkbox"
+                              name="health"
+                              value="health"
+                              onChange={updateInterestedField}
+                              checked={interestedField.health}
+                            />
+                          </S.Label>
+                          <S.Label>
+                            자격증
+                            <S.InputCheck
+                              type="checkbox"
+                              name="certification"
+                              value="certification"
+                              onChange={updateInterestedField}
+                              checked={interestedField.certification}
+                            />
+                          </S.Label>
+                          <S.Label>
+                            IT
+                            <S.InputCheck
+                              type="checkbox"
+                              name="IT"
+                              value="IT"
+                              onChange={updateInterestedField}
+                              checked={interestedField.IT}
+                            />
+                          </S.Label>
+                          <S.Label>
+                            예능
+                            <S.InputCheck
+                              type="checkbox"
+                              name="entertainment"
+                              value="entertainment"
+                              onChange={updateInterestedField}
+                              checked={interestedField.entertainment}
+                            />
+                          </S.Label>
+                          <S.Label>
+                            종교
+                            <S.InputCheck
+                              type="checkbox"
+                              name="religion"
+                              value="religion"
+                              onChange={updateInterestedField}
+                              checked={interestedField.religion}
+                            />
+                          </S.Label>
+                          <S.Label>
+                            기술
+                            <S.InputCheck
+                              type="checkbox"
+                              name="tech"
+                              value="tech"
+                              onChange={updateInterestedField}
+                              checked={interestedField.tech}
+                            />
+                          </S.Label>
+                        </S.RoomHashTagBox>
                       </p>
                       <p>
-                        <Button variant="secondary" name="commit" type="submit">
+                        <S.CreateButton name="commit" type="submit">
                           생성
-                        </Button>
+                        </S.CreateButton>
                       </p>
                     </form>
                   </div>
-                </div>
+                </S.CreateContainer>
               ) : (
                 <>
                   <h1>{state.mySessionId} 방</h1>

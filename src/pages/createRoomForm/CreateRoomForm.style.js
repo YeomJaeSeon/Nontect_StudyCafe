@@ -2,19 +2,19 @@ import styled, { keyframes } from "styled-components";
 import * as style from "../../utils/css-utils";
 
 export const BackgroundContainer = styled.div`
-width: 100vw;
-height: 100vh;  
+  width: 100vw;
+  height: 100vh;
 
-position: fixed;
-background-color: ${style.BackgroundColor};
+  position: fixed;
+  background-color: ${style.BackgroundColor};
 `;
 
 export const Background = styled.img`
-width: 100vw;
-height: 100vh;  
-opacity: 0.5;
-position: absolute;
-z-index:-1;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.5;
+  position: absolute;
+  z-index: -1;
 `;
 
 export const Container = styled.div`
@@ -27,6 +27,8 @@ export const Container = styled.div`
   width: 450px;
   height: 550px;
   background-color: ${style.BoxColor};
+
+  margin-top: 80px;
 `;
 
 const spin = keyframes`
@@ -78,3 +80,42 @@ export const InputCheck = styled.input`
   transform: scale(1.5);
 `;
 
+// 방생성 박스
+export const CreateContainer = styled.div`
+  margin-top: 50px;
+`;
+
+export const NameLabel = styled.div`
+  font-size: 20px;
+  margin-bottom: 20px;
+`;
+
+export const NameInput = styled.input`
+  font-size: 20px;
+  padding: 5px;
+  text-align: center;
+`;
+
+export const RoomHashTagBox = styled.div`
+  width: 300px;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+`;
+
+export const CreateButton = styled.button`
+  padding: 5px 30px;
+  font-size: 20px;
+  background-color: ${style.BoxColor};
+  margin-top: 20px;
+
+  font-weight: bolder;
+  cursor: pointer;
+  transition: all 0.4s;
+
+  &:hover {
+    background-color: ${style.HeaderButtonColor};
+    transform: scale(1.1);
+    color: white;
+  }
+`;

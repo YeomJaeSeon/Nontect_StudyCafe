@@ -44,7 +44,9 @@ const Room = ({ id, name, hashTag, peopleCount, dataService }) => {
             return <S.HashTagContent>#{tag}</S.HashTagContent>;
           })}
         </S.HashTagContainer>
-        <div>{peopleCount}/6</div>
+        <S.PeopleCountContent peopleCount={peopleCount}>
+          {peopleCount}/6
+        </S.PeopleCountContent>
       </S.InnerContainer>
     </S.RoomContainer>
   );

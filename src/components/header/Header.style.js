@@ -45,6 +45,7 @@ export const LogoContainer = styled.img`
   height: 50px;
   left: 0;
   top: 4px;
+  cursor: pointer;
 `;
 
 export const LogoutBtn = styled.button`

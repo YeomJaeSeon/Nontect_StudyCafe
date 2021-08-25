@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import * as style from '../../utils/css-utils';
+import styled from "styled-components";
+import * as style from "../../utils/css-utils";
 
 export const RoomContainer = styled.div`
   width: 40%;
   height: 120px;
   margin-left: 50px;
   margin-right: 30px;
-  background-color: orange;
+  background-color: ${style.RoomColor};
   display: flex;
   flex-direction: column;
   cursor: pointer;
@@ -25,7 +25,7 @@ export const RoomTitleBox = styled.div`
   height: 50px;
   line-height: 50px;
   font-size: 20px;
-  color: gray;
+  color: black;
   margin-top: 10px;
 `;
 
@@ -44,3 +44,8 @@ export const HashTagContainer = styled.div`
 `;
 
 export const HashTagContent = styled.span``;
+
+export const PeopleCountContent = styled.div`
+  color: ${(props) =>
+    props.peopleCount == 6 ? style.HeaderButtonColor : "black"};
+`;
