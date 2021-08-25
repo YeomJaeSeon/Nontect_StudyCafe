@@ -372,21 +372,20 @@ export default function CreateRoomForm({ authService, dataService }) {
 
   return (
     <>
-      <S.BackgroundContainer>
-        <S.Background src="./main_background.jpg" art="main"></S.Background>
-        {isLoading ? (
-          <>
-            <Header />
-            <S.LoadingSpinnerContainer>
-              <S.LoadingSpinner />
-            </S.LoadingSpinnerContainer>
-          </>
-        ) : (
-          <>
+      {isLoading ? (
+        <>
+          <Header />
+          <S.LoadingSpinnerContainer>
+            <S.LoadingSpinner />
+          </S.LoadingSpinnerContainer>
+        </>
+      ) : (
+        <>
+          <S.BackgroundContainer>
             <Header />
 
-            {state.session === undefined ? (
-              <S.Container>
+            <S.Container>
+              {state.session === undefined ? (
                 <div>
                   <div>
                     <h1> 방 생성 페이지 </h1>
@@ -474,66 +473,67 @@ export default function CreateRoomForm({ authService, dataService }) {
                     </form>
                   </div>
                 </div>
-              </S.Container>
-            ) : (
-              <>
-                <h1>{state.mySessionId} 방</h1>
-                <OpenViduSession
-                  id="opv-session"
-                  sessionName={state.mySessionId}
-                  user={state.myUserName}
-                  token={state.token}
-                  joinSession={handlerJoinSessionEvent}
-                  leaveSession={handlerLeaveSessionEvent}
-                  error={handlerErrorEvent}
-                />
+              ) : (
+                <>
+                  <h1>{state.mySessionId} 방</h1>
+                  <OpenViduSession
+                    id="opv-session"
+                    sessionName={state.mySessionId}
+                    user={state.myUserName}
+                    token={state.token}
+                    joinSession={handlerJoinSessionEvent}
+                    leaveSession={handlerLeaveSessionEvent}
+                    error={handlerErrorEvent}
+                  />
 
-                <S.Facemesh>
-                  <div>
-                    <header>
-                      <Webcam
-                        ref={webcamRef}
-                        style={{
-                          position: "absolute",
-                          marginLeft: "50px",
-                          marginRight: "50px",
-                          left: 0,
-                          right: 0,
-                          textAlign: "center",
-                          zindex: 9,
-                          width: 640,
-                          height: 480,
-                        }}
-                      />
-                      <canvas
-                        ref={canvasRef}
-                        style={{
-                          position: "absolute",
-                          marginLeft: "50px",
-                          marginRight: "50px",
-                          left: 0,
-                          right: 0,
-                          textAlign: "center",
-                          zindex: 9,
-                          width: 640,
-                          height: 480,
-                        }}
-                      />
-                    </header>
-                  </div>
-                </S.Facemesh>
+                  <S.Facemesh>
+                    <div>
+                      <header>
+                        <Webcam
+                          ref={webcamRef}
+                          style={{
+                            position: "absolute",
+                            marginLeft: "50px",
+                            marginRight: "50px",
+                            left: 0,
+                            right: 0,
+                            textAlign: "center",
+                            zindex: 9,
+                            width: 640,
+                            height: 480,
+                          }}
+                        />
+                        <canvas
+                          ref={canvasRef}
+                          style={{
+                            position: "absolute",
+                            marginLeft: "50px",
+                            marginRight: "50px",
+                            left: 0,
+                            right: 0,
+                            textAlign: "center",
+                            zindex: 9,
+                            width: 640,
+                            height: 480,
+                          }}
+                        />
+                      </header>
+                    </div>
+                  </S.Facemesh>
 
-                <S.FocusTimer>
-                  <div>
-                    총 공부 시간 : {Math.floor(totalSec / 60)} : {totalSec % 60}
-                    , 집중 시간 : {Math.floor(studySec / 60)} : {studySec % 60}
-                  </div>
-                </S.FocusTimer>
-              </>
-            )}
-          </>
-        )}
-      </S.BackgroundContainer>
+                  <S.FocusTimer>
+                    <div>
+                      총 공부 시간 : {Math.floor(totalSec / 60)} :{" "}
+                      {totalSec % 60}, 집중 시간 : {Math.floor(studySec / 60)} :{" "}
+                      {studySec % 60}
+                    </div>
+                  </S.FocusTimer>
+                </>
+              )}
+            </S.Container>
+          </S.BackgroundContainer>
+        </>
+      )}
     </>
   );
 }
