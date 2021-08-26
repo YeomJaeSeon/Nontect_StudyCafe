@@ -116,6 +116,7 @@ const Main = ({ authService, dataService }) => {
         <S.Background src="./main_background.jpg" alt="main"></S.Background>
         <Search />
         <S.MainContainer>
+
           <Rooms dataService={dataService} rooms={rooms} />
           <S.ButtonBox>
             <S.Button onClick={showBackRooms}>{"<"}</S.Button>
@@ -126,7 +127,6 @@ const Main = ({ authService, dataService }) => {
           <S.RoomButton onClick={goCreate} left>
             방 생성
           </S.RoomButton>
-          <S.RoomButton>방 참가</S.RoomButton>
         </S.RoomButtonBox>
       </S.BackgroundContainer>
     </>

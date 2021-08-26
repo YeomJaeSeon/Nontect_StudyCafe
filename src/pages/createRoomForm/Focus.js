@@ -40,7 +40,7 @@ export const alarm = (data) => {
 
 
   //입술의 움직임으로 집중 감지
-  if (openMouth > 3.5 && startConv === Boolean(false)) {  //입을 벌린 순간 대화로 인식
+  if (openMouth > 4.0 && startConv === Boolean(false)) {  //입을 벌린 순간 대화로 인식
     startConv = Boolean(true);
     console.log("대화 시작");
   } else if (openMouth < 2.0 && startConv === Boolean(true)) { //대화도중 입술이 다물어지는 순간
@@ -58,17 +58,17 @@ export const alarm = (data) => {
     } else {
       ++mouthCnt;
     }
-  } else if (openMouth > 3.5 && startConv === Boolean(true)) { //대화라고 판단한상태에서 입이 계속 열려있음
+  } else if (openMouth > 4.0 && startConv === Boolean(true)) { //대화라고 판단한상태에서 입이 계속 열려있음
     mouthState = Boolean(true);//입술이 열림
     closeStateHold = 0;
     ++openStateHold;
-    if (openStateHold > 15 && mouthState === Boolean(true)) { //입을 연채로 움직임 없을 때
-      console.log("대화가 아님")
+    if (openStateHold > 3 && mouthState === Boolean(true)) { //입을 연채로 움직임 없을 때
+      //console.log("대화가 아님")
       startConv = Boolean(false);
       convState = Boolean(false);
       openStateHold = 0;
       mouthCnt = 0;
-      Focus = Boolean(true);
+      //  Focus = Boolean(true);
     } else {
       ++mouthCnt;
     }
@@ -86,8 +86,8 @@ export const alarm = (data) => {
   }
   closeEyeCnt > 0 && console.log(`${closeEyeCnt}초동안 눈감음`);
 
-  if (mouthCnt > 25 && startConv === Boolean(true)) {
-    //alert("잡담금지^^");
+  if (mouthCnt > 30 && startConv === Boolean(true)) {
+    alert("잡담금지^^");
     startConv = Boolean(false);
     convState = Boolean(true);
     Focus = Boolean(false);
@@ -126,7 +126,7 @@ export const alarm = (data) => {
   if (lookingUpDownDirection > 10) {
     console.log('위쪽 보는중')
   }
-  if (lookingUpDownDirection < -15) {
+  if (lookingUpDownDirection < -14) {
     console.log('아래쪽 보는중')
   }
 }

@@ -1,6 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import * as style from "../../utils/css-utils";
 
+
 export const BackgroundContainer = styled.div`
   width: 100vw;
   height: 100vh;
@@ -16,7 +17,6 @@ export const Background = styled.img`
   position: absolute;
   z-index: -1;
 `;
-
 
 
 const spin = keyframes`

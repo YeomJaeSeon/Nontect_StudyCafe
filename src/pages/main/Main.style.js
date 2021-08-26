@@ -32,6 +32,8 @@ export const MainContainer = styled.div`
   box-shadow: 5px 5px 5px 0px rgba(0, 0, 0, 0.75);
 `;
 
+
+
 export const ButtonBox = styled.div`
   width: 150px;
   margin: auto;
