@@ -19,8 +19,11 @@ import * as S from "./CreateRoomForm.style";
 import { useBeforeunload } from "react-beforeunload";
 
 import { Button } from "react-bootstrap";
+import Graph from "../../components/graph/Graph";
 
 export default function CreateRoomForm({ authService, dataService }) {
+  const [clickGraph, setClickGraph] = useState(false);
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -571,13 +574,14 @@ export default function CreateRoomForm({ authService, dataService }) {
                   </div>
                 </S.Facemesh>
               </S.VideoContainer>
-              <S.FocusContainer>
-                <S.Focusimg
-                  src="/focus_logo (2).png"
-                  art="focus"
-                  onClick={displayFocus}
-                ></S.Focusimg>
-              </S.FocusContainer>
+              <S.GraphContainer
+                onClick={() => {
+                  setClickGraph((prev) => !prev);
+                }}
+              >
+                click
+                {clickGraph && <Graph dataService={dataService}></Graph>}
+              </S.GraphContainer>
             </>
           )}
         </>

@@ -17,8 +17,6 @@ export const Background = styled.img`
   z-index: -1;
 `;
 
-
-
 const spin = keyframes`
   0%{
     tranform : rotate(0deg);
@@ -48,25 +46,23 @@ export const LoadingSpinnerContainer = styled.div`
 export const Facemesh = styled.div`
   visibility: hidden;
 `;
-export const FocusContainer = styled.div`
-
-  
-`;
+export const FocusContainer = styled.div``;
 export const Focusimg = styled.img`
-width:100px;
-height: 100px;
-z-index:1;position:absolute;bottom: 0;
-cursor: pointer;
-opacity: 0.3;
+  width: 100px;
+  height: 100px;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  cursor: pointer;
+  opacity: 0.3;
 `;
 
 export const FocusTimer = styled.div`
-
-  z-index:1;
+  z-index: 1;
   text-align: center;
-  position:absolute;
+  position: absolute;
   bottom: 0;
-  background-color:${style.BoxColor};
+  background-color: ${style.BoxColor};
 `;
 
 export const Label = styled.label`
@@ -87,7 +83,7 @@ export const CreateContainer = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   position: absolute;
-  opacity:0.6;
+  opacity: 0.6;
   width: 450px;
   height: 550px;
   background-color: ${style.BoxColor};
@@ -103,17 +99,13 @@ export const DivLine = styled.div`
   background-color: ${style.BackgroundColor};
 `;
 
-
 export const NameLabel = styled.div`
   font-size: 15px;
   margin-bottom: 20px;
 `;
 
-
-
 export const NameInput = styled.input`
-  
-font-size: 20px;
+  font-size: 20px;
   padding: 5px;
   text-align: center;
   margin-bottom: 60px;
@@ -145,5 +137,10 @@ export const CreateButton = styled.button`
 
 export const VideoContainer = styled.div`
   margin-top: 0;
-  z-index:-1;
+  z-index: -1;
+`;
+export const GraphContainer = styled.div`
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
 `;

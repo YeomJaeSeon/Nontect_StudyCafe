@@ -101,7 +101,7 @@ export default class Database {
     return axios.patch(
       `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/studyTimeInRoom.json`,
       {
-        focus: updateTime,
+        total: updateTime,
       }
     );
   }

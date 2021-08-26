@@ -18,6 +18,7 @@
     "react-dom": "16.14.0",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.0",
+    "react-vis": "^1.11.7",
     "react-webcam": "^6.0.0",
     "styled-components": "5.2.3",
     "web-vitals": "^1.0.1",
