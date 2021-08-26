@@ -13,6 +13,9 @@
   - uid
     - email
     - joinRoom(접속한 방) (접속안했으면 0)
+    - studyTimeInRoom
+      - focus : 방에서 집중시간
+      - total : 방에서 총공부시간
     - name(별명)
     - score(집중도를 위한 점수)
     - uid

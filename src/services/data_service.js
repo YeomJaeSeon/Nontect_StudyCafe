@@ -23,6 +23,10 @@ export default class Database {
         score: 0,
         joinRoom: 0,
         hashTag: obj,
+        studyTimeInRoom: {
+          total: 0,
+          focus: 0,
+        },
       }
     );
   }
@@ -65,7 +69,13 @@ export default class Database {
   leftRoom(uid) {
     return axios.patch(
       `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
-      { joinRoom: 0 }
+      {
+        joinRoom: 0,
+        studyTimeInRoom: {
+          total: 0,
+          focus: 0,
+        },
+      }
     );
   }
 
@@ -73,6 +83,26 @@ export default class Database {
   deleteRoom(sessionId) {
     return axios.delete(
       `https://web-project-e37c4-default-rtdb.firebaseio.com/rooms/${sessionId}.json`
+    );
+  }
+
+  //==total시간 update by room ==//
+  updateTotalTimeByRoom(uid, updateTime) {
+    return axios.patch(
+      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/studyTimeInRoom.json`,
+      {
+        total: updateTime,
+      }
+    );
+  }
+
+  //==focus시간 update by room ==//
+  updateFocusTimeByRoom(uid, updateTime) {
+    return axios.patch(
+      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/studyTimeInRoom.json`,
+      {
+        focus: updateTime,
+      }
     );
   }
 
