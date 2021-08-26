@@ -36,9 +36,18 @@ export default function CreateRoomForm({ authService, dataService }) {
   const Studysecond = studySec % 60;
 
   const displayFocus = () => {
-    alert("총 공부시간 : " + Totalminute + "분 " + Totalsecond + "초  \n공부 중 실제로 집중한 시간 : " + Studyminute + "분 " + Studysecond + "초");
+    alert(
+      "총 공부시간 : " +
+        Totalminute +
+        "분 " +
+        Totalsecond +
+        "초  \n공부 중 실제로 집중한 시간 : " +
+        Studyminute +
+        "분 " +
+        Studysecond +
+        "초"
+    );
   };
-
 
   const [state, setState] = useState({
     mySessionId: "", // 방이름
@@ -57,7 +66,6 @@ export default function CreateRoomForm({ authService, dataService }) {
       detect(net);
     }, 800);
   };
-
 
   const detect = async (net) => {
     if (
@@ -119,7 +127,23 @@ export default function CreateRoomForm({ authService, dataService }) {
         setStudySeconds((studySec) => studySec + 1);
       }
     }, 1000);
+
+    //언마운트시 데이터 누출막기
+    return () => {
+      clearInterval(totalStudytime);
+      clearInterval(realStudytime);
+    };
   }, []); //배열 안에 minutes, seconds를 설정하여 인터벌간격(1초)마다 업데이트
+
+  //==방에서 total시간 db 연동==//
+  useEffect(() => {
+    dataService.updateTotalTimeByRoom(state.myUserName, totalSec);
+  }, [totalSec]);
+
+  //==방에서 집중시간 db 연동==//
+  useEffect(() => {
+    dataService.updateFocusTimeByRoom(state.myUserName, studySec);
+  }, [studySec]);
 
   //---------------------------------------------------------------
   const [isLoading, setIsLoading] = useState(false);
@@ -343,16 +367,16 @@ export default function CreateRoomForm({ authService, dataService }) {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-              OPENVIDU_SERVER_URL
+                OPENVIDU_SERVER_URL
             );
             if (
               window.confirm(
                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                OPENVIDU_SERVER_URL +
-                '"\n\nClick OK to navigate and accept it. ' +
-                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                OPENVIDU_SERVER_URL +
-                '"'
+                  OPENVIDU_SERVER_URL +
+                  '"\n\nClick OK to navigate and accept it. ' +
+                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                  OPENVIDU_SERVER_URL +
+                  '"'
               )
             ) {
               window.location.assign(
@@ -364,17 +388,15 @@ export default function CreateRoomForm({ authService, dataService }) {
     });
   };
 
-
-
   const createToken = (sessionId) => {
     return new Promise((resolve, reject) => {
       var data = JSON.stringify({});
       axios
         .post(
           OPENVIDU_SERVER_URL +
-          "/openvidu/api/sessions/" +
-          sessionId +
-          "/connection",
+            "/openvidu/api/sessions/" +
+            sessionId +
+            "/connection",
           data,
           {
             headers: {
@@ -411,10 +433,12 @@ export default function CreateRoomForm({ authService, dataService }) {
             <Header chatting={false} />
           )}
 
-
           {state.session === undefined ? (
             <S.BackgroundContainer>
-              <S.Background src="/main_background.jpg" alt="main"></S.Background>
+              <S.Background
+                src="/main_background.jpg"
+                alt="main"
+              ></S.Background>
               <S.CreateContainer>
                 <div>
                   <h1> 스터디룸 생성 </h1>
@@ -431,8 +455,9 @@ export default function CreateRoomForm({ authService, dataService }) {
                       />
                     </p>
                     <p>
-
-                      <S.NameLabel>스터디룸 해시태그를 선택하세요(최대 3개)</S.NameLabel>
+                      <S.NameLabel>
+                        스터디룸 해시태그를 선택하세요(최대 3개)
+                      </S.NameLabel>
                       <S.RoomHashTagBox>
                         <S.Label>
                           건강
@@ -547,15 +572,14 @@ export default function CreateRoomForm({ authService, dataService }) {
                 </S.Facemesh>
               </S.VideoContainer>
               <S.FocusContainer>
-                <S.Focusimg src="/focus_logo (2).png"
+                <S.Focusimg
+                  src="/focus_logo (2).png"
                   art="focus"
-                  onClick={displayFocus} >
-                </S.Focusimg>
+                  onClick={displayFocus}
+                ></S.Focusimg>
               </S.FocusContainer>
             </>
           )}
-
-
         </>
       )}
     </>
