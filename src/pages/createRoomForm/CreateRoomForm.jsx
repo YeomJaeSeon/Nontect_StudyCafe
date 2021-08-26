@@ -67,7 +67,7 @@ export default function CreateRoomForm({ authService, dataService }) {
     setInterval(() => {
       //clearInterval -> 멈출 수 있음
       detect(net);
-    }, 500);
+    }, 800);
   };
 
   const detect = async (net) => {
