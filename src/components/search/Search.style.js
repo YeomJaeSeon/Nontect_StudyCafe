@@ -2,25 +2,35 @@ import styled from 'styled-components';
 import * as style from '../../utils/css-utils';
 
 export const SelectorContainer = styled.div`
-  margin-left: 150px;
-  margin-top: 30px;
-  margin-bottom: 30px;
-  
+margin:auto;  
+width:90%;
 `;
 
 export const Selector = styled.select`
-  margin-right: 30px;
-  background-color: ${style.BoxColor};
-  border: 2px solid ${style.MainColor};
-  padding: 3px 10px;
-  font-weight: bolder;
-  font-size: 20px;
+margin-left: auto;
+margin-top: 20px;
+margin-bottom: 30px;
+background-color: ${style.BackgroundColor};
+border: 1px solid ${style.MainColor};
+border-radius: 5px;
+opacity:0.9;
+padding: 3px 10px;
+font-weight: bolder;
+color: white;
+font-size: 20px;
 `;
 
 export const Input = styled.input`
   background-color: ${style.BoxColor};
-  border: 2px solid ${style.MainColor};
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 30px;
   padding: 3px 10px;
   font-weight: bolder;
   font-size: 20px;
+  opacity:0.6;
+
+  border: 1px solid ${style.MainColor};
+  border-radius: 5px;
+  
 `;

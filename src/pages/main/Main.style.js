@@ -60,9 +60,12 @@ export const Button = styled.button`
 `;
 
 export const RoomButtonBox = styled.div`
-  float: right;
-  margin-right: 150px;
+  text-align: center;
   margin-top: 20px;
+ 
+  width:100%;
+  
+  
 `;
 
 
@@ -70,6 +73,9 @@ export const RoomButton = styled.button`
   padding: 5px 30px;
   font-size: 20px;
   background-color: ${style.BoxColor};
+  border: 1px solid ${style.MainColor};
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.5);
 
   margin-right: ${(props) => (props.left ? '15px' : null)};
   font-weight: bolder;

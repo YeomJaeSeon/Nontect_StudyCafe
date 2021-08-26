@@ -4,6 +4,7 @@ import * as style from "../../utils/css-utils";
 export const NonHeader = styled.header`
   background-color: ${style.BackgroundColor};
   margin-bottom: 0;
+  display:flex;
   position: fixed;
   top: 0;
   width: 100%;
@@ -11,8 +12,9 @@ export const NonHeader = styled.header`
 `;
 
 export const HeaderContainer = styled.header`
-  margin-bottom: 0;
+  //margin-bottom: 0;
   position: fixed;
+  
   top: 0;
   background-color: ${style.MainColor};
   width: 100%;
@@ -42,7 +44,7 @@ export const InfoBtn = styled.button`
 export const LogoContainer = styled.img`
   position: absolute;
   width: 140px;
-  height: 50px;
+  height: 40px;
   left: 0;
   top: 4px;
   cursor: pointer;
