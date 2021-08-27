@@ -11,9 +11,9 @@ import {
 
 import * as S from "./Graph.style";
 
-let data = [];
-
 export default function Graph({ dataService, roomName }) {
+  const [data, setData] = useState([]);
+
   useEffect(() => {
     dataService.getAllUsers((value) => {
       console.log("graph를 위한 데이터 보여주!");
@@ -27,11 +27,24 @@ export default function Graph({ dataService, roomName }) {
             total: value.studyTimeInRoom.total,
           }));
 
-        data = filterArr.map((value) => ({
+        const newData = filterArr.map((value) => ({
           name: value.name,
-          집중도: Math.floor((value.focus / value.total) * 1000),
+          집중도: Math.floor((value.focus / value.total) * 100),
         }));
-        console.log("data야 보여라!");
+        setData((prev) => {
+          return [
+            {
+              name: "집중도 100",
+              집중도: 100,
+            },
+            ...newData,
+            {
+              name: "집중도 0",
+              집중도: 0,
+            },
+          ];
+        });
+        console.log("dataaaaaa");
         console.log(data);
       }
     });
