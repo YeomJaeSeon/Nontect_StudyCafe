@@ -580,7 +580,12 @@ export default function CreateRoomForm({ authService, dataService }) {
                 }}
               >
                 click
-                {clickGraph && <Graph dataService={dataService}></Graph>}
+                {clickGraph && (
+                  <Graph
+                    dataService={dataService}
+                    roomName={state.mySessionId}
+                  ></Graph>
+                )}
               </S.GraphContainer>
             </>
           )}
