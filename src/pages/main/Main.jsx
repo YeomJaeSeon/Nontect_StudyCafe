@@ -14,7 +14,17 @@ const hashMatch = {
   religion: "종교",
   tech: "기술",
 };
+
+const reverseHashMatch = {
+  건강: "health",
+  IT: "IT",
+  자격증: "certification",
+  예능: "entertainment",
+  종교: "religion",
+  기술: "tech",
+};
 Object.freeze(hashMatch);
+Object.freeze(reverseHashMatch);
 //=========
 
 const Main = ({ authService, dataService }) => {
@@ -109,14 +119,72 @@ const Main = ({ authService, dataService }) => {
     }
   };
 
+  //== 방 탐색==//
+  const searchRooms = (category, target) => {
+    console.log("main에서 search 클릭 영향받음");
+    dataService.getAllRooms((value) => {
+      if (value) {
+        console.log(value);
+        if (category == "title") {
+          //방이름으로 검색
+          console.log("target : " + target);
+          const result = Object.values(value)
+            .map((value) => {
+              return {
+                name: value.sessionId,
+                peopleCount: value.peopleCount,
+                hashTag: Object.values(value.hashTag).map(
+                  (v) => hashMatch[`${v}`]
+                ),
+              };
+            })
+            .filter((value) => value.name == target);
+          console.log(result);
+          setTotalRoomsLength(result.length);
+          if (result.length > 4) {
+            console.log("setState");
+            setRooms(result.slice(0, 4));
+          } else {
+            console.log("setState");
+            setRooms(result);
+          }
+        } else {
+          //해시태그로 검색
+          console.log("taret : " + target);
+
+          const result = Object.values(value)
+            .map((value) => {
+              return {
+                name: value.sessionId,
+                peopleCount: value.peopleCount,
+                hashTag: Object.values(value.hashTag).map(
+                  (v) => hashMatch[`${v}`]
+                ),
+              };
+            })
+            .filter((value) => value.hashTag.includes(target));
+
+          console.log(result);
+          setTotalRoomsLength(result.length);
+          if (result.length > 4) {
+            console.log("setState");
+            setRooms(result.slice(0, 4));
+          } else {
+            console.log("setState");
+            setRooms(result);
+          }
+        }
+      }
+    });
+  };
+
   return (
     <>
       <Header location="main" logout={logout} />
       <S.BackgroundContainer>
         <S.Background src="./main_background.jpg" alt="main"></S.Background>
-        <Search />
+        <Search hashMatch={hashMatch} searchRooms={searchRooms} />
         <S.MainContainer>
-
           <Rooms dataService={dataService} rooms={rooms} />
           <S.ButtonBox>
             <S.Button onClick={showBackRooms}>{"<"}</S.Button>
