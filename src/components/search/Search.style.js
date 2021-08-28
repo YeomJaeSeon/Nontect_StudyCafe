@@ -48,16 +48,24 @@ export const Select = styled.select`
   border-radius: 5px;
 `;
 
+export const SearchIcon = styled.img`
+
+
+width:16px;
+height:18px;
+`;
+
+
 export const SearchBtn = styled.button`
-  background-color: ${style.BoxColor};
-  margin-left: 30px;
+  //background-color: ${style.BoxColor};
+  margin-left: 20px;
   margin-top: 20px;
   margin-bottom: 30px;
-  padding: 3px 10px;
-  font-weight: bolder;
-  font-size: 20px;
+  padding: 3px 5px;
+  //font-weight: bolder;
+  //font-size: 20px;
+  
   opacity: 0.6;
-
   border: 1px solid ${style.MainColor};
   border-radius: 5px;
   cursor: pointer;
@@ -66,6 +74,6 @@ export const SearchBtn = styled.button`
   &:hover {
     background-color: ${style.HeaderButtonColor};
     transform: scale(1.10);
-    color:white;
-
+   // color:white;
+}
 `;

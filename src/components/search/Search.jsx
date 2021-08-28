@@ -59,9 +59,11 @@ const Search = ({ hashMatch, searchRooms }) => {
             })}
           </S.Select>
         )}
-        <S.SearchBtn onClick={searchOption}>검색</S.SearchBtn>
+        <S.SearchBtn onClick={searchOption}>
+          <S.SearchIcon src="/search.png" alt="search"></S.SearchIcon>
+        </S.SearchBtn>
       </form>
-    </S.SelectorContainer>
+    </S.SelectorContainer >
   );
 };
 

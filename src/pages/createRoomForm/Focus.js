@@ -10,7 +10,7 @@ export function setFocus(value) {
   Focus = value;
 }
 
-//mesh와 console에출력되는 데이터는 1초에 2번(Interval 간격 500ms)
+//mesh와 console에출력되는 데이터는 1초에 2번(Interval 간격 800ms)
 export const alarm = (data) => {
   console.log(data);
 
@@ -40,7 +40,7 @@ export const alarm = (data) => {
 
 
   //입술의 움직임으로 집중 감지
-  if (openMouth > 4.0 && startConv === Boolean(false)) {  //입을 벌린 순간 대화로 인식
+  if (openMouth > 3.7 && startConv === Boolean(false)) {  //입을 벌린 순간 대화로 인식
     startConv = Boolean(true);
     console.log("대화 시작");
   } else if (openMouth < 2.0 && startConv === Boolean(true)) { //대화도중 입술이 다물어지는 순간
@@ -58,17 +58,17 @@ export const alarm = (data) => {
     } else {
       ++mouthCnt;
     }
-  } else if (openMouth > 4.0 && startConv === Boolean(true)) { //대화라고 판단한상태에서 입이 계속 열려있음
+  } else if (openMouth > 3.7 && startConv === Boolean(true)) { //대화라고 판단한상태에서 입이 계속 열려있음
     mouthState = Boolean(true);//입술이 열림
     closeStateHold = 0;
     ++openStateHold;
-    if (openStateHold > 3 && mouthState === Boolean(true)) { //입을 연채로 움직임 없을 때
-      //console.log("대화가 아님")
+    if (openStateHold > 6 && mouthState === Boolean(true)) { //입을 연채로 움직임 없을 때
+      console.log("대화가 아님")
       startConv = Boolean(false);
       convState = Boolean(false);
       openStateHold = 0;
       mouthCnt = 0;
-      //  Focus = Boolean(true);
+      //  Focus = Boolean(true);  // 집중을 하고있다고 판단하기 애매 
     } else {
       ++mouthCnt;
     }
@@ -77,8 +77,8 @@ export const alarm = (data) => {
   //눈의 움직임 감지
   if (leftEyeDiff < 0.3 && rightEyeDiff < 0.3) {
     ++closeEyeCnt;
-    if (closeEyeCnt >= 25)
-      alert("조는중")
+    if (closeEyeCnt >= 25)   // 눈 감고 25초 경과시 
+      alert("졸지 마시오!")
     Focus = Boolean(false);
   } else {
     closeEyeCnt = 0;
@@ -86,8 +86,8 @@ export const alarm = (data) => {
   }
   closeEyeCnt > 0 && console.log(`${closeEyeCnt}초동안 눈감음`);
 
-  if (mouthCnt > 30 && startConv === Boolean(true)) {
-    alert("잡담금지^^");
+  if (mouthCnt > 40 && startConv === Boolean(true)) {
+    //alert("잡담금지^^");
     startConv = Boolean(false);
     convState = Boolean(true);
     Focus = Boolean(false);
@@ -108,6 +108,7 @@ export const alarm = (data) => {
     console.log("왼쪽 보는중");
     if (convState === Boolean(true)) {
       console.log("잡담하는중");
+      alert("잡담금지^^");
       Focus = Boolean(false);
     } else {
       Focus = Boolean(true);
@@ -117,6 +118,7 @@ export const alarm = (data) => {
     console.log("오른쪽 보는중")
     if (convState === Boolean(true)) {
       console.log("잡담하는중");
+      alert("잡담금지^^");
       Focus = Boolean(false);
     } else {
       Focus = Boolean(true);

@@ -56,14 +56,14 @@ export default function CreateRoomForm({ authService, dataService }) {
   const displayFocus = () => {
     alert(
       "총 공부시간 : " +
-        Totalminute +
-        "분 " +
-        Totalsecond +
-        "초  \n공부 중 실제로 집중한 시간 : " +
-        Studyminute +
-        "분 " +
-        Studysecond +
-        "초"
+      Totalminute +
+      "분 " +
+      Totalsecond +
+      "초  \n공부 중 실제로 집중한 시간 : " +
+      Studyminute +
+      "분 " +
+      Studysecond +
+      "초"
     );
   };
 
@@ -235,7 +235,7 @@ export default function CreateRoomForm({ authService, dataService }) {
   //세션 나갈때
   const handlerLeaveSessionEvent = () => {
     setIsLoading(true);
-    console.log("Leave session!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    console.log("세션 나감!! ");
     setState({
       ...state,
       session: undefined,
@@ -385,16 +385,16 @@ export default function CreateRoomForm({ authService, dataService }) {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-                OPENVIDU_SERVER_URL
+              OPENVIDU_SERVER_URL
             );
             if (
               window.confirm(
                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"\n\nClick OK to navigate and accept it. ' +
-                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                  OPENVIDU_SERVER_URL +
-                  '"'
+                OPENVIDU_SERVER_URL +
+                '"\n\nClick OK to navigate and accept it. ' +
+                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                OPENVIDU_SERVER_URL +
+                '"'
               )
             ) {
               window.location.assign(
@@ -412,9 +412,9 @@ export default function CreateRoomForm({ authService, dataService }) {
       axios
         .post(
           OPENVIDU_SERVER_URL +
-            "/openvidu/api/sessions/" +
-            sessionId +
-            "/connection",
+          "/openvidu/api/sessions/" +
+          sessionId +
+          "/connection",
           data,
           {
             headers: {
@@ -437,7 +437,7 @@ export default function CreateRoomForm({ authService, dataService }) {
   const openModal = () => {
     setIsOpen(true);
   };
-  function afterOpenModal() {}
+  function afterOpenModal() { }
 
   function closeModal() {
     setIsOpen(false);

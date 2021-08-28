@@ -6,14 +6,19 @@ export const RoomContainer = styled.div`
   height: 120px;
   margin-left: 50px;
   margin-right: 30px;
+  
   background-color: ${style.RoomColor};
   display: flex;
   flex-direction: column;
   cursor: pointer;
   border: 2px solid transparent;
   transition: all 300ms ease;
+  border-radius: 7px;
   &:hover {
-    border: 2px solid ${style.MainColor};
+    border: 3px solid ${style.MainColor};
+    border-color : ${style.HeaderButtonColor};
+    transform: scale(1.05);
+    
   }
 `;
 
@@ -27,6 +32,7 @@ export const RoomTitleBox = styled.div`
   font-size: 20px;
   color: black;
   margin-top: 10px;
+  border-radius: 7px;
 `;
 
 export const InnerContainer = styled.div`
@@ -41,6 +47,7 @@ export const InnerContainer = styled.div`
 export const HashTagContainer = styled.div`
   background-color: white;
   padding: 5px 10px;
+  border-radius: 7px;
 `;
 
 export const HashTagContent = styled.span`

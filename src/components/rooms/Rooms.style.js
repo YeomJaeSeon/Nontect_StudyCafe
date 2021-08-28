@@ -7,6 +7,7 @@ export const RoomsContainer = styled.div`
   flex-wrap: wrap;
   margin: auto;
   margin-top: 20px;
-  padding-top: 20px;
   
+  padding-top: 20px;
+
 `;
