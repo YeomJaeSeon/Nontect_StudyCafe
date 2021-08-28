@@ -144,3 +144,36 @@ export const GraphContainer = styled.div`
   position: absolute;
   bottom: 0;
 `;
+
+//==모달 style==//
+export const ModalOpenButton = styled.button`
+  color: white;
+  z-index: 1;
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  font-size: 20px;
+  padding: 5px;
+  cursor: pointer;
+  background-color: ${style.HeaderButtonColor};
+  border: none;
+  border-radius: 5px;
+  transition: all 0.4s;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
+export const ModalCloseButton = styled.button`
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  padding: 5px;
+  background-color: ${style.HeaderButtonColor};
+  border: none;
+  border-radius: 5px;
+  transition: all 0.4s;
+  &:hover {
+    transform: scale(1.1);
+  }
+`;

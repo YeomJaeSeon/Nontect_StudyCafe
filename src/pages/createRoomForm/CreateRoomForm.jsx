@@ -21,8 +21,23 @@ import { useBeforeunload } from "react-beforeunload";
 import { Button } from "react-bootstrap";
 import Graph from "../../components/graph/Graph";
 
+import Modal from "react-modal";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
 export default function CreateRoomForm({ authService, dataService }) {
   const [clickGraph, setClickGraph] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  let subtitle;
 
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -417,6 +432,17 @@ export default function CreateRoomForm({ authService, dataService }) {
     });
   };
 
+  //==모달 관련 메서드==//
+
+  const openModal = () => {
+    setIsOpen(true);
+  };
+  function afterOpenModal() {}
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
   return (
     <>
       {isLoading ? (
@@ -574,19 +600,24 @@ export default function CreateRoomForm({ authService, dataService }) {
                   </div>
                 </S.Facemesh>
               </S.VideoContainer>
-              <S.GraphContainer
-                onClick={() => {
-                  setClickGraph((prev) => !prev);
-                }}
+              <S.ModalOpenButton onClick={openModal}>
+                집중도 현황
+              </S.ModalOpenButton>
+              <Modal
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Example Modal"
               >
-                click
-                {clickGraph && (
-                  <Graph
-                    dataService={dataService}
-                    roomName={state.mySessionId}
-                  ></Graph>
-                )}
-              </S.GraphContainer>
+                <S.ModalCloseButton onClick={closeModal}>
+                  닫기
+                </S.ModalCloseButton>
+                <Graph
+                  dataService={dataService}
+                  roomName={state.mySessionId}
+                ></Graph>
+              </Modal>
             </>
           )}
         </>

@@ -81,7 +81,7 @@ export default function Graph({ dataService, roomName }) {
             <CartesianGrid strokeDasharray="3 3" />
             <Bar
               dataKey="집중도"
-              fill="#8884d8"
+              fill="#f50057"
               background={{ fill: "#eee" }}
             />
           </BarChart>
