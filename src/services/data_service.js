@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default class Database {
   //==회원가입==//
-  createUser(uid, name, email, interestedField) {
+  createUser(uid, name, email, interestedField, date) {
     const entries = new Map();
     interestedField.forEach((value) => {
       entries.set(value, value);
@@ -119,6 +119,37 @@ export default class Database {
   getAllUsers(func) {
     const usersDatasRef = firebaseDatabase.ref("users");
     usersDatasRef.once("value", (snapshot) => {
+      func && func(snapshot.val());
+    });
+  }
+
+  //--이현욱
+  //공부시간, 집중시간 저장
+  focusRecord(uid, date, totalSec, focusSec) {
+    return axios.patch(
+      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/focusRecord/${date}.json`,
+      {
+        totalStudyTime : totalSec,
+        focusStudyTime : focusSec
+      }
+    );
+  }
+  //공부 날짜에 따른 데이터가 있는지 확인
+  studayDataExists(uid, date){
+    const studyDataref = firebaseDatabase.ref("users/"+ uid + "/focusRecord/" + date);
+    var tf;
+    studyDataref.on("value",(snapshot) => {
+      tf = snapshot.exists(); //snapshot.exists() : ref에 데이터가 존재하면 true반환 없으면 false
+      console.log("데이터 있당"+tf);
+      return Boolean(true);
+    });
+    console.log("@@@@tf 출력 제발"+ tf);
+  }
+  
+  //저장된 집중정보 호출
+  getTodayStudyData(uid, date, func){
+    const studyTimeRef = firebaseDatabase.ref("users/"+ uid + "/focusRecord/" + date);
+    studyTimeRef.on("value", (snapshot) => {
       func && func(snapshot.val());
     });
   }
