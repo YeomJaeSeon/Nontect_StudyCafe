@@ -129,26 +129,30 @@ export default class Database {
     return axios.patch(
       `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/focusRecord/${date}.json`,
       {
-        totalStudyTime : totalSec,
-        focusStudyTime : focusSec
+        totalStudyTime: totalSec,
+        focusStudyTime: focusSec,
       }
     );
   }
   //공부 날짜에 따른 데이터가 있는지 확인
-  studayDataExists(uid, date){
-    const studyDataref = firebaseDatabase.ref("users/"+ uid + "/focusRecord/" + date);
+  studayDataExists(uid, date, func) {
+    const studyDataref = firebaseDatabase.ref(
+      "users/" + uid + "/focusRecord/" + date
+    );
     var tf;
-    studyDataref.on("value",(snapshot) => {
+    studyDataref.on("value", (snapshot) => {
       tf = snapshot.exists(); //snapshot.exists() : ref에 데이터가 존재하면 true반환 없으면 false
-      console.log("데이터 있당"+tf);
-      return Boolean(true);
+      console.log("데이터 있당" + tf);
+      func && func(true);
     });
-    console.log("@@@@tf 출력 제발"+ tf);
+    console.log("@@@@tf 출력 제발" + tf);
   }
-  
+
   //저장된 집중정보 호출
-  getTodayStudyData(uid, date, func){
-    const studyTimeRef = firebaseDatabase.ref("users/"+ uid + "/focusRecord/" + date);
+  getTodayStudyData(uid, date, func) {
+    const studyTimeRef = firebaseDatabase.ref(
+      "users/" + uid + "/focusRecord/" + date
+    );
     studyTimeRef.on("value", (snapshot) => {
       func && func(snapshot.val());
     });

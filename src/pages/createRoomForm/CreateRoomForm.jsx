@@ -56,14 +56,14 @@ export default function CreateRoomForm({ authService, dataService }) {
   const displayFocus = () => {
     alert(
       "총 공부시간 : " +
-      Totalminute +
-      "분 " +
-      Totalsecond +
-      "초  \n공부 중 실제로 집중한 시간 : " +
-      Studyminute +
-      "분 " +
-      Studysecond +
-      "초"
+        Totalminute +
+        "분 " +
+        Totalsecond +
+        "초  \n공부 중 실제로 집중한 시간 : " +
+        Studyminute +
+        "분 " +
+        Studysecond +
+        "초"
     );
   };
 
@@ -74,15 +74,13 @@ export default function CreateRoomForm({ authService, dataService }) {
     session: undefined,
   });
 
-
   //--이현욱
   //yyyymmdd 형식의 날짜 데이터
   const today = new Date();
   const year = today.getFullYear();
-  const month = ('0' + (today.getMonth() + 1)).slice(-2);
-  const day = ('0' + today.getDate()).slice(-2);
+  const month = ("0" + (today.getMonth() + 1)).slice(-2);
+  const day = ("0" + today.getDate()).slice(-2);
   const nowDate = year + month + day;
-
 
   //  Load posenet
   const runFacemesh = async () => {
@@ -237,7 +235,7 @@ export default function CreateRoomForm({ authService, dataService }) {
       let currentPeoplecount = Object.values(values).filter(
         (room) => room.sessionId == state.mySessionId
       )[0].peopleCount;
-    
+
       dataService.changeRoomData(state.mySessionId, currentPeoplecount + 1);
     });
   };
@@ -245,14 +243,21 @@ export default function CreateRoomForm({ authService, dataService }) {
   //세션 나갈때
   const handlerLeaveSessionEvent = () => {
     //-- 이현욱
-    //함수 동작 -> result의 결과로 오늘 날짜의 공부시간, 집중시간 데이터가 
+    //함수 동작 -> result의 결과로 오늘 날짜의 공부시간, 집중시간 데이터가
     //파이어베이스에 저장되어 있는지 확인(studyDataExists함수)
     //studyDataExists의 반환값은 true or false
     // 1. 반환값이 true인 경우 : 데이터가 존재하므로 기존데이터와 현재 데이터를 누적(더함)
     // 2. 반환값이 false인 경우 : 데이터가 존재하지 않으므로 새로운 데이터 필드 생성하여 저장
 
     //<문제 : studyDataExists에서 return을 사용해도 값이 반환되지 않고 undefined가 됨...>
-    var result = dataService.studayDataExists(state.myUserName, nowDate);
+    var result = dataService.studayDataExists(
+      state.myUserName,
+      nowDate,
+      (value) => {
+        console.log("요게 문제문제문제~?~?~?~?");
+        console.log(value);
+      }
+    );
     if (result) {
       //기존 데이터가 있으므로 누적
       console.log("@@@@누적실행 @@@@");
@@ -260,15 +265,19 @@ export default function CreateRoomForm({ authService, dataService }) {
         var currentTotalTime = Object.values(values);
         //index 0 : focustime, index 1 : totaltime
         var cumulativeTotalSec = totalSec + currentTotalTime[1];
-        var cumulativeStudylSec = studySec +  currentTotalTime[0];
-        dataService.focusRecord(state.myUserName, nowDate, cumulativeTotalSec, cumulativeStudylSec);
+        var cumulativeStudylSec = studySec + currentTotalTime[0];
+        dataService.focusRecord(
+          state.myUserName,
+          nowDate,
+          cumulativeTotalSec,
+          cumulativeStudylSec
+        );
       });
-    }else{
+    } else {
       console.log("@@@@최초 저장 실행 @@@@");
       dataService.focusRecord(state.myUserName, nowDate, totalSec, studySec);
     }
 
-    
     setIsLoading(true);
     console.log("세션 나감!! ");
     setState({
@@ -420,16 +429,16 @@ export default function CreateRoomForm({ authService, dataService }) {
             console.log(error);
             console.warn(
               "No connection to OpenVidu Server. This may be a certificate error at " +
-              OPENVIDU_SERVER_URL
+                OPENVIDU_SERVER_URL
             );
             if (
               window.confirm(
                 'No connection to OpenVidu Server. This may be a certificate error at "' +
-                OPENVIDU_SERVER_URL +
-                '"\n\nClick OK to navigate and accept it. ' +
-                'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
-                OPENVIDU_SERVER_URL +
-                '"'
+                  OPENVIDU_SERVER_URL +
+                  '"\n\nClick OK to navigate and accept it. ' +
+                  'If no certificate warning is shown, then check that your OpenVidu Server is up and running at "' +
+                  OPENVIDU_SERVER_URL +
+                  '"'
               )
             ) {
               window.location.assign(
@@ -447,9 +456,9 @@ export default function CreateRoomForm({ authService, dataService }) {
       axios
         .post(
           OPENVIDU_SERVER_URL +
-          "/openvidu/api/sessions/" +
-          sessionId +
-          "/connection",
+            "/openvidu/api/sessions/" +
+            sessionId +
+            "/connection",
           data,
           {
             headers: {
@@ -472,7 +481,7 @@ export default function CreateRoomForm({ authService, dataService }) {
   const openModal = () => {
     setIsOpen(true);
   };
-  function afterOpenModal() { }
+  function afterOpenModal() {}
 
   function closeModal() {
     setIsOpen(false);
