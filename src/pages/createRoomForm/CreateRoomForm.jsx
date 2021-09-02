@@ -18,7 +18,6 @@ import { useHistory, useLocation } from "react-router";
 import * as S from "./CreateRoomForm.style";
 import { useBeforeunload } from "react-beforeunload";
 
-import { Button } from "react-bootstrap";
 import Graph from "../../components/graph/Graph";
 
 import Modal from "react-modal";
@@ -652,7 +651,7 @@ export default function CreateRoomForm({ authService, dataService }) {
                 onAfterOpen={afterOpenModal}
                 onRequestClose={closeModal}
                 style={customStyles}
-                contentLabel="Example Modal"
+                contentLabel="graph Modal"
               >
                 <S.ModalCloseButton onClick={closeModal}>
                   닫기

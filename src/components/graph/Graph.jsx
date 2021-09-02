@@ -27,19 +27,36 @@ export default function Graph({ dataService, roomName }) {
             total: value.studyTimeInRoom.total,
           }));
 
-        const newData = filterArr.map((value) => ({
-          name: value.name,
-          집중도: Math.floor((value.focus / value.total) * 100),
-        }));
+        const newData = filterArr.map((value) => {
+          let time = 0;
+
+          if (value.total > 60) {
+            const totalMin = Math.floor(value.total / 60); //분
+            const totalSec = value.total % 60;
+            time = 0 + ":" + totalMin + ":" + totalSec;
+          } else if (value.total > 3600) {
+            const totalHour = Math.floor(value.total / (60 * 60));
+            const totalMin = Math.floor(value.total / 60); //분
+            const totalSec = value.total % 60;
+            time = totalHour + ":" + totalMin + ":" + totalSec;
+          } else {
+            const totalSec = value.total % 60;
+            time = 0 + ":" + 0 + ":" + totalSec;
+          }
+          return {
+            name: `${value.name}(${time})`,
+            집중도: Math.floor((value.focus / value.total) * 100),
+          };
+        });
         setData((prev) => {
           return [
             {
-              name: "집중도 100",
+              name: " ",
               집중도: 100,
             },
             ...newData,
             {
-              name: "집중도 0",
+              name: "  ",
               집중도: 0,
             },
           ];
