@@ -134,19 +134,18 @@ export default class Database {
       }
     );
   }
-  //공부 날짜에 따른 데이터가 있는지 확인
-  studayDataExists(uid, date, func) {
-    const studyDataref = firebaseDatabase.ref(
-      "users/" + uid + "/focusRecord/" + date
-    );
-    var tf;
-    studyDataref.on("value", (snapshot) => {
-      tf = snapshot.exists(); //snapshot.exists() : ref에 데이터가 존재하면 true반환 없으면 false
-      console.log("데이터 있당" + tf);
-      func && func(true);
-    });
-    console.log("@@@@tf 출력 제발" + tf);
-  }
+//공부 날짜에 따른 데이터가 있는지 확인
+studayDataExists(uid, date, func) {
+  const studyDataref = firebaseDatabase.ref("users/" + uid + "/focusRecord/" + date);
+  var tf;
+  studyDataref.once("value").then((snapshot) => {
+      if(snapshot.exists()){
+        func && func(true);
+      }else{
+        func && func(false);
+      }
+  });
+}
 
   //저장된 집중정보 호출
   getTodayStudyData(uid, date, func) {

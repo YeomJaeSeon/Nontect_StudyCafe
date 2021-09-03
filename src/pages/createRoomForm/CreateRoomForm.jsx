@@ -242,40 +242,38 @@ export default function CreateRoomForm({ authService, dataService }) {
   //세션 나갈때
   const handlerLeaveSessionEvent = () => {
     //-- 이현욱
-    //함수 동작 -> result의 결과로 오늘 날짜의 공부시간, 집중시간 데이터가
-    //파이어베이스에 저장되어 있는지 확인(studyDataExists함수)
-    //studyDataExists의 반환값은 true or false
-    // 1. 반환값이 true인 경우 : 데이터가 존재하므로 기존데이터와 현재 데이터를 누적(더함)
-    // 2. 반환값이 false인 경우 : 데이터가 존재하지 않으므로 새로운 데이터 필드 생성하여 저장
-
-    //<문제 : studyDataExists에서 return을 사용해도 값이 반환되지 않고 undefined가 됨...>
-    var result = dataService.studayDataExists(
+    // 누적은 1번만 시행이 되도록 하기 위해서 count
+    dataService.studayDataExists(
       state.myUserName,
       nowDate,
       (value) => {
-        console.log("요게 문제문제문제~?~?~?~?");
-        console.log(value);
+        console.log("value 출력"+value);
+        var count = 0;
+        count++;
+        if (value == true && count == 1) {
+        //기존 데이터가 있으므로 누적
+          console.log("@@@@누적실행 @@@@");
+          dataService.getTodayStudyData(state.myUserName, nowDate, (values) => {
+            var currentTotalTime = Object.values(values);
+            //index 0 : focustime, index 1 : totaltime
+            var cumulativeTotalSec = totalSec + currentTotalTime[1];
+            var cumulativeStudylSec = studySec + currentTotalTime[0];
+            if(count == 1){
+              dataService.focusRecord(
+              state.myUserName,
+              nowDate,
+              cumulativeTotalSec,
+              cumulativeStudylSec
+            );
+            count++;
+            }
+          });
+        } else if(value == false && count == 1 ) {
+          dataService.focusRecord(state.myUserName, nowDate, totalSec, studySec);
+          count++;
+        }
       }
     );
-    if (result) {
-      //기존 데이터가 있으므로 누적
-      console.log("@@@@누적실행 @@@@");
-      dataService.getTodayStudyData(state.myUserName, nowDate, (values) => {
-        var currentTotalTime = Object.values(values);
-        //index 0 : focustime, index 1 : totaltime
-        var cumulativeTotalSec = totalSec + currentTotalTime[1];
-        var cumulativeStudylSec = studySec + currentTotalTime[0];
-        dataService.focusRecord(
-          state.myUserName,
-          nowDate,
-          cumulativeTotalSec,
-          cumulativeStudylSec
-        );
-      });
-    } else {
-      console.log("@@@@최초 저장 실행 @@@@");
-      dataService.focusRecord(state.myUserName, nowDate, totalSec, studySec);
-    }
 
     setIsLoading(true);
     console.log("세션 나감!! ");
