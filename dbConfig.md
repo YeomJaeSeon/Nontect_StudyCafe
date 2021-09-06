@@ -6,6 +6,7 @@
       - ...hasTags
     - peopleCount(방에 접속한 유저수)
     - sessionId(방이름)
+    - secret(방의 비밀방/공개방여부, 공개방이면 값이 'public'이들어가고 그렇지않으면 '방의 비밀번호'값이 들어감)
 
 # 유저정보
 

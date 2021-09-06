@@ -32,7 +32,7 @@ export default class Database {
   }
 
   //==방장이 방생성==//
-  createRoom(sessionId, interestedArr) {
+  createRoom(sessionId, interestedArr, secreteRoomNumber) {
     const entries = new Map();
     interestedArr.forEach((value) => {
       entries.set(value, value);
@@ -44,6 +44,7 @@ export default class Database {
       {
         sessionId: sessionId,
         peopleCount: 0, //방만 생성시 count = 0 (방의 유저 수)
+        secret: secreteRoomNumber,
         hashTag: obj,
       }
     );
@@ -134,18 +135,20 @@ export default class Database {
       }
     );
   }
-//공부 날짜에 따른 데이터가 있는지 확인
-studayDataExists(uid, date, func) {
-  const studyDataref = firebaseDatabase.ref("users/" + uid + "/focusRecord/" + date);
-  var tf;
-  studyDataref.once("value").then((snapshot) => {
-      if(snapshot.exists()){
+  //공부 날짜에 따른 데이터가 있는지 확인
+  studayDataExists(uid, date, func) {
+    const studyDataref = firebaseDatabase.ref(
+      "users/" + uid + "/focusRecord/" + date
+    );
+    var tf;
+    studyDataref.once("value").then((snapshot) => {
+      if (snapshot.exists()) {
         func && func(true);
-      }else{
+      } else {
         func && func(false);
       }
-  });
-}
+    });
+  }
 
   //저장된 집중정보 호출
   getTodayStudyData(uid, date, func) {

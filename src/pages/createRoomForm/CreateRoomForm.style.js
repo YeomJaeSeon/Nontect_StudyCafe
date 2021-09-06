@@ -108,7 +108,7 @@ export const NameInput = styled.input`
   font-size: 20px;
   padding: 5px;
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 10px;
 `;
 
 export const RoomHashTagBox = styled.div`
@@ -176,4 +176,10 @@ export const ModalCloseButton = styled.button`
   &:hover {
     transform: scale(1.1);
   }
+`;
+
+export const SecreteRoomSelector = styled.p``;
+
+export const SecreteNumberInput = styled.div`
+  margin-bottom: 40px;
 `;

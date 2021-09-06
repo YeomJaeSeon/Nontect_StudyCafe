@@ -182,6 +182,9 @@ export default function CreateRoomForm({ authService, dataService }) {
     tech: false,
   });
 
+  const [isSecreteRoom, setIsSecreteRoom] = useState(false);
+
+  const [secreteRoomNumber, setSecreteRoomNumber] = useState("");
   //방의 해시태그
   // 1 ~ 3 checkbox
   const updateInterestedField = (e) => {
@@ -243,37 +246,33 @@ export default function CreateRoomForm({ authService, dataService }) {
   const handlerLeaveSessionEvent = () => {
     //-- 이현욱
     // 누적은 1번만 시행이 되도록 하기 위해서 count
-    dataService.studayDataExists(
-      state.myUserName,
-      nowDate,
-      (value) => {
-        console.log("value 출력"+value);
-        var count = 0;
-        count++;
-        if (value == true && count == 1) {
+    dataService.studayDataExists(state.myUserName, nowDate, (value) => {
+      console.log("value 출력" + value);
+      var count = 0;
+      count++;
+      if (value == true && count == 1) {
         //기존 데이터가 있으므로 누적
-          console.log("@@@@누적실행 @@@@");
-          dataService.getTodayStudyData(state.myUserName, nowDate, (values) => {
-            var currentTotalTime = Object.values(values);
-            //index 0 : focustime, index 1 : totaltime
-            var cumulativeTotalSec = totalSec + currentTotalTime[1];
-            var cumulativeStudylSec = studySec + currentTotalTime[0];
-            if(count == 1){
-              dataService.focusRecord(
+        console.log("@@@@누적실행 @@@@");
+        dataService.getTodayStudyData(state.myUserName, nowDate, (values) => {
+          var currentTotalTime = Object.values(values);
+          //index 0 : focustime, index 1 : totaltime
+          var cumulativeTotalSec = totalSec + currentTotalTime[1];
+          var cumulativeStudylSec = studySec + currentTotalTime[0];
+          if (count == 1) {
+            dataService.focusRecord(
               state.myUserName,
               nowDate,
               cumulativeTotalSec,
               cumulativeStudylSec
             );
             count++;
-            }
-          });
-        } else if(value == false && count == 1 ) {
-          dataService.focusRecord(state.myUserName, nowDate, totalSec, studySec);
-          count++;
-        }
+          }
+        });
+      } else if (value == false && count == 1) {
+        dataService.focusRecord(state.myUserName, nowDate, totalSec, studySec);
+        count++;
       }
-    );
+    });
 
     setIsLoading(true);
     console.log("세션 나감!! ");
@@ -352,6 +351,17 @@ export default function CreateRoomForm({ authService, dataService }) {
     }
     if (event !== undefined) {
       //방생성 후 입장
+
+      if (isSecreteRoom) {
+        //비밀방 여부 true로 설정했으면
+        if (secreteRoomNumber == "") {
+          //공백이면
+          alert("방 비밀번호를 입력해주세요");
+          setIsLoading(false);
+          return;
+        }
+      }
+
       console.log("방 생성 후 입장");
       if (state.mySessionId && state.myUserName) {
         getToken().then((token) => {
@@ -370,7 +380,17 @@ export default function CreateRoomForm({ authService, dataService }) {
           );
           console.log("방의 해쉬태그으으으으");
           console.log(interestArr);
-          dataService.createRoom(state.mySessionId, interestArr);
+          if (isSecreteRoom) {
+            //비밀방이면
+            dataService.createRoom(
+              state.mySessionId,
+              interestArr,
+              secreteRoomNumber
+            );
+          } else {
+            //공개방이면
+            dataService.createRoom(state.mySessionId, interestArr, "public");
+          }
           setIsLoading(false);
         });
       }
@@ -484,6 +504,21 @@ export default function CreateRoomForm({ authService, dataService }) {
     setIsOpen(false);
   }
 
+  //== secrete room 여부 체크메서드==//
+  const selectSecreteRoomHandler = () => {
+    setIsSecreteRoom((prev) => {
+      if (!prev) {
+        console.log("비밀방으로 변경됨");
+      }
+      return !prev;
+    });
+  };
+
+  //==secret room number 입력==//
+  const changeSecreteRoomNumberHandler = (e) => {
+    setSecreteRoomNumber(e.target.value);
+  };
+
   return (
     <>
       {isLoading ? (
@@ -524,6 +559,29 @@ export default function CreateRoomForm({ authService, dataService }) {
                         required
                       />
                     </p>
+                    <S.SecreteRoomSelector>
+                      <label>
+                        비밀방 여부
+                        <input
+                          type="checkbox"
+                          onClick={selectSecreteRoomHandler}
+                          checked={isSecreteRoom}
+                        />
+                      </label>
+                    </S.SecreteRoomSelector>
+                    {isSecreteRoom ? (
+                      <S.SecreteNumberInput>
+                        <input
+                          value={secreteRoomNumber}
+                          onChange={changeSecreteRoomNumberHandler}
+                          type="number"
+                          placeholder="방 비밀번호 입력(숫자)"
+                        />
+                      </S.SecreteNumberInput>
+                    ) : (
+                      <S.SecreteNumberInput></S.SecreteNumberInput>
+                    )}
+
                     <p>
                       <S.NameLabel>
                         스터디룸 해시태그를 선택하세요(최대 3개)
