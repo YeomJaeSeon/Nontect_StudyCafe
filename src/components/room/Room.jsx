@@ -4,6 +4,7 @@ import OpenViduSession from "openvidu-react";
 import axios from "axios";
 import { useHistory } from "react-router";
 import Modal from "react-modal";
+import { ReactComponent as LockSVG } from "../../assets/svg/lock-solid.svg";
 
 const customStyles = {
   content: {
@@ -117,7 +118,11 @@ const Room = ({ id, name, hashTag, peopleCount, secret, dataService }) => {
                 return <S.HashTagContent key={idx}>#{tag} </S.HashTagContent>;
               })}
             </S.HashTagContainer>
-            {secret != "public" && <S.SecretRoomName>비밀방</S.SecretRoomName>}
+            {secret != "public" && (
+              <S.SecretRoomName>
+                <LockSVG width={20} height={20} />
+              </S.SecretRoomName>
+            )}
           </S.LeftSection>
           <S.PeopleCountContent peopleCount={peopleCount}>
             {peopleCount}/6
