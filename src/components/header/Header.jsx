@@ -17,6 +17,13 @@ const Header = ({ location, logout, chatting }) => {
           <S.LogoutBtn onClick={logout}>로그아웃</S.LogoutBtn>
         </>
       );
+    } else if (location === "myinfo") {
+      return (
+        <>
+          <S.InfoBtn>메인으로</S.InfoBtn>
+          <S.LogoutBtn onClick={logout}>로그아웃</S.LogoutBtn>
+        </>
+      );
     }
   };
   return (

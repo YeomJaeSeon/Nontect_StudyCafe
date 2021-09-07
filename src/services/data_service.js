@@ -6,7 +6,7 @@ import axios from "axios";
 
 export default class Database {
   //==회원가입==//
-  createUser(uid, name, email, interestedField, date) {
+  createUser(uid, name, email, interestedField) {
     const entries = new Map();
     interestedField.forEach((value) => {
       entries.set(value, value);
@@ -134,18 +134,20 @@ export default class Database {
       }
     );
   }
-//공부 날짜에 따른 데이터가 있는지 확인
-studayDataExists(uid, date, func) {
-  const studyDataref = firebaseDatabase.ref("users/" + uid + "/focusRecord/" + date);
-  var tf;
-  studyDataref.once("value").then((snapshot) => {
-      if(snapshot.exists()){
+  //공부 날짜에 따른 데이터가 있는지 확인
+  studayDataExists(uid, date, func) {
+    const studyDataref = firebaseDatabase.ref(
+      "users/" + uid + "/focusRecord/" + date
+    );
+    var tf;
+    studyDataref.once("value").then((snapshot) => {
+      if (snapshot.exists()) {
         func && func(true);
-      }else{
+      } else {
         func && func(false);
       }
-  });
-}
+    });
+  }
 
   //저장된 집중정보 호출
   getTodayStudyData(uid, date, func) {
@@ -155,5 +157,30 @@ studayDataExists(uid, date, func) {
     studyTimeRef.on("value", (snapshot) => {
       func && func(snapshot.val());
     });
+  }
+
+  //현재 로그인한 유저 데이터 받아옴
+  getLoginUserData(uid, func) {
+    const usersDatasRef = firebaseDatabase.ref("users/" + uid);
+    usersDatasRef.once("value", (snapshot) => {
+      func && func(snapshot.val());
+    });
+  }
+
+  updateLoginUserData(uid, changedName, interestedField) {
+    const entries = new Map();
+    interestedField.forEach((value) => {
+      entries.set(value, value);
+    });
+
+    const obj = Object.fromEntries(entries);
+
+    return axios.patch(
+      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/studyTimeInRoom.json`,
+      {
+        name: changedName,
+        hashTag: obj,
+      }
+    );
   }
 }
