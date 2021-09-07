@@ -32,7 +32,7 @@ export default class Database {
   }
 
   //==방장이 방생성==//
-  createRoom(sessionId, interestedArr) {
+  createRoom(sessionId, interestedArr, secreteRoomNumber) {
     const entries = new Map();
     interestedArr.forEach((value) => {
       entries.set(value, value);
@@ -44,6 +44,7 @@ export default class Database {
       {
         sessionId: sessionId,
         peopleCount: 0, //방만 생성시 count = 0 (방의 유저 수)
+        secret: secreteRoomNumber,
         hashTag: obj,
       }
     );

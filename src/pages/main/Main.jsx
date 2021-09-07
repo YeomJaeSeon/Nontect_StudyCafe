@@ -48,6 +48,7 @@ const Main = ({ authService, dataService }) => {
           return {
             name: value.sessionId,
             peopleCount: value.peopleCount,
+            secret: value.secret,
             hashTag: Object.values(value.hashTag).map((v) => hashMatch[`${v}`]),
           };
         });
@@ -75,6 +76,7 @@ const Main = ({ authService, dataService }) => {
               return {
                 name: value.sessionId,
                 peopleCount: value.peopleCount,
+                secret: value.secret,
                 hashTag: Object.values(value.hashTag).map(
                   (v) => hashMatch[`${v}`]
                 ),

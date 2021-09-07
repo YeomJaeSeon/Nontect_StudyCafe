@@ -22,6 +22,7 @@ const Rooms = ({ dataService, rooms }) => {
               id={room.id}
               name={room.name}
               peopleCount={room.peopleCount}
+              secret={room.secret}
               hashTag={room.hashTag}
             ></Room>
           );
