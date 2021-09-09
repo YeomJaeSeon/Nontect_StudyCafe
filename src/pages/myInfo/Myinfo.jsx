@@ -41,6 +41,8 @@ const Myinfo = ({ authService, dataService }) => {
     });
   }, []);
 
+  //일단 정상적으로 호출되어 사용은 가능하지만 계속해서 리렌더링 발생
+  //1회만 받아오게 하고싶음ㅠ
   useEffect(() => {
     if (state.myuid !== "") {
       if (userData.character === " ") {
@@ -49,13 +51,14 @@ const Myinfo = ({ authService, dataService }) => {
           setUserData((user) => ({
             ...user,
             character: values.name,
+            interestedField: values.hashTag,
           }));
         });
       }
     }
   });
-  console.log("#######" + state.myUid);
-  console.log("#######" + userData.character);
+  //console.log("#######" + state.myUid);
+  //console.log("#######" + userData.character);
   const [isCharacterProper, setIsCharacterProper] = useState(false);
   const [existedUsers, setExistedUsers] = useState([]);
   const history = useHistory();
