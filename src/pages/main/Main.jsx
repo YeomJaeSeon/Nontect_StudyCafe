@@ -4,6 +4,7 @@ import * as S from "./Main.style";
 import Rooms from "../../components/rooms/Rooms";
 import Header from "../../components/header/Header";
 import { useHistory } from "react-router-dom";
+import Info from "../myInfo/Myinfo";
 
 //======= 해시태그 매핑할 한국어
 const hashMatch = {

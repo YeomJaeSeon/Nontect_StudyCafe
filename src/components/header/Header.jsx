@@ -9,18 +9,22 @@ const Header = ({ location, logout, chatting }) => {
     history.push("/");
   };
 
+  const goMyInfo = () => {
+    history.push("/Myinfo");
+  };
+
   const displayMenu = () => {
     if (location === "main") {
       return (
         <>
-          <S.InfoBtn>내 정보</S.InfoBtn>
+          <S.InfoBtn onClick={goMyInfo}> 내 정보</S.InfoBtn>
           <S.LogoutBtn onClick={logout}>로그아웃</S.LogoutBtn>
         </>
       );
-    } else if (location === "myinfo") {
+    } else if (location === "MyInfo") {
       return (
         <>
-          <S.InfoBtn>메인으로</S.InfoBtn>
+          <S.InfoBtn onClick={goToHome}>메인으로</S.InfoBtn>
           <S.LogoutBtn onClick={logout}>로그아웃</S.LogoutBtn>
         </>
       );
