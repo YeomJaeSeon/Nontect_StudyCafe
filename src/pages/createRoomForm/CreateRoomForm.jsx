@@ -210,22 +210,29 @@ export default function CreateRoomForm({ authService, dataService }) {
   });
 
   useEffect(() => {
-    if (location.state !== undefined) {
-      setState((prev) => ({
-        ...prev,
-        mySessionId: location.state.name,
-      }));
-      joinSession(undefined);
-    }
-
-    //로그인한 유저의 uid와 방이름(mySessionId) 를 넘김
-    authService.getLoginStatus((uid) => {
-      console.log(uid);
-      setState((user) => ({
-        ...user,
-        myUserName: uid.uid,
-      }));
+    const unscribe = authService.getLoginStatus((user) => {
+      if (user) {
+        //로그인 되어있으면
+        if (location.state !== undefined) {
+          setState((prev) => ({
+            ...prev,
+            mySessionId: location.state.name,
+          }));
+          joinSession(undefined);
+        }
+        setState((u) => ({
+          ...u,
+          myUserName: user.uid,
+        }));
+      } else {
+        //로그인 안되어있으면
+        history.push("/");
+        alert("로그인 해주세요");
+      }
     });
+    return () => {
+      unscribe();
+    };
   }, []);
 
   //세션 입장 메서드
