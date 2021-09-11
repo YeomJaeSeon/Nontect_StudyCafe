@@ -18,7 +18,7 @@ export const Background = styled.img`
 
 export const MainContainer = styled.div`
   width: 90%;
-  height: 500px;
+  height: 600px;
 
   background-color: ${style.MainContainerColor};
   margin: auto;

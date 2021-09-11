@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import * as S from "./Myinfo.style";
 import { useHistory } from "react-router-dom";
 import Header from "../../components/header/Header";
+import Graph from "../../components/graph/Graph";
+import MyGraph from "../../components/mygraph/MyGraph";
 
 /*회원정보창에서 이름은 텍스트필드, 해쉬테그는 체크박스,
   집중정보는 리스트형태
@@ -65,13 +67,17 @@ const Myinfo = ({ authService, dataService }) => {
             religion: false,
             tech: false,
           };
+
           Object.keys(userDataFromFB.hashTag).forEach((hash) => {
             newHashTag[`${hash}`] = true;
           });
+
+          let newFocusRecord = {};
+          newFocusRecord = userDataFromFB.focusRecord;
           return {
             ...prev,
             name: userDataFromFB.name,
-            focusRecord: userDataFromFB.focusRecord,
+            focusRecord: newFocusRecord,
             hashTag: newHashTag,
           };
         });
@@ -245,6 +251,7 @@ const Myinfo = ({ authService, dataService }) => {
                 </S.ListContainer>
                 <S.DivLine />
                 <S.SmallTitle>공부 정보</S.SmallTitle>
+                <MyGraph subData={userData.focusRecord}></MyGraph>
               </S.FormContainer>
             </S.MainContainer>
           </S.BackgroundContainer>
