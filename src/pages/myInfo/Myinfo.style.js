@@ -17,12 +17,12 @@ export const Background = styled.img`
 `;
 
 export const MainContainer = styled.div`
-  margin-top: 200px;
   width: 90%;
   height: 500px;
 
   background-color: ${style.MainContainerColor};
   margin: auto;
+  margin-top: 50px;
   opacity: 0.8;
 
   border: 0.5px solid ${style.MainColor};
@@ -73,23 +73,28 @@ export const DivLine = styled.div`
   width: 90%;
   height: 2px;
   background-color: ${style.MainColor};
-  margin: 10px 0;
+  margin: 20px 0;
 `;
 
 export const FormContainer = styled.form`
   width: 100%;
-  height: 70%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow-y: auto;
+
+  position: relative;
 `;
 
 export const Input = styled.input`
-  width: 80%;
+  width: 200px;
   margin: 15px 0;
   padding: 10px;
   font-size: 20px;
+  text-align: center;
+  background-color: ${(props) => props.readOnly && style.MainContainerColor};
+  outline: ${(props) => props.readOnly && "none"};
 `;
 
 export const SignUpBtn = styled.button`
@@ -124,7 +129,7 @@ export const InterestingTitle = styled.h3`
 `;
 
 export const ListContainer = styled.div`
-  width: 80%;
+  width: 300px;
   display: flex;
   flex-wrap: wrap;
 `;
@@ -137,6 +142,7 @@ export const Label = styled.label`
 export const InputCheck = styled.input`
   margin-left: 15px;
   transform: scale(1.5);
+  accent-color: ${(props) => props.readOnly && style.MainContainerColor};
 `;
 
 export const None = styled.input`
@@ -170,3 +176,21 @@ export const LoadingSpinnerContainer = styled.div`
 `;
 
 export const SmallTitle = styled.h2``;
+
+export const EditBtn = styled.button`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-weight: bolder;
+  width: 80px;
+  height: 30px;
+  background-color: ${style.HeaderButtonColor};
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: all 0.4s;
+  &:hover {
+    transform: scale(1.1);
+    color: white;
+  }
+`;

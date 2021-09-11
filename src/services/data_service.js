@@ -177,7 +177,7 @@ export default class Database {
     const obj = Object.fromEntries(entries);
 
     return axios.patch(
-      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/studyTimeInRoom.json`,
+      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}.json`,
       {
         name: changedName,
         hashTag: obj,

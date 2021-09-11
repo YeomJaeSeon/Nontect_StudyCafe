@@ -29,6 +29,8 @@ const Myinfo = ({ authService, dataService }) => {
     },
   }); //로그인한 유저의 정보
 
+  const [isReadOnly, setIsReadOnly] = useState(true);
+
   const history = useHistory();
 
   useEffect(() => {
@@ -83,6 +85,61 @@ const Myinfo = ({ authService, dataService }) => {
     authService.logout();
   };
 
+  //수정 - 완료 버튼 클릭 핸들러 함수
+  const changeBtnHandler = () => {
+    console.log("change btn clicked");
+    setIsReadOnly((prev) => {
+      if (!prev) {
+        //완료 버튼 클릭시 - db에 수정내용 적용되어야함
+        if (userData.name.length < 2) {
+          alert("별명이 너무 짧습니다.");
+          return;
+        } else if (userData.name.trim() == "") {
+          alert("공백만으로 이루어져있습니다.");
+          return;
+        } else {
+          const interestedField = Object.keys(userData.hashTag).filter(
+            (hashTagName) => userData.hashTag[`${hashTagName}`]
+          );
+
+          console.log(interestedField);
+          dataService.updateLoginUserData(uid, userData.name, interestedField);
+        }
+      }
+      return !prev;
+    });
+  };
+
+  //별명 수정 핸들러 함수
+  const changeNameHandler = (e) => {
+    const value = e.currentTarget.value;
+    if (value.length > 6) return;
+    setUserData((prev) => ({
+      ...prev,
+      name: value,
+    }));
+  };
+
+  // 1 ~ 3 checkbox (관심사 수정 핸들러 함수)
+  const updateInterestedField = (e) => {
+    if (isReadOnly) return;
+    const name = e.currentTarget.name;
+    const isChecked = e.currentTarget.checked;
+
+    const checkedCount = Object.values(userData.hashTag).filter(
+      (bool) => bool
+    ).length;
+    if (checkedCount === 1 && userData.hashTag[name] === true) return;
+    if (checkedCount === 3 && userData.hashTag[name] === false) return;
+    setUserData((user) => ({
+      ...user,
+      hashTag: {
+        ...user.hashTag,
+        [name]: isChecked,
+      },
+    }));
+  };
+
   return (
     <>
       {isLoading ? (
@@ -103,14 +160,19 @@ const Myinfo = ({ authService, dataService }) => {
                   e.preventDefault();
                 }}
               >
+                {isReadOnly ? (
+                  <S.EditBtn onClick={changeBtnHandler}>수정</S.EditBtn>
+                ) : (
+                  <S.EditBtn onClick={changeBtnHandler}>완료</S.EditBtn>
+                )}
                 <S.SmallTitle>내 정보</S.SmallTitle>
                 <S.InterestingTitle>별명</S.InterestingTitle>
-                {}
                 <S.Input
                   type="text"
                   id="character"
                   value={userData.name}
-                  readOnly
+                  readOnly={isReadOnly}
+                  onChange={changeNameHandler}
                 />
                 <S.InterestingTitle>관심분야</S.InterestingTitle>
                 <S.ListContainer>
@@ -121,7 +183,8 @@ const Myinfo = ({ authService, dataService }) => {
                       name="health"
                       value="health"
                       checked={userData.hashTag.health}
-                      readOnly
+                      readOnly={isReadOnly}
+                      onChange={updateInterestedField}
                     />
                   </S.Label>
                   <S.Label>
@@ -131,7 +194,8 @@ const Myinfo = ({ authService, dataService }) => {
                       name="certification"
                       value="certification"
                       checked={userData.hashTag.certification}
-                      readOnly
+                      readOnly={isReadOnly}
+                      onChange={updateInterestedField}
                     />
                   </S.Label>
                   <S.Label>
@@ -141,7 +205,8 @@ const Myinfo = ({ authService, dataService }) => {
                       name="IT"
                       value="IT"
                       checked={userData.hashTag.IT}
-                      readOnly
+                      readOnly={isReadOnly}
+                      onChange={updateInterestedField}
                     />
                   </S.Label>
                   <S.Label>
@@ -151,7 +216,8 @@ const Myinfo = ({ authService, dataService }) => {
                       name="entertainment"
                       value="entertainment"
                       checked={userData.hashTag.entertainment}
-                      readOnly
+                      readOnly={isReadOnly}
+                      onChange={updateInterestedField}
                     />
                   </S.Label>
                   <S.Label>
@@ -161,7 +227,8 @@ const Myinfo = ({ authService, dataService }) => {
                       name="religion"
                       value="religion"
                       checked={userData.hashTag.religion}
-                      readOnly
+                      readOnly={isReadOnly}
+                      onChange={updateInterestedField}
                     />
                   </S.Label>
                   <S.Label>
@@ -171,11 +238,13 @@ const Myinfo = ({ authService, dataService }) => {
                       name="tech"
                       value="tech"
                       checked={userData.hashTag.tech}
-                      readOnly
+                      readOnly={isReadOnly}
+                      onChange={updateInterestedField}
                     />
                   </S.Label>
                 </S.ListContainer>
                 <S.DivLine />
+                <S.SmallTitle>공부 정보</S.SmallTitle>
               </S.FormContainer>
             </S.MainContainer>
           </S.BackgroundContainer>
