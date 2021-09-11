@@ -93,7 +93,7 @@ const Main = ({ authService, dataService }) => {
     const unscribe = authService.getLoginStatus((user) => {
       if (!user) {
         history.push("/");
-        alert("로그인 해주세요");
+        alert("로그아웃 성공");
       }
     });
 

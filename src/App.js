@@ -28,7 +28,7 @@ function App({ authService, dataService }) {
               dataService={dataService}
             ></CreateRoomForm>
           </Route>
-          <Route path="/myInfo" exact>
+          <Route path="/myinfo" exact>
             <Myinfo authService={authService} dataService={dataService} />
           </Route>
         </Switch>

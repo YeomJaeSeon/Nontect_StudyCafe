@@ -10,7 +10,7 @@ const Header = ({ location, logout, chatting }) => {
   };
 
   const goMyInfo = () => {
-    history.push("/Myinfo");
+    history.push("/myinfo");
   };
 
   const displayMenu = () => {
@@ -21,7 +21,7 @@ const Header = ({ location, logout, chatting }) => {
           <S.LogoutBtn onClick={logout}>로그아웃</S.LogoutBtn>
         </>
       );
-    } else if (location === "MyInfo") {
+    } else if (location === "myinfo") {
       return (
         <>
           <S.InfoBtn onClick={goToHome}>메인으로</S.InfoBtn>

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 import * as style from "../../utils/css-utils";
 
 export const BackgroundContainer = styled.div`
@@ -77,7 +77,7 @@ export const DivLine = styled.div`
 `;
 
 export const FormContainer = styled.form`
-  width: 90%;
+  width: 100%;
   height: 70%;
   display: flex;
   flex-direction: column;
@@ -142,3 +142,31 @@ export const InputCheck = styled.input`
 export const None = styled.input`
   visibility: hidden;
 `;
+
+const spin = keyframes`
+  0%{
+    tranform : rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+`;
+
+export const LoadingSpinner = styled.div`
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  border: 15px solid #e0e0e0;
+  border-top: 15px solid #212121;
+  animation: ${spin} 2s infinite linear;
+`;
+
+export const LoadingSpinnerContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SmallTitle = styled.h2``;
