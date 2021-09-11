@@ -16,37 +16,42 @@ export default function MyGraph({ subData }) {
   useEffect(() => {
     console.log("섭데이터");
     console.log(subData);
-    const changeData = Object.keys(subData).map((value) => {
-      return {
-        name: value,
-        집중도:
-          (subData[`${value}`].focusStudyTime /
-            subData[`${value}`].totalStudyTime) *
-          100,
-      };
-    });
-    console.log(changeData);
-    setData(
-      Object.keys(subData).map((value) => {
-        const date =
-          value.substring(0, 5) +
-          "년 " +
-          value.substring(4, 6) +
-          "월 " +
-          value.substring(6, 8) +
-          "일";
-        const ratio =
-          Math.floor(
+    if (!subData) {
+      //공부한 기록없는 사용자는 데이터에 아무것도없음
+    } else {
+      //공부한 기록있는 사용자만 데이터존재
+      const changeData = Object.keys(subData).map((value) => {
+        return {
+          name: value,
+          집중도:
             (subData[`${value}`].focusStudyTime /
               subData[`${value}`].totalStudyTime) *
-              10000
-          ) / 100;
-        return {
-          name: date,
-          집중도: ratio,
+            100,
         };
-      })
-    );
+      });
+      console.log(changeData);
+      setData(
+        Object.keys(subData).map((value) => {
+          const date =
+            value.substring(0, 5) +
+            "년 " +
+            value.substring(4, 6) +
+            "월 " +
+            value.substring(6, 8) +
+            "일";
+          const ratio =
+            Math.floor(
+              (subData[`${value}`].focusStudyTime /
+                subData[`${value}`].totalStudyTime) *
+                10000
+            ) / 100;
+          return {
+            name: date,
+            집중도: ratio,
+          };
+        })
+      );
+    }
   }, [subData]);
   return (
     <S.GraphBox className="App">
