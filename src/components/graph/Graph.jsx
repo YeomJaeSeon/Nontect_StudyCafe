@@ -94,7 +94,6 @@ export default function Graph({ dataService, roomName }) {
             />
             <YAxis />
             <Tooltip />
-            <Legend />
             <CartesianGrid strokeDasharray="3 3" />
             <Bar
               dataKey="집중도"

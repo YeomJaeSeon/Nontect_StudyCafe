@@ -57,8 +57,8 @@ export default function MyGraph({ subData }) {
           {" "}
           <S.GraphTitle>집중도 그래프</S.GraphTitle>
           <BarChart
-            width={500}
-            height={300}
+            width={800}
+            height={400}
             data={data}
             margin={{
               top: 5,
@@ -75,7 +75,6 @@ export default function MyGraph({ subData }) {
             />
             <YAxis />
             <Tooltip />
-            <Legend />
             <CartesianGrid strokeDasharray="3 3" />
             <Bar
               dataKey="집중도"
