@@ -8,21 +8,21 @@ import Info from "../myInfo/Myinfo";
 
 //======= 해시태그 매핑할 한국어
 const hashMatch = {
-  health: "건강",
-  IT: "IT",
+  health: "수능",
+  IT: "IT",
   certification: "자격증",
-  entertainment: "예능",
-  religion: "종교",
-  tech: "기술",
+  entertainment: "예체능",
+  religion: "외국어",
+  tech: "기타",
 };
 
 const reverseHashMatch = {
-  건강: "health",
+  수능: "health",
   IT: "IT",
   자격증: "certification",
-  예능: "entertainment",
-  종교: "religion",
-  기술: "tech",
+  예체능: "entertainment",
+  외국어: "religion",
+  기타: "tech",
 };
 Object.freeze(hashMatch);
 Object.freeze(reverseHashMatch);

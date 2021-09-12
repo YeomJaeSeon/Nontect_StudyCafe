@@ -112,7 +112,7 @@ export const NameInput = styled.input`
 `;
 
 export const RoomHashTagBox = styled.div`
-  width: 300px;
+  width: 330px;
   margin: auto;
   display: flex;
   flex-wrap: wrap;

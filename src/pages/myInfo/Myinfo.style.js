@@ -129,7 +129,7 @@ export const InterestingTitle = styled.h3`
 `;
 
 export const ListContainer = styled.div`
-  width: 300px;
+  width: 330px;
   display: flex;
   flex-wrap: wrap;
 `;

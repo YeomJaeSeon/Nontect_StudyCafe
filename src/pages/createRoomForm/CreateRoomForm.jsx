@@ -595,7 +595,7 @@ export default function CreateRoomForm({ authService, dataService }) {
                       </S.NameLabel>
                       <S.RoomHashTagBox>
                         <S.Label>
-                          건강
+                          수능
                           <S.InputCheck
                             type="checkbox"
                             name="health"
@@ -625,7 +625,7 @@ export default function CreateRoomForm({ authService, dataService }) {
                           />
                         </S.Label>
                         <S.Label>
-                          예능
+                          예체능
                           <S.InputCheck
                             type="checkbox"
                             name="entertainment"
@@ -635,7 +635,7 @@ export default function CreateRoomForm({ authService, dataService }) {
                           />
                         </S.Label>
                         <S.Label>
-                          종교
+                          외국어
                           <S.InputCheck
                             type="checkbox"
                             name="religion"
@@ -645,7 +645,7 @@ export default function CreateRoomForm({ authService, dataService }) {
                           />
                         </S.Label>
                         <S.Label>
-                          기술
+                          기타
                           <S.InputCheck
                             type="checkbox"
                             name="tech"

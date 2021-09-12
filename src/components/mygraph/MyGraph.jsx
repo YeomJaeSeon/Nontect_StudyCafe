@@ -33,7 +33,7 @@ export default function MyGraph({ subData }) {
       setData(
         Object.keys(subData).map((value) => {
           const date =
-            value.substring(0, 5) +
+            value.substring(0, 4) +
             "년 " +
             value.substring(4, 6) +
             "월 " +

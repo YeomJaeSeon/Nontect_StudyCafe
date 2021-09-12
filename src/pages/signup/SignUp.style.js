@@ -105,7 +105,7 @@ export const InterestingTitle = styled.h3`
 `;
 
 export const ListContainer = styled.div`
-  width: 80%;
+  width: 85%;
   display: flex;
   flex-wrap: wrap;
 `;
