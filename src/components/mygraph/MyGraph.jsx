@@ -13,6 +13,30 @@ import * as S from "./MyGraph.style";
 export default function MyGraph({ subData }) {
   const [data, setData] = useState([]);
 
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (active && payload && payload.length) {
+      console.log("active");
+      console.log(active);
+      console.log(payload);
+      console.log(label);
+      return (
+        <S.ToolTipCustom className="custom-tooltip">
+          <S.TooltipTitle className="label">{`${label} 집중도`}</S.TooltipTitle>
+          <S.TooltilSubTitle className="label">{`${payload[0].value}%`}</S.TooltilSubTitle>
+          {payload[0].value >= 80 && (
+            <p className="desc">열심히 공부한 하루군요</p>
+          )}
+          {payload[0].value >= 50 && payload[0].value < 80 && (
+            <p className="desc">더 노력해야할거 같아요</p>
+          )}
+          {payload[0].value < 50 && <p className="desc">분발하세요!</p>}
+        </S.ToolTipCustom>
+      );
+    }
+
+    return null;
+  };
+
   useEffect(() => {
     console.log("섭데이터");
     console.log(subData);
@@ -77,9 +101,10 @@ export default function MyGraph({ subData }) {
               dataKey="name"
               scale="point"
               padding={{ left: 10, right: 10, bottom: 100 }}
+              fontSize={10}
             />
             <YAxis />
-            <Tooltip />
+            <Tooltip content={<CustomTooltip />} />
             <CartesianGrid strokeDasharray="3 3" />
             <Bar
               dataKey="집중도"
