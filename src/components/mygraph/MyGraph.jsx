@@ -11,14 +11,17 @@ import {
 import * as S from "./MyGraph.style";
 
 export default function MyGraph({ subData }) {
-  const [data, setData] = useState([]);
+  var totalRatio = 0;
+  var cumulativeFocus = 0;
+  var cumulativeTotal = 0;
 
+  const [data, setData] = useState([]);
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      console.log("active");
-      console.log(active);
-      console.log(payload);
-      console.log(label);
+      console.log("active " + active);
+      console.log("payload " + payload[0].value);
+      console.log("payloadlength " + payload.length);
+      console.log("label " + label);
       return (
         <S.ToolTipCustom className="custom-tooltip">
           <S.TooltipTitle className="label">{`${label} 집중도`}</S.TooltipTitle>
@@ -40,6 +43,7 @@ export default function MyGraph({ subData }) {
   useEffect(() => {
     console.log("섭데이터");
     console.log(subData);
+    //console.log("섭데이터 타입" + Object.keys(subData).length);
     if (!subData) {
       //공부한 기록없는 사용자는 데이터에 아무것도없음
     } else {
@@ -53,6 +57,7 @@ export default function MyGraph({ subData }) {
             100,
         };
       });
+      console.log("@@@@@@@@@@changedata출력");
       console.log(changeData);
       setData(
         Object.keys(subData).map((value) => {
@@ -77,6 +82,16 @@ export default function MyGraph({ subData }) {
       );
     }
   }, [subData]);
+
+  for (var i in subData) {
+    cumulativeFocus = cumulativeFocus + subData[i].focusStudyTime;
+    cumulativeTotal = cumulativeTotal + subData[i].totalStudyTime;
+  }
+  console.log("$$$$$$" + cumulativeFocus);
+  console.log("$$$$$$" + cumulativeTotal);
+
+  totalRatio = Math.floor((cumulativeFocus / cumulativeTotal) * 10000) / 100;
+  console.log("@@@@@@@@@" + totalRatio);
   return (
     <S.GraphBox className="App">
       {data == [] ? (
@@ -85,6 +100,7 @@ export default function MyGraph({ subData }) {
         <>
           {" "}
           <S.GraphTitle>집중도 그래프</S.GraphTitle>
+          <h3>나의 집중력 현황 : {totalRatio}%</h3>
           <BarChart
             width={800}
             height={400}
