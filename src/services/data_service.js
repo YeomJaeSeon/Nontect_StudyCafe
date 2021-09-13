@@ -184,4 +184,14 @@ export default class Database {
       }
     );
   }
+
+  //방에 들어온 유저의 total, focus공부시간
+  getKeepStduyTimes(func) {
+    const usersDatasRef = firebaseDatabase.ref("users");
+    usersDatasRef.on("value", (snapshot) => {
+      func && func(snapshot.val());
+    });
+
+    return () => usersDatasRef.off();
+  }
 }

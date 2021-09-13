@@ -8,6 +8,7 @@ export const GraphBox = styled.div`
 
 export const GraphTitle = styled.div`
   padding-bottom: 20px;
+  font-size: 20px;
 `;
 
 export const ToolTipCustom = styled.div`

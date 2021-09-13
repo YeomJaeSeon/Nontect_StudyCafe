@@ -21,10 +21,11 @@ import { useBeforeunload } from "react-beforeunload";
 import Graph from "../../components/graph/Graph";
 
 import Modal from "react-modal";
+import Time from "../../components/time/Time";
 
 const customStyles = {
   content: {
-    top: "50%",
+    top: "45%",
     left: "50%",
     right: "auto",
     bottom: "auto",
@@ -707,7 +708,7 @@ export default function CreateRoomForm({ authService, dataService }) {
                 </S.Facemesh>
               </S.VideoContainer>
               <S.ModalOpenButton onClick={openModal}>
-                집중도 현황
+                집중도 & 집중 시간 비교
               </S.ModalOpenButton>
               <Modal
                 isOpen={modalIsOpen}
@@ -723,6 +724,10 @@ export default function CreateRoomForm({ authService, dataService }) {
                   dataService={dataService}
                   roomName={state.mySessionId}
                 ></Graph>
+                <Time
+                  dataService={dataService}
+                  roomName={state.mySessionId}
+                ></Time>
               </Modal>
             </>
           )}
