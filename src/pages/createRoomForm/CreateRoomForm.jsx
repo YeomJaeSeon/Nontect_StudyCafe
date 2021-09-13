@@ -53,20 +53,6 @@ export default function CreateRoomForm({ authService, dataService }) {
   const Studyminute = Math.floor(studySec / 60);
   const Studysecond = studySec % 60;
 
-  const displayFocus = () => {
-    alert(
-      "총 공부시간 : " +
-        Totalminute +
-        "분 " +
-        Totalsecond +
-        "초  \n공부 중 실제로 집중한 시간 : " +
-        Studyminute +
-        "분 " +
-        Studysecond +
-        "초"
-    );
-  };
-
   const [state, setState] = useState({
     mySessionId: "", // 방이름
     myUserName: "", // 유저이름(유저의 uid임) - 별명아님

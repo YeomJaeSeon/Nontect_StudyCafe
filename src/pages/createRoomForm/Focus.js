@@ -1,10 +1,10 @@
 let closeEyeCnt = 0;
 let mouthCnt = 0;
-var startConv = Boolean(false);  //대화를 하는지 판별 => 다른쪽 보고있는 
+var startConv = Boolean(false); //대화를 하는지 판별 => 다른쪽 보고있는
 var mouthState = Boolean(false); //입의 상태( open = true, close= false)
-var closeStateHold = 0;              //닫은 상태를 유지하는 시간
-var openStateHold = 0;               //연 상태를 유지하는 시간
-var convState = Boolean(false);   //최종적으로 대화하는지 확인하는 변수 ==> 
+var closeStateHold = 0; //닫은 상태를 유지하는 시간
+var openStateHold = 0; //연 상태를 유지하는 시간
+var convState = Boolean(false); //최종적으로 대화하는지 확인하는 변수 ==>
 export var Focus = Boolean(true);
 export function setFocus(value) {
   Focus = value;
@@ -24,7 +24,6 @@ export const alarm = (data) => {
   const InnerMouthTop = data.lipsUpperInner[5][1]; // 윗입술 안쪽 정 중앙 y좌표
   const InnerMouthBottom = data.lipsLowerInner[5][1]; // 아랫입술 안쪽 정 중앙 y좌표
 
-
   //눈 감음 감지
   const leftEyeDiff = leftEyeTop - leftEyeBottom;
   const rightEyeDiff = rightEyeTop - rightEyeBottom;
@@ -38,18 +37,20 @@ export const alarm = (data) => {
   //상하 방향 체크
   const lookingUpDownDirection = data.midwayBetweenEyes[0][2];
 
-
   //입술의 움직임으로 집중 감지
-  if (openMouth > 3.7 && startConv === Boolean(false)) {  //입을 벌린 순간 대화로 인식
+  if (openMouth > 3.7 && startConv === Boolean(false)) {
+    //입을 벌린 순간 대화로 인식
     startConv = Boolean(true);
     console.log("대화 시작");
-  } else if (openMouth < 2.0 && startConv === Boolean(true)) { //대화도중 입술이 다물어지는 순간
+  } else if (openMouth < 2.0 && startConv === Boolean(true)) {
+    //대화도중 입술이 다물어지는 순간
     //입이 다물어진 시간을 통해 하품과 같은 일시적인 움직임인지 대화인지 파악
     mouthState = Boolean(false); //입이 다물어졌으니 false
-    openStateHold = 0;           //입이 열린 시간 0으로 초기화
-    ++closeStateHold;            //입이 닫힌 시간 ++연산
-    if (closeStateHold > 15 && mouthState === Boolean(false)) { //입술이 닫힌채로 움직임 없을 때
-      console.log("대화가 아님")
+    openStateHold = 0; //입이 열린 시간 0으로 초기화
+    ++closeStateHold; //입이 닫힌 시간 ++연산
+    if (closeStateHold > 15 && mouthState === Boolean(false)) {
+      //입술이 닫힌채로 움직임 없을 때
+      console.log("대화가 아님");
       startConv = Boolean(false);
       convState = Boolean(false);
       closeStateHold = 0;
@@ -58,17 +59,19 @@ export const alarm = (data) => {
     } else {
       ++mouthCnt;
     }
-  } else if (openMouth > 3.7 && startConv === Boolean(true)) { //대화라고 판단한상태에서 입이 계속 열려있음
-    mouthState = Boolean(true);//입술이 열림
+  } else if (openMouth > 3.7 && startConv === Boolean(true)) {
+    //대화라고 판단한상태에서 입이 계속 열려있음
+    mouthState = Boolean(true); //입술이 열림
     closeStateHold = 0;
     ++openStateHold;
-    if (openStateHold > 6 && mouthState === Boolean(true)) { //입을 연채로 움직임 없을 때
-      console.log("대화가 아님")
+    if (openStateHold > 6 && mouthState === Boolean(true)) {
+      //입을 연채로 움직임 없을 때
+      console.log("대화가 아님");
       startConv = Boolean(false);
       convState = Boolean(false);
       openStateHold = 0;
       mouthCnt = 0;
-      //  Focus = Boolean(true);  // 집중을 하고있다고 판단하기 애매 
+      //  Focus = Boolean(true);  // 집중을 하고있다고 판단하기 애매
     } else {
       ++mouthCnt;
     }
@@ -77,9 +80,10 @@ export const alarm = (data) => {
   //눈의 움직임 감지
   if (leftEyeDiff < 0.3 && rightEyeDiff < 0.3) {
     ++closeEyeCnt;
-    if (closeEyeCnt >= 25)   // 눈 감고 25초 경과시 
-      alert("졸지 마시오!")
-    Focus = Boolean(false);
+    if (closeEyeCnt >= 25)
+      // 눈 감고 25초 경과시
+      // alert("졸지 마시오!");
+      Focus = Boolean(false);
   } else {
     closeEyeCnt = 0;
     Focus = Boolean(true);
@@ -102,23 +106,21 @@ export const alarm = (data) => {
   console.log("연 상태 : " + openStateHold);
   console.log("현재 집중상태" + Focus);
 
-
-
   if (lookingLeftDirection < -1) {
     console.log("왼쪽 보는중");
     if (convState === Boolean(true)) {
       console.log("잡담하는중");
-      alert("잡담금지^^");
+      // alert("잡담금지^^");
       Focus = Boolean(false);
     } else {
       Focus = Boolean(true);
     }
   }
   if (lookingRightDirection < -1) {
-    console.log("오른쪽 보는중")
+    console.log("오른쪽 보는중");
     if (convState === Boolean(true)) {
       console.log("잡담하는중");
-      alert("잡담금지^^");
+      // alert("잡담금지^^");
       Focus = Boolean(false);
     } else {
       Focus = Boolean(true);
@@ -126,9 +128,9 @@ export const alarm = (data) => {
   }
 
   if (lookingUpDownDirection > 10) {
-    console.log('위쪽 보는중')
+    console.log("위쪽 보는중");
   }
   if (lookingUpDownDirection < -14) {
-    console.log('아래쪽 보는중')
+    console.log("아래쪽 보는중");
   }
-}
+};

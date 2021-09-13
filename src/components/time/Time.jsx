@@ -42,7 +42,7 @@ export default function Time({ dataService, roomName }) {
             <S.TableHeader>
               <S.TableTr>
                 <S.TableTh>유저 이름</S.TableTh>
-                <S.TableTh>순 공부시간</S.TableTh>
+                <S.TableTh>순 집중시간</S.TableTh>
                 <S.TableTh>총 공부시간</S.TableTh>
               </S.TableTr>
             </S.TableHeader>
