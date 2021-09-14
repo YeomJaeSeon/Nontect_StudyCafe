@@ -129,7 +129,7 @@ export default function MyGraph({ subData }) {
           <BarChart
             width={800}
             height={400}
-            data={slicedData}
+            data={slicedData.filter((value) => value)}
             margin={{
               top: 5,
               right: 30,
@@ -144,7 +144,7 @@ export default function MyGraph({ subData }) {
               padding={{ left: 10, right: 10, bottom: 100 }}
               fontSize={10}
             />
-            <YAxis />
+            <YAxis domain={[0, 100]} />
             <Tooltip content={<CustomTooltip />} />
             <CartesianGrid strokeDasharray="3 3" />
             <Bar
