@@ -39,7 +39,7 @@ export default function Graph({ dataService, roomName }) {
   };
 
   useEffect(() => {
-    dataService.getAllUsers((value) => {
+    const unscribe = dataService.getKeepStduyTimes((value) => {
       console.log("graph를 위한 데이터 보여주!");
       if (value) {
         // 방에서 공부하는 유저이름, focus, total모두 있음
@@ -52,22 +52,6 @@ export default function Graph({ dataService, roomName }) {
           }));
 
         const newData = filterArr.map((value) => {
-          //공부한시간 데이터정제 잠시삭제
-          // let time = 0;
-
-          // if (value.total > 60) {
-          //   const totalMin = Math.floor(value.total / 60); //분
-          //   const totalSec = value.total % 60;
-          //   time = 0 + ":" + totalMin + ":" + totalSec;
-          // } else if (value.total > 3600) {
-          //   const totalHour = Math.floor(value.total / (60 * 60));
-          //   const totalMin = Math.floor(value.total / 60); //분
-          //   const totalSec = value.total % 60;
-          //   time = totalHour + ":" + totalMin + ":" + totalSec;
-          // } else {
-          //   const totalSec = value.total % 60;
-          //   time = 0 + ":" + 0 + ":" + totalSec;
-          // }
           return {
             // name: `${value.name}(${time})`,
             name: `${value.name}`,
@@ -81,6 +65,7 @@ export default function Graph({ dataService, roomName }) {
         console.log(data);
       }
     });
+    return () => unscribe();
   }, []);
 
   return (
