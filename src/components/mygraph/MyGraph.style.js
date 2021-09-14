@@ -8,7 +8,18 @@ export const GraphBox = styled.div`
 `;
 
 export const GraphTitle = styled.div`
+  margin-top: 20px;
   padding-bottom: 20px;
+`;
+
+export const GraphSubTitle = styled.div`
+  margin-top: 10px;
+  font-size: 15px;
+`;
+
+export const PrintRatio = styled.h3`
+  font-weight: bold;
+  font-size: 15px;
 `;
 
 export const ToolTipCustom = styled.div`

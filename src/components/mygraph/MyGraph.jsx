@@ -11,17 +11,23 @@ import {
 import * as S from "./MyGraph.style";
 
 export default function MyGraph({ subData }) {
-  var totalRatio = 0;
+  var avgRatio = 0;
   var cumulativeFocus = 0;
   var cumulativeTotal = 0;
+
+  //var lastTenData = subData.slice(-10);
+  var count = 0;
+  var lastTenRatio = 0;
+  var lastTenFocus = 0;
+  var lastTenTotal = 0;
+  const RecordLength = Object.keys(subData).length;
 
   const [data, setData] = useState([]);
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       console.log("active " + active);
-      console.log("payload " + payload[0].value);
-      console.log("payloadlength " + payload.length);
-      console.log("label " + label);
+      console.log(payload);
+      console.log(label);
       return (
         <S.ToolTipCustom className="custom-tooltip">
           <S.TooltipTitle className="label">{`${label} 집중도`}</S.TooltipTitle>
@@ -43,7 +49,7 @@ export default function MyGraph({ subData }) {
   useEffect(() => {
     console.log("섭데이터");
     console.log(subData);
-    //console.log("섭데이터 타입" + Object.keys(subData).length);
+
     if (!subData) {
       //공부한 기록없는 사용자는 데이터에 아무것도없음
     } else {
@@ -57,7 +63,6 @@ export default function MyGraph({ subData }) {
             100,
         };
       });
-      console.log("@@@@@@@@@@changedata출력");
       console.log(changeData);
       setData(
         Object.keys(subData).map((value) => {
@@ -83,15 +88,26 @@ export default function MyGraph({ subData }) {
     }
   }, [subData]);
 
+  //평균 집중력
   for (var i in subData) {
     cumulativeFocus = cumulativeFocus + subData[i].focusStudyTime;
     cumulativeTotal = cumulativeTotal + subData[i].totalStudyTime;
+    count++;
+    //최근 10일 집중력
+    if (count > RecordLength - 10) {
+      console.log(subData[i]);
+      lastTenFocus = lastTenFocus + subData[i].focusStudyTime;
+      lastTenTotal = lastTenTotal + subData[i].totalStudyTime;
+      console.log("###" + lastTenFocus);
+      console.log("@@@" + lastTenTotal);
+      if (count == RecordLength) {
+        count = 0;
+        break;
+      }
+    }
   }
-  console.log("$$$$$$" + cumulativeFocus);
-  console.log("$$$$$$" + cumulativeTotal);
-
-  totalRatio = Math.floor((cumulativeFocus / cumulativeTotal) * 10000) / 100;
-  console.log("@@@@@@@@@" + totalRatio);
+  avgRatio = Math.floor((cumulativeFocus / cumulativeTotal) * 10000) / 100;
+  lastTenRatio = Math.floor((lastTenFocus / lastTenTotal) * 10000) / 100;
   return (
     <S.GraphBox className="App">
       {data == [] ? (
@@ -99,8 +115,9 @@ export default function MyGraph({ subData }) {
       ) : (
         <>
           {" "}
-          <S.GraphTitle>집중도 그래프</S.GraphTitle>
-          <h3>나의 집중력 현황 : {totalRatio}%</h3>
+          <S.GraphSubTitle>최근 10개 정보만 출력합니다.</S.GraphSubTitle>
+          <S.PrintRatio>나의 평균 집중력 : {avgRatio}%</S.PrintRatio>
+          <S.PrintRatio>최근 10일 집중력 : {lastTenRatio}%</S.PrintRatio>
           <BarChart
             width={800}
             height={400}
