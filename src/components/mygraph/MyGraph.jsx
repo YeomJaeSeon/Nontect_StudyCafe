@@ -22,6 +22,26 @@ export default function MyGraph({ subData }) {
   var lastTenTotal = 0;
   const RecordLength = Object.keys(subData).length;
 
+  var slicedData = [];
+
+  //평균 집중력
+  for (var i in subData) {
+    cumulativeFocus = cumulativeFocus + subData[i].focusStudyTime;
+    cumulativeTotal = cumulativeTotal + subData[i].totalStudyTime;
+    count++;
+    //최근 10일 집중력
+    if (count > RecordLength - 10) {
+      lastTenFocus = lastTenFocus + subData[i].focusStudyTime;
+      lastTenTotal = lastTenTotal + subData[i].totalStudyTime;
+      if (count == RecordLength) {
+        count = 0;
+        break;
+      }
+    }
+  }
+  avgRatio = Math.floor((cumulativeFocus / cumulativeTotal) * 10000) / 100;
+  lastTenRatio = Math.floor((lastTenFocus / lastTenTotal) * 10000) / 100;
+
   const [data, setData] = useState([]);
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -63,7 +83,7 @@ export default function MyGraph({ subData }) {
             100,
         };
       });
-      console.log(changeData);
+      console.log(changeData[1]);
       setData(
         Object.keys(subData).map((value) => {
           const date =
@@ -87,27 +107,14 @@ export default function MyGraph({ subData }) {
       );
     }
   }, [subData]);
+  //console.log(data);
 
-  //평균 집중력
-  for (var i in subData) {
-    cumulativeFocus = cumulativeFocus + subData[i].focusStudyTime;
-    cumulativeTotal = cumulativeTotal + subData[i].totalStudyTime;
-    count++;
-    //최근 10일 집중력
-    if (count > RecordLength - 10) {
-      console.log(subData[i]);
-      lastTenFocus = lastTenFocus + subData[i].focusStudyTime;
-      lastTenTotal = lastTenTotal + subData[i].totalStudyTime;
-      console.log("###" + lastTenFocus);
-      console.log("@@@" + lastTenTotal);
-      if (count == RecordLength) {
-        count = 0;
-        break;
-      }
-    }
+  for (var i = RecordLength - 10; i < RecordLength; i++) {
+    slicedData[i + 10 - RecordLength] = data[i];
   }
-  avgRatio = Math.floor((cumulativeFocus / cumulativeTotal) * 10000) / 100;
-  lastTenRatio = Math.floor((lastTenFocus / lastTenTotal) * 10000) / 100;
+  for (var i = 0; i < 10; i++) {
+    console.log(slicedData[i]);
+  }
   return (
     <S.GraphBox className="App">
       {data == [] ? (
@@ -121,7 +128,7 @@ export default function MyGraph({ subData }) {
           <BarChart
             width={800}
             height={400}
-            data={data}
+            data={slicedData}
             margin={{
               top: 5,
               right: 30,
