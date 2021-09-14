@@ -109,6 +109,7 @@ export default function MyGraph({ subData }) {
   }, [subData]);
   //console.log(data);
 
+  //데이터 10개 슬라이스
   for (var i = RecordLength - 10; i < RecordLength; i++) {
     slicedData[i + 10 - RecordLength] = data[i];
   }
