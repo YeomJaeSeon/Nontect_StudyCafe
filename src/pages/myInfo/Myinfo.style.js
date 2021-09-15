@@ -74,6 +74,7 @@ export const DivLine = styled.div`
   height: 2px;
   background-color: ${style.MainColor};
   margin: 20px 0;
+  border: 1px solid ${style.BackgroundColor};
 `;
 
 export const FormContainer = styled.form`
@@ -194,3 +195,10 @@ export const EditBtn = styled.button`
     color: white;
   }
 `;
+
+// export const DivLine = styled.div`
+//   width: 70%;
+//   height: 2px;
+//   margin: auto;
+//   background-color: ${style.BackgroundColor};
+// `;
