@@ -17,8 +17,7 @@ export default function MyGraph({ subData }) {
   //var lastTenData = subData.slice(-10);
   var count = 0;
   var lastTenRatio = 0;
-  var lastTenFocus = 0;
-  var lastTenTotal = 0;
+  var lastTenResult = 0;
   const RecordLength = Object.keys(subData).length;
 
   var slicedData = [];
@@ -29,8 +28,7 @@ export default function MyGraph({ subData }) {
     count++;
     //최근 10일 집중력
     if (count > RecordLength - 10) {
-      lastTenFocus = lastTenFocus + subData[i].focusStudyTime;
-      lastTenTotal = lastTenTotal + subData[i].totalStudyTime;
+      lastTenResult = lastTenResult + Math.floor((subData[i].focusStudyTime / subData[i].totalStudyTime) * 10000) / 100;
       if (count == RecordLength) {
         count = 0;
         break;
@@ -38,7 +36,7 @@ export default function MyGraph({ subData }) {
     }
   }
   avgRatio = Math.floor(result / RecordLength *100) / 100;
-  lastTenRatio = Math.floor((lastTenFocus / lastTenTotal) * 10000) / 100;
+  lastTenRatio = Math.floor((lastTenResult / 10 ) * 100) / 100;
 
   const formatTime = (seconds) =>
     new Date(seconds * 1000).toLocaleTimeString("en-GB", {
