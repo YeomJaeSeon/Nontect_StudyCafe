@@ -12,8 +12,7 @@ import * as S from "./MyGraph.style";
 
 export default function MyGraph({ subData }) {
   var avgRatio = 0;
-  var cumulativeFocus = 0;
-  var cumulativeTotal = 0;
+  var result = 0;
 
   //var lastTenData = subData.slice(-10);
   var count = 0;
@@ -26,8 +25,7 @@ export default function MyGraph({ subData }) {
 
   //평균 집중력
   for (var i in subData) {
-    cumulativeFocus = cumulativeFocus + subData[i].focusStudyTime;
-    cumulativeTotal = cumulativeTotal + subData[i].totalStudyTime;
+    result = result + Math.floor((subData[i].focusStudyTime / subData[i].totalStudyTime) * 10000) / 100;
     count++;
     //최근 10일 집중력
     if (count > RecordLength - 10) {
@@ -39,18 +37,30 @@ export default function MyGraph({ subData }) {
       }
     }
   }
-  avgRatio = Math.floor((cumulativeFocus / cumulativeTotal) * 10000) / 100;
+  avgRatio = Math.floor(result / RecordLength *100) / 100;
   lastTenRatio = Math.floor((lastTenFocus / lastTenTotal) * 10000) / 100;
+
+  const formatTime = (seconds) =>
+    new Date(seconds * 1000).toLocaleTimeString("en-GB", {
+      timeZone: "Etc/UTC",
+      hour12: false,
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    });
 
   const [data, setData] = useState([]);
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       console.log("active " + active);
+      console.log(payload[0].value);
       console.log(payload);
-      console.log(label);
+      console.log("라벨 " + label);
       return (
         <S.ToolTipCustom className="custom-tooltip">
           <S.TooltipTitle className="label">{`${label} 집중도`}</S.TooltipTitle>
+          <S.focusAndTotal className="label">{`집중시간 : ${payload[0].payload.공부시간}`}</S.focusAndTotal>
+          <S.focusAndTotal className="label">{`참여시간 : ${payload[0].payload.참여시간}`}</S.focusAndTotal>
           <S.TooltilSubTitle className="label">{`${payload[0].value}%`}</S.TooltilSubTitle>
           {payload[0].value >= 80 && (
             <p className="desc">열심히 공부한 하루군요</p>
@@ -83,7 +93,6 @@ export default function MyGraph({ subData }) {
             100,
         };
       });
-      console.log(changeData[1]);
       setData(
         Object.keys(subData).map((value) => {
           const date =
@@ -99,9 +108,14 @@ export default function MyGraph({ subData }) {
                 subData[`${value}`].totalStudyTime) *
                 10000
             ) / 100;
+          //onst focus = formatTime(subData[`${value}`].focusStudyTime);
+          //const total = formatTime(subData[`${value}`].totalStudyTime);
           return {
             name: date,
             집중도: ratio,
+            공부시간 : formatTime(subData[`${value}`].focusStudyTime),
+            참여시간 : formatTime(subData[`${value}`].totalStudyTime),
+
           };
         })
       );

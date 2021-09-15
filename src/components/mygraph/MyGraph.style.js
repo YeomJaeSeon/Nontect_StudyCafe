@@ -32,4 +32,13 @@ export const TooltipTitle = styled.h2`
   font-bold: bolder;
 `;
 
-export const TooltilSubTitle = styled.h3``;
+export const TooltilSubTitle = styled.h3`
+  margin-top:-20px;
+  margin-bottom:-10px;
+  color : red;
+`;
+
+export const focusAndTotal = styled.h4`
+  font-bold: bolder;
+  margin-top: -20px;
+`;
