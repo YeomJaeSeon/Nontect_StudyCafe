@@ -49,12 +49,9 @@ export const Select = styled.select`
 `;
 
 export const SearchIcon = styled.img`
-
-
-width:16px;
-height:18px;
+  width: 16px;
+  height: 18px;
 `;
-
 
 export const SearchBtn = styled.button`
   //background-color: ${style.BoxColor};
@@ -64,7 +61,7 @@ export const SearchBtn = styled.button`
   padding: 3px 5px;
   //font-weight: bolder;
   //font-size: 20px;
-  
+
   opacity: 0.6;
   border: 1px solid ${style.MainColor};
   border-radius: 5px;
@@ -73,7 +70,38 @@ export const SearchBtn = styled.button`
 
   &:hover {
     background-color: ${style.HeaderButtonColor};
-    transform: scale(1.10);
-   // color:white;
-}
+    transform: scale(1.1);
+    // color:white;
+  }
+`;
+
+export const FormContainer = styled.form`
+  // display: flex;
+`;
+
+// export const SelectContainer = styled.select`
+//   display
+// `
+
+export const RecommendBtn = styled.button`
+  //background-color: ${style.BoxColor};
+  margin-left: 20px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 5px 8px;
+  //font-weight: bolder;
+  //font-size: 20px;
+
+  opacity: 0.6;
+  border: 1px solid ${style.MainColor};
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.4s;
+  transform: translateY(-4px);
+
+  &:hover {
+    background-color: ${style.HeaderButtonColor};
+    transform: scale(1.1);
+    // color:white;
+  }
 `;

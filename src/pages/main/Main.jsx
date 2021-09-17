@@ -182,12 +182,37 @@ const Main = ({ authService, dataService }) => {
     });
   };
 
+  //== 자신의 관심사에 맞는 방들을 랜더링==//
+  const recommendUserRooms = () => {
+    console.log("자신에게 맞는 방 추천");
+
+    // dataService.getAllRooms((value) => {
+    //   if (value) {
+    //     const result = Object.values(value)
+    //       .map((value) => {
+    //         return {
+    //           name: value.sessionId,
+    //           peopleCount: value.peopleCount,
+    //           hashTag: Object.values(value.hashTag).map(
+    //             (v) => hashMatch[`${v}`]
+    //           ),
+    //         };
+    //       })
+    //       .filter((value) => value.name == target);
+    //   }
+    // });
+  };
+
   return (
     <>
       <Header location="main" logout={logout} />
       <S.BackgroundContainer>
         <S.Background src="./main_background.jpg" alt="main"></S.Background>
-        <Search hashMatch={hashMatch} searchRooms={searchRooms} />
+        <Search
+          hashMatch={hashMatch}
+          searchRooms={searchRooms}
+          recommendUserRooms={recommendUserRooms}
+        />
         <S.MainContainer>
           <Rooms dataService={dataService} rooms={rooms} />
           <S.ButtonBox>

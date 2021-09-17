@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import * as S from "./Search.style";
 
-const Search = ({ hashMatch, searchRooms }) => {
+const Search = ({ hashMatch, searchRooms, recommendUserRooms }) => {
   const [search, setSearch] = useState("title");
   const [inputSearch, setInputSearch] = useState("");
   const [hashSearch, setHashSearch] = useState("건강");
@@ -22,9 +22,13 @@ const Search = ({ hashMatch, searchRooms }) => {
   const handleHashChangeHandler = (e) => {
     setHashSearch(e.target.value);
   };
+
+  const recommendMyRooms = () => {
+    recommendUserRooms();
+  };
   return (
     <S.SelectorContainer>
-      <form onSubmit={searchOption}>
+      <S.FormContainer onSubmit={searchOption}>
         <S.Selector
           onChange={(e) => {
             console.log(e.target.value);
@@ -62,8 +66,11 @@ const Search = ({ hashMatch, searchRooms }) => {
         <S.SearchBtn onClick={searchOption}>
           <S.SearchIcon src="/search.png" alt="search"></S.SearchIcon>
         </S.SearchBtn>
-      </form>
-    </S.SelectorContainer >
+        <S.RecommendBtn onClick={recommendMyRooms} type="button">
+          나에게 맞는 방 추천
+        </S.RecommendBtn>
+      </S.FormContainer>
+    </S.SelectorContainer>
   );
 };
 
