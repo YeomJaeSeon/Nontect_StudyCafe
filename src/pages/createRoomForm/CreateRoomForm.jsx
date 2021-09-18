@@ -277,28 +277,34 @@ export default function CreateRoomForm({ authService, dataService }) {
     dataService.leftRoom(state.myUserName);
 
     dataService.getAllRooms((values) => {
-      let currentPeoplecount = Object.values(values).filter(
+      const room = Object.values(values).filter(
         (room) => room.sessionId == state.mySessionId
-      )[0].peopleCount;
+      );
 
-      console.log("나갈대 현재 방인원 세보자 ");
-      console.log(currentPeoplecount);
+      if (room[0]) {
+        let currentPeoplecount = room[0].peopleCount;
+        console.log("나갈대 현재 방인원 세보자 ");
+        console.log(currentPeoplecount);
 
-      if (currentPeoplecount <= 1) {
-        //내가 마지막 인원이면
-        dataService.deleteRoom(state.mySessionId).then(() => {
-          history.push("/rooms");
-          setIsLoading(false);
-        });
-      } else {
-        //나가는데 인원이 더남아있으면
-        dataService
-          .changeRoomData(state.mySessionId, currentPeoplecount - 1)
-          .then(() => {
-            console.log("ㅋㅋㅋ");
+        if (currentPeoplecount <= 1) {
+          //내가 마지막 인원이면
+          dataService.deleteRoom(state.mySessionId).then(() => {
             history.push("/rooms");
             setIsLoading(false);
           });
+        } else {
+          //나가는데 인원이 더남아있으면
+          dataService
+            .changeRoomData(state.mySessionId, currentPeoplecount - 1)
+            .then(() => {
+              console.log("ㅋㅋㅋ");
+              history.push("/rooms");
+              setIsLoading(false);
+            });
+        }
+      } else {
+        history.push("/rooms");
+        setIsLoading(false);
       }
     });
   };
