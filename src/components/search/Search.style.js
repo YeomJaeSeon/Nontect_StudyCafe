@@ -105,3 +105,21 @@ export const RecommendBtn = styled.button`
     // color:white;
   }
 `;
+
+export const HashSpan = styled.span`
+  padding: 0 5px;
+`;
+
+export const HashBox = styled.span`
+  background-color: ${style.BoxColor};
+  margin-left: 30px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  padding: 3px 10px;
+  font-weight: bolder;
+  font-size: 20px;
+  opacity: 0.6;
+
+  border: 1px solid ${style.MainColor};
+  border-radius: 5px;
+`;

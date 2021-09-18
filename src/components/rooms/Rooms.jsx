@@ -6,7 +6,7 @@ import axios from "axios";
 import OpenViduSession from "openvidu-react";
 import { useState, useEffect } from "react";
 
-const Rooms = ({ dataService, rooms }) => {
+const Rooms = ({ dataService, rooms, startRoomNumber }) => {
   useEffect(() => {
     console.log("Rooms useEffect");
     console.log(rooms);
@@ -14,7 +14,7 @@ const Rooms = ({ dataService, rooms }) => {
   return (
     <>
       <S.RoomsContainer>
-        {rooms.map((room, idx) => {
+        {rooms.slice(startRoomNumber, startRoomNumber + 4).map((room, idx) => {
           return (
             <Room
               dataService={dataService}

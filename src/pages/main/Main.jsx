@@ -33,6 +33,8 @@ const Main = ({ authService, dataService }) => {
   const [rooms, setRooms] = useState([]); //방들 (세션들)
   const [startRoomNumber, setStartRoomNumber] = useState(0);
   const [totalRoomsLength, setTotalRoomsLength] = useState(0);
+  const [myHashTag, setMyHashTag] = useState([]);
+  const [isSelectMyHash, setIsSelectMyHash] = useState(false);
 
   const history = useHistory();
 
@@ -57,43 +59,27 @@ const Main = ({ authService, dataService }) => {
         console.log("result=======");
         console.log(result);
         setTotalRoomsLength(result.length);
-        if (result.length > 4) {
-          console.log("setState");
-          setRooms(result.slice(0, 4));
-        } else {
-          console.log("setState");
-          setRooms(result);
-        }
+        setRooms(result);
       }
     });
   }, []);
-
-  useEffect(() => {
-    dataService.getAllRooms((rooms) => {
-      if (rooms != undefined) {
-        setRooms(
-          Object.values(rooms)
-            .map((value) => {
-              return {
-                name: value.sessionId,
-                peopleCount: value.peopleCount,
-                secret: value.secret,
-                hashTag: Object.values(value.hashTag).map(
-                  (v) => hashMatch[`${v}`]
-                ),
-              };
-            })
-            .slice(startRoomNumber, startRoomNumber + 4)
-        );
-      }
-    });
-  }, [startRoomNumber]);
 
   useEffect(() => {
     const unscribe = authService.getLoginStatus((user) => {
       if (!user) {
         history.push("/");
         alert("로그아웃 성공");
+      } else {
+        console.log("로그인한 유저의 모오오오오든 데이터");
+        dataService.getLoginUserData(user.uid, (value) => {
+          if (value) {
+            setMyHashTag(
+              Object.keys(value.hashTag)
+                .map((value) => value)
+                .filter((value) => value)
+            );
+          }
+        });
       }
     });
 
@@ -126,6 +112,9 @@ const Main = ({ authService, dataService }) => {
   //== 방 탐색==//
   const searchRooms = (category, target) => {
     console.log("main에서 search 클릭 영향받음");
+    setStartRoomNumber(0);
+    setIsSelectMyHash(false);
+
     dataService.getAllRooms((value) => {
       if (value) {
         console.log(value);
@@ -137,6 +126,7 @@ const Main = ({ authService, dataService }) => {
               return {
                 name: value.sessionId,
                 peopleCount: value.peopleCount,
+                secret: value.secret,
                 hashTag: Object.values(value.hashTag).map(
                   (v) => hashMatch[`${v}`]
                 ),
@@ -145,13 +135,7 @@ const Main = ({ authService, dataService }) => {
             .filter((value) => value.name == target);
           console.log(result);
           setTotalRoomsLength(result.length);
-          if (result.length > 4) {
-            console.log("setState");
-            setRooms(result.slice(0, 4));
-          } else {
-            console.log("setState");
-            setRooms(result);
-          }
+          setRooms(result);
         } else {
           //해시태그로 검색
           console.log("taret : " + target);
@@ -161,6 +145,7 @@ const Main = ({ authService, dataService }) => {
               return {
                 name: value.sessionId,
                 peopleCount: value.peopleCount,
+                secret: value.secret,
                 hashTag: Object.values(value.hashTag).map(
                   (v) => hashMatch[`${v}`]
                 ),
@@ -170,13 +155,7 @@ const Main = ({ authService, dataService }) => {
 
           console.log(result);
           setTotalRoomsLength(result.length);
-          if (result.length > 4) {
-            console.log("setState");
-            setRooms(result.slice(0, 4));
-          } else {
-            console.log("setState");
-            setRooms(result);
-          }
+          setRooms(result);
         }
       }
     });
@@ -184,23 +163,42 @@ const Main = ({ authService, dataService }) => {
 
   //== 자신의 관심사에 맞는 방들을 랜더링==//
   const recommendUserRooms = () => {
+    setIsSelectMyHash(true);
     console.log("자신에게 맞는 방 추천");
-
-    // dataService.getAllRooms((value) => {
-    //   if (value) {
-    //     const result = Object.values(value)
-    //       .map((value) => {
-    //         return {
-    //           name: value.sessionId,
-    //           peopleCount: value.peopleCount,
-    //           hashTag: Object.values(value.hashTag).map(
-    //             (v) => hashMatch[`${v}`]
-    //           ),
-    //         };
-    //       })
-    //       .filter((value) => value.name == target);
-    //   }
-    // });
+    if (myHashTag.length > 0) {
+      //myHashTag 로딩 완료
+      const transformMyHashTag = myHashTag.map((value) => {
+        return hashMatch[`${value}`];
+      });
+      console.log("변경된 해시태그들");
+      console.log(transformMyHashTag);
+      dataService.getAllRooms((value) => {
+        if (value) {
+          const result = Object.values(value)
+            .map((value) => {
+              return {
+                name: value.sessionId,
+                peopleCount: value.peopleCount,
+                secret: value.secret,
+                hashTag: Object.values(value.hashTag).map(
+                  (v) => hashMatch[`${v}`]
+                ),
+              };
+            })
+            .filter((value) =>
+              value.hashTag.some((v) => transformMyHashTag.includes(v))
+            );
+          console.log("자신에게 맞는 방 추천");
+          console.log(result);
+          setTotalRoomsLength(result.length);
+          setStartRoomNumber(0);
+          setRooms(result);
+        }
+      });
+    } else {
+      //my hashtag로딩중..
+      alert("로딩중. 잠시후 다시 시도해주세요");
+    }
   };
 
   return (
@@ -212,9 +210,15 @@ const Main = ({ authService, dataService }) => {
           hashMatch={hashMatch}
           searchRooms={searchRooms}
           recommendUserRooms={recommendUserRooms}
+          myHashTag={myHashTag.map((value) => "#" + hashMatch[`${value}`])}
+          isSelectMyHash={isSelectMyHash}
         />
         <S.MainContainer>
-          <Rooms dataService={dataService} rooms={rooms} />
+          <Rooms
+            dataService={dataService}
+            rooms={rooms}
+            startRoomNumber={startRoomNumber}
+          />
           <S.ButtonBox>
             <S.Button onClick={showBackRooms}>{"<"}</S.Button>
             <S.Button onClick={showFrontRooms}>{">"}</S.Button>

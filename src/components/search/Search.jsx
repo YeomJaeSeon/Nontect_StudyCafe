@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import * as S from "./Search.style";
 
-const Search = ({ hashMatch, searchRooms, recommendUserRooms }) => {
+const Search = ({
+  hashMatch,
+  searchRooms,
+  recommendUserRooms,
+  myHashTag,
+  isSelectMyHash,
+}) => {
   const [search, setSearch] = useState("title");
   const [inputSearch, setInputSearch] = useState("");
-  const [hashSearch, setHashSearch] = useState("건강");
+  const [hashSearch, setHashSearch] = useState("수능");
   const searchOption = (e) => {
     e.preventDefault();
     console.log("검색");
@@ -25,6 +31,16 @@ const Search = ({ hashMatch, searchRooms, recommendUserRooms }) => {
 
   const recommendMyRooms = () => {
     recommendUserRooms();
+  };
+
+  const displayMyHashTag = () => {
+    return (
+      <S.HashBox>
+        {myHashTag.map((value) => (
+          <S.HashSpan>{value}</S.HashSpan>
+        ))}
+      </S.HashBox>
+    );
   };
   return (
     <S.SelectorContainer>
@@ -69,6 +85,7 @@ const Search = ({ hashMatch, searchRooms, recommendUserRooms }) => {
         <S.RecommendBtn onClick={recommendMyRooms} type="button">
           나에게 맞는 방 추천
         </S.RecommendBtn>
+        {isSelectMyHash && displayMyHashTag()}
       </S.FormContainer>
     </S.SelectorContainer>
   );
