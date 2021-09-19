@@ -31,6 +31,16 @@ export default class Database {
     );
   }
 
+  createFocusRecord(uid, date) {
+    return axios.put(
+      `https://web-project-e37c4-default-rtdb.firebaseio.com/users/${uid}/focusRecord/${date}.json`,
+      {
+        totalStudyTime: 0,
+        focusStudyTime: 0,
+      }
+    );
+  }
+
   //==방장이 방생성==//
   createRoom(sessionId, interestedArr, secreteRoomNumber) {
     const entries = new Map();

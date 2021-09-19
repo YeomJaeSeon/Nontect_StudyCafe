@@ -12,7 +12,7 @@ export function setFocus(value) {
 
 //mesh와 console에출력되는 데이터는 1초에 2번(Interval 간격 800ms)
 export const alarm = (data) => {
-  console.log(data);
+  //console.log(data);
 
   //[][n], n : meshdata의 인덱스 0은 왼쪽 9는 오른쪽, 범위 0 ~ 9
   const leftEyeTop = data.leftEyeLower0[0][1]; // 왼쪽 윗눈꺼풀 y좌표
@@ -56,6 +56,7 @@ export const alarm = (data) => {
       closeStateHold = 0;
       mouthCnt = 0;
       Focus = Boolean(true);
+      //console.log("@@@ "+ Focus + "@@@");
     } else {
       ++mouthCnt;
     }
@@ -71,7 +72,7 @@ export const alarm = (data) => {
       convState = Boolean(false);
       openStateHold = 0;
       mouthCnt = 0;
-      //  Focus = Boolean(true);  // 집중을 하고있다고 판단하기 애매
+      //Focus = Boolean(true);  // 집중을 하고있다고 판단하기 애매
     } else {
       ++mouthCnt;
     }
@@ -87,11 +88,11 @@ export const alarm = (data) => {
   } else {
     closeEyeCnt = 0;
     Focus = Boolean(true);
+    //console.log("###"+ Focus + "###");
   }
   closeEyeCnt > 0 && console.log(`${closeEyeCnt}초동안 눈감음`);
 
   if (mouthCnt > 40 && startConv === Boolean(true)) {
-    //alert("잡담금지^^");
     startConv = Boolean(false);
     convState = Boolean(true);
     Focus = Boolean(false);
@@ -99,7 +100,7 @@ export const alarm = (data) => {
   }
 
   //입을 벙긋하다 멈췄을 때 초기화 하는 조건이 필요함
-  console.log(openMouth);
+  //console.log(openMouth);
   console.log("대화 상태 : " + startConv);
   console.log("입열고 닫은 횟수 : " + mouthCnt);
   console.log("닫은 상태 : " + closeStateHold);
@@ -109,21 +110,25 @@ export const alarm = (data) => {
   if (lookingLeftDirection < -1) {
     console.log("왼쪽 보는중");
     if (convState === Boolean(true)) {
-      console.log("잡담하는중");
+      console.log("왼쪽 보고 잡담하는중");
       // alert("잡담금지^^");
       Focus = Boolean(false);
     } else {
+      console.log("왼쪽 보고 잡담안함");
       Focus = Boolean(true);
+      //console.log("!!! "+ Focus + "!!!");
     }
   }
   if (lookingRightDirection < -1) {
     console.log("오른쪽 보는중");
     if (convState === Boolean(true)) {
-      console.log("잡담하는중");
+      console.log("오른쪽 보고 잡담하는중");
       // alert("잡담금지^^");
       Focus = Boolean(false);
     } else {
+      console.log("오른쪽 보고 잡담안함");
       Focus = Boolean(true);
+      //console.log("&&&"+ Focus + "&&&");
     }
   }
 

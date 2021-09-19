@@ -3,6 +3,12 @@ import * as S from "./SignUp.style";
 import { useHistory } from "react-router-dom";
 import { EmailReg } from "../../config/config";
 import Header from "../../components/header/Header";
+
+const today = new Date();
+const year = today.getFullYear();
+const month = ("0" + (today.getMonth() + 1)).slice(-2);
+const day = ("0" + today.getDate()).slice(-2);
+const nowDate = year + month + day;
 // 관심분야 체크박스 0 ~ 3
 const SignUp = ({ authService, dataService }) => {
   const [isCharacterProper, setIsCharacterProper] = useState(false);
@@ -78,6 +84,7 @@ const SignUp = ({ authService, dataService }) => {
           newUser.email,
           interesedFieldArr
         );
+        dataService.createFocusRecord(user.user.uid, nowDate);
       })
       .catch((err) => {
         if (err.code === "auth/email-already-in-use") {

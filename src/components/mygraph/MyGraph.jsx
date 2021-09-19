@@ -14,29 +14,49 @@ export default function MyGraph({ subData }) {
   var avgRatio = 0;
   var result = 0;
 
-  //var lastTenData = subData.slice(-10);
   var count = 0;
   var lastTenRatio = 0;
   var lastTenResult = 0;
-  const RecordLength = Object.keys(subData).length;
 
+  var RecordLength = Object.keys(subData).length;
   var slicedData = [];
 
   //평균 집중력
   for (var i in subData) {
-    result = result + Math.floor((subData[i].focusStudyTime / subData[i].totalStudyTime) * 10000) / 100;
+    result =
+      result +
+      Math.floor(
+        (subData[i].focusStudyTime / subData[i].totalStudyTime) * 10000
+      ) /
+        100;
     count++;
     //최근 10일 집중력
     if (count > RecordLength - 10) {
-      lastTenResult = lastTenResult + Math.floor((subData[i].focusStudyTime / subData[i].totalStudyTime) * 10000) / 100;
+      lastTenResult =
+        lastTenResult +
+        Math.floor(
+          (subData[i].focusStudyTime / subData[i].totalStudyTime) * 10000
+        ) /
+          100;
       if (count == RecordLength) {
         count = 0;
         break;
       }
     }
   }
-  avgRatio = Math.floor(result / RecordLength *100) / 100;
-  lastTenRatio = Math.floor((lastTenResult / 10 ) * 100) / 100;
+  avgRatio = Math.floor((result / RecordLength) * 100) / 100;
+  if (RecordLength < 10) {
+    lastTenRatio = Math.floor((lastTenResult / RecordLength) * 100) / 100;
+  } else {
+    lastTenRatio = Math.floor((lastTenResult / 10) * 100) / 100;
+  }
+  console.log("@@@" + isNaN(avgRatio));
+  console.log("$$$" + typeof avgRatio);
+  console.log("!!!" + typeof NaN);
+  /*
+  if ((isNaN(avgRatio) || isNaN(lastTenRatio))) {
+    alert("저장된 데이터가 없습니다!");
+  }*/
 
   const formatTime = (seconds) =>
     new Date(seconds * 1000).toLocaleTimeString("en-GB", {
@@ -111,9 +131,8 @@ export default function MyGraph({ subData }) {
           return {
             name: date,
             집중도: ratio,
-            공부시간 : formatTime(subData[`${value}`].focusStudyTime),
-            참여시간 : formatTime(subData[`${value}`].totalStudyTime),
-
+            공부시간: formatTime(subData[`${value}`].focusStudyTime),
+            참여시간: formatTime(subData[`${value}`].totalStudyTime),
           };
         })
       );
@@ -125,9 +144,10 @@ export default function MyGraph({ subData }) {
   for (var i = RecordLength - 10; i < RecordLength; i++) {
     slicedData[i + 10 - RecordLength] = data[i];
   }
+  /*
   for (var i = 0; i < 10; i++) {
     console.log(slicedData[i]);
-  }
+  }*/
   return (
     <S.GraphBox className="App">
       {data == [] ? (
