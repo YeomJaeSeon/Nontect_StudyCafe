@@ -56,8 +56,9 @@ const Myinfo = ({ authService, dataService }) => {
   useEffect(() => {
     dataService.getLoginUserData(uid, (userDataFromFB) => {
       console.log("로그인한 유저의 데이터받아오기");
+      console.log("~!@~!@~!@~!@~!@~!@~!@");
       console.log(userDataFromFB);
-      if (userDataFromFB.uid) {
+      if (userDataFromFB) {
         setUserData((prev) => {
           const newHashTag = {
             health: false,
