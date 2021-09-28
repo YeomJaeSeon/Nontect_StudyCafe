@@ -68,7 +68,7 @@ const Main = ({ authService, dataService }) => {
     const unscribe = authService.getLoginStatus((user) => {
       if (!user) {
         history.push("/");
-        alert("로그아웃 성공");
+        alert("로그인을 해야 접근할수 있습니다.");
       } else {
         console.log("로그인한 유저의 모오오오오든 데이터");
         dataService.getLoginUserData(user.uid, (value) => {

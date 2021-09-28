@@ -81,7 +81,8 @@ export const alarm = (data) => {
   //눈의 움직임 감지
   if (leftEyeDiff < 0.3 && rightEyeDiff < 0.3) {
     ++closeEyeCnt;
-    if (closeEyeCnt >= 25)
+    if (closeEyeCnt >= 5)
+      //원래 : 25
       // 눈 감고 25초 경과시
       // alert("졸지 마시오!");
       Focus = Boolean(false);
@@ -92,7 +93,8 @@ export const alarm = (data) => {
   }
   closeEyeCnt > 0 && console.log(`${closeEyeCnt}초동안 눈감음`);
 
-  if (mouthCnt > 40 && startConv === Boolean(true)) {
+  if (mouthCnt > 5 && startConv === Boolean(true)) {
+    // 원래 40
     startConv = Boolean(false);
     convState = Boolean(true);
     Focus = Boolean(false);
